@@ -4,7 +4,7 @@ I work a lot with [Kustomize](https://kustomize.io/) and I love Neovim. So why n
 
 ⚠ This is my first Neovim plugin so any Feedback is appreciated!
 
-![](https://gifyu.com/image/ShzzC)
+[![kustomize.nvim.gif](https://s4.gifyu.com/images/kustomize.nvim.gif)](https://gifyu.com/image/ShzzC)
 
 ## Requirements
 
