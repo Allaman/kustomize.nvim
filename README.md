@@ -4,6 +4,8 @@ I work a lot with [Kustomize](https://kustomize.io/) and I love Neovim. So why n
 
 ⚠ This is my first Neovim plugin so any Feedback is appreciated!
 
+![](https://gifyu.com/image/ShzzC)
+
 ## Requirements
 
 - kustomize must be installed and in your $PATH
