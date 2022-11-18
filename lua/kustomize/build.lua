@@ -1,6 +1,22 @@
+local utils = require("kustomize.utils")
 M = {}
 
-local Job = require("plenary.job")
+local function check_plenary()
+  local ok = pcall(require, "plenary.job")
+  if not ok then
+    utils.error("kustomize build requires https://github.com/nvim-lua/plenary.nvim")
+    return false
+  end
+  return true
+end
+
+local function check_kustomize()
+  local ok = utils.check_exec("kustomize")
+  if not ok then
+    return false
+  end
+  return true
+end
 
 local function create_output()
   vim.api.nvim_command("botright vnew")
@@ -14,25 +30,30 @@ local function create_output()
 end
 
 M.build = function()
+  if not (check_plenary() and check_kustomize()) then
+    return
+  end
   local bufName = vim.api.nvim_buf_get_name(0)
   local fileName = vim.fs.basename(bufName)
-  local buf = create_output()
   if fileName == "kustomization.yaml" then
+    local Job = require("plenary.job")
     local dirName = vim.fs.dirname(bufName)
     Job:new({
       command = "kustomize",
       args = { "build", "." },
       cwd = dirName,
       -- https://github.com/nvim-lua/plenary.nvim/issues/189
-      on_stdout = vim.schedule_wrap(function(_, data)
-        vim.api.nvim_buf_set_lines(buf, -1, -1, true, { data })
+      on_exit = vim.schedule_wrap(function(j, code)
+        if code == 1 then
+          local error = table.concat(j:stderr_result(), "\n")
+          utils.error("Failed with code " .. code .. "\n" .. error)
+        end
+        local buf = create_output()
+        vim.api.nvim_buf_set_lines(buf, -1, -1, true, j:result())
       end),
-      on_stderr = function(_, data)
-        error(data)
-      end,
     }):sync()
   else
-    vim.api.nvim_notify("Buffer is not a kustomization.yaml", 1, {})
+    utils.warn("Buffer is not a kustomization.yaml")
   end
 end
 
