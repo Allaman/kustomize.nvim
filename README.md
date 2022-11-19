@@ -40,7 +40,7 @@ You can define your own keybindings. Just don't call `setup()` and create mappin
 <details>
 <summary>Showcase</summary
 
-![kustomize.nvim-build.gif](https://s4.gifyu.com/images/kustomize.nvim-build.gif)
+![kustomize.nvim-build.gif](https://s1.gifyu.com/images/kustomize.nvim-build.gif)
 
 </details>
 
@@ -52,7 +52,7 @@ This allows me to quickly inspect the YAML that Kustomize generates (and ultimat
 <details>
 <summary>Showcase</summary
 
-![kustomize.nvim-kinds.gif](https://s1.gifyu.com/images/kustomize.nvim-kinds.gif)
+![kustomize.nvim-kinds.gif](https://s4.gifyu.com/images/kustomize.nvim-kinds.gif)
 
 </details>
 
