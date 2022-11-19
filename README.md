@@ -41,7 +41,10 @@ You can define your own keybindings. Just don't call `setup()` and create mappin
 <details>
 <summary>Showcase</summary
 
-[![Showcase](https://img.youtube.com/vi/g10wirc0gGE/hqdefault.jpg)](https://youtu.be/g10wirc0gGE)
+<iframe id="ytplayer" type="text/html" width="640" height="360"
+  src="https://www.youtube.com/embed/g10wirc0gGE?autoplay=1"
+  frameborder="0"></iframe>
+
 </details>
 
 If your buffer contains a `kustomization.yaml` this command will run `kustomize build . ` in the buffer's directory. The generated YAML will printed to a new buffer. The new buffer can be closed by just typing `q`.
