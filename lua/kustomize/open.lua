@@ -37,7 +37,7 @@ M.open = function()
   local fileName = vim.fs.basename(bufName)
   local dirName = vim.fs.dirname(bufName)
 
-  if fileName == "kustomization.yaml" then
+  if fileName == "kustomization.yaml" or fileName == "kustomization.yml" then
     if path:new(dirName, selectedString):is_file() then
       local absolute = join_paths(dirName, selectedString)
       vim.api.nvim_command("edit " .. absolute)
@@ -48,7 +48,7 @@ M.open = function()
       utils.warn("This is not a valid file or directory: " .. selectedString)
     end
   else
-    utils.error("Buffer is not a kustomization.yaml")
+    utils.error("Buffer is not a kustomization.y(a)ml")
   end
 end
 

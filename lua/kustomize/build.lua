@@ -35,7 +35,7 @@ M.build = function()
   end
   local bufName = vim.api.nvim_buf_get_name(0)
   local fileName = vim.fs.basename(bufName)
-  if fileName == "kustomization.yaml" then
+  if fileName == "kustomization.yaml" or fileName == "kustomization.yml" then
     local Job = require("plenary.job")
     local dirName = vim.fs.dirname(bufName)
     Job:new({
@@ -53,7 +53,7 @@ M.build = function()
       end),
     }):sync()
   else
-    utils.warn("Buffer is not a kustomization.yaml")
+    utils.warn("Buffer is not a kustomization.y(a)ml")
   end
 end
 
