@@ -99,7 +99,7 @@ In order to quickly check/edit those included YAMLs this command will open a vis
 
 When writing a new deployment I usually split the resources into files according to their type, for instance `deployment.yaml`, `cm.yaml`, or `sa.yaml`. When writing my `kustomization.yaml` I must add all resource files which does this command for me.
 
-### TODO
+## TODO
 
 - [ ] use treesitter for parsing
 - [ ] nicer and configurable output (floating, split, ...)
