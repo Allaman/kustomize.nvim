@@ -81,6 +81,17 @@ resources:
 
 In order to quickly check/edit those included YAMLs this command will open a visually selected file in the current window in a new buffer. `..` is supported. Folders are opened via `netrw`.
 
+### List resource files
+
+<details>
+<summary>Showcase</summary
+
+[![kustomize.nvim-resources.gif](https://s4.gifyu.com/images/kustomize.nvim-resources.gif)](https://gifyu.com/image/ShTyF)
+
+</details>
+
+When writing a new deployment I usually split the resources into files according to their type, for instance `deployment.yaml`, `cm.yaml`, or `sa.yaml`. When writing my `kustomization.yaml` I must add all resource files which does this command for me.
+
 ### TODO
 
 - [ ] use treesitter for parsing

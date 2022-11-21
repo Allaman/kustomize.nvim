@@ -15,3 +15,4 @@ let g:loaded_exampleplugin = 1
 command! -nargs=0 KustomizeBuild lua require("kustomize").build()
 command! -nargs=0 KustomizeKindsList lua require("kustomize").kinds()
 command! -nargs=0 KustomizeOpen lua require("kustomize").open()
+command! -nargs=0 KustomizeResources lua require("kustomize").resources()
