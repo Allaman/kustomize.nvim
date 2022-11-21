@@ -35,7 +35,7 @@ M.build = function()
   end
   local bufName = vim.api.nvim_buf_get_name(0)
   local fileName = vim.fs.basename(bufName)
-  if fileName == "kustomization.yaml" or fileName == "kustomization.yml" then
+  if utils.is_kustomization_yaml(fileName) then
     local Job = require("plenary.job")
     local dirName = vim.fs.dirname(bufName)
     Job:new({

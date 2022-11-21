@@ -37,7 +37,7 @@ M.open = function()
   local fileName = vim.fs.basename(bufName)
   local dirName = vim.fs.dirname(bufName)
 
-  if fileName == "kustomization.yaml" or fileName == "kustomization.yml" then
+  if utils.is_kustomization_yaml(fileName) then
     if path:new(dirName, selectedString):is_file() then
       local absolute = join_paths(dirName, selectedString)
       vim.api.nvim_command("edit " .. absolute)

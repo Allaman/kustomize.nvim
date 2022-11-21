@@ -25,4 +25,7 @@ M.check_exec = function(command)
   return true
 end
 
+M.is_kustomization_yaml = function(fileName)
+  return fileName == "kustomization.yaml" or fileName == "kustomization.yml"
+end
 return M
