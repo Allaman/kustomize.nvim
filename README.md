@@ -1,4 +1,11 @@
-# kustomize.nvim
+<h1 align="center">kustomize.nvim</h1>
+
+<div align="center">
+  <p>
+    <img src="https://img.shields.io/badge/NeoVim-%2357A143.svg?&style=for-the-badge&logo=neovim&logoColor=white" alt="Neovim"/>
+    <img src="https://img.shields.io/badge/lua-%232C2D72.svg?style=for-the-badge&logo=lua&logoColor=white" alt="Lua"/>
+  </p>
+</div>
 
 I work a lot with [Kustomize](https://kustomize.io/) and I love Neovim. So why not write a plugin for some tasks for that I usually switch to a shell.
 Jump to the [use cases](#use-cases) to check out what this plugin can do!
