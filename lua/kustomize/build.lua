@@ -47,9 +47,10 @@ M.build = function()
         if code == 1 then
           local error = table.concat(j:stderr_result(), "\n")
           utils.error("Failed with code " .. code .. "\n" .. error)
+        else
+          local buf = create_output()
+          vim.api.nvim_buf_set_lines(buf, -1, -1, true, j:result())
         end
-        local buf = create_output()
-        vim.api.nvim_buf_set_lines(buf, -1, -1, true, j:result())
       end),
     }):sync()
   else
