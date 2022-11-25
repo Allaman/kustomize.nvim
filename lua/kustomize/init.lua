@@ -4,6 +4,7 @@ local build = require("kustomize.build")
 local kinds = require("kustomize.kinds")
 local open = require("kustomize.open")
 local resources = require("kustomize.resources")
+local validate = require("kustomize.validate")
 
 M.build = function()
   build.build()
@@ -21,6 +22,10 @@ M.resources = function()
   resources.resources()
 end
 
+M.validate = function()
+  validate.validate()
+end
+
 M.setup = function()
   vim.keymap.set("n", "<leader>kb", function()
     M.build()
@@ -34,6 +39,9 @@ M.setup = function()
   vim.keymap.set("n", "<leader>kr", function()
     M.resources()
   end, { desc = "Print resources in folder" })
+  vim.keymap.set("n", "<leader>kv", function()
+    M.validate()
+  end, { desc = "Validate manifests" })
 end
 
 return M

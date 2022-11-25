@@ -14,7 +14,8 @@ Jump to the [use cases](#use-cases) to check out what this plugin can do!
 
 ## Requirements
 
-- kustomize must be installed and in your $PATH
+- kustomize in your PATH to [build manifests](#build-manifests)
+- [kubeconform](https://github.com/yannh/kubeconform) in your PATH to [validate manifests](#validate-resources)
 - [plenary.nvim](https://github.com/nvim-lua/plenary.nvim)
 
 ## Quickstart
@@ -32,11 +33,12 @@ With Packer:
 
 ## Default mappings
 
-| Mode | Mapping      | Action          | Lua                                | Command               |
-| ---- | ------------ | --------------- | ---------------------------------- | --------------------- |
-| n    | \<leader\>kb | Kustomize build | `lua require("kustomize").build()` | `:KustomizeBuild`     |
-| n    | \<leader\>kk | List kinds      | `lua require("kustomize").kinds()` | `:KustomizeKindsList` |
-| v    | \<leader\>ko | Open file       | `lua require("kustomize").open()`  | `:KustomizeOpen`      |
+| Mode | Mapping      | Action          | Lua                                   | Command               |
+| ---- | ------------ | --------------- | ------------------------------------- | --------------------- |
+| n    | \<leader\>kb | Kustomize build | `lua require("kustomize").build()`    | `:KustomizeBuild`     |
+| n    | \<leader\>kk | List kinds      | `lua require("kustomize").kinds()`    | `:KustomizeKindsList` |
+| v    | \<leader\>ko | Open file       | `lua require("kustomize").open()`     | `:KustomizeOpen`      |
+| v    | \<leader\>kv | Validate file   | `lua require("kustomize").validate()` | `:KustomizeValidate`  |
 
 You can define your own keybindings. Just don't call `setup()` and create mappings on your own.
 
@@ -99,8 +101,22 @@ In order to quickly check/edit those included YAMLs this command will open a vis
 
 When writing a new deployment I usually split the resources into files according to their type, for instance `deployment.yaml`, `cm.yaml`, or `sa.yaml`. When writing my `kustomization.yaml` I must add all resource files which does this command for me.
 
+### Validate resources
+
+<details>
+<summary>Showcase</summary
+
+[![kustomize.nvim-validate.gif](https://s1.gifyu.com/images/kustomize.nvim-validate.gif)](https://gifyu.com/image/ShQmx)
+
+</details>
+
+[kubeconform](https://github.com/yannh/kubeconform) is a Kubernetes manifests validator that can detect a misconfiguration before you apply your manifests to your cluster. This command runs `kubeconform --strict --ignore-missing-schemas` on the current buffer. The buffer's content may be a file on disk or content not (yet) saved, e.g. the output of [Build manifests](#build-manifests).
+
 ## TODO
 
 - [ ] use treesitter for parsing
 - [ ] nicer and configurable output (floating, split, ...)
 - [ ] error handling for unexpected window layouts
+- [ ] implement a validation job
+- [ ] Tests
+- [ ] custom validation command and/or args
