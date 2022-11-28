@@ -31,6 +31,7 @@ M.open = function()
   if not (utils.check_plenary()) then
     return
   end
+  local path = require("plenary.path")
   local selectedString = get_visual_selection()
   if not selectedString then
     return
