@@ -1,23 +1,6 @@
 local utils = require("kustomize.utils")
 M = {}
 
-local function check_plenary()
-  local ok = pcall(require, "plenary.job")
-  if not ok then
-    utils.error("kustomize build requires https://github.com/nvim-lua/plenary.nvim")
-    return false
-  end
-  return true
-end
-
-local function check_kustomize()
-  local ok = utils.check_exec("kustomize")
-  if not ok then
-    return false
-  end
-  return true
-end
-
 local function create_output()
   vim.api.nvim_command("botright vnew")
   local win = vim.api.nvim_get_current_win()
@@ -30,7 +13,7 @@ local function create_output()
 end
 
 M.build = function()
-  if not (check_plenary() and check_kustomize()) then
+  if not (utils.check_plenary() and utils.check_exec("kustomize")) then
     return
   end
   local bufName = vim.api.nvim_buf_get_name(0)

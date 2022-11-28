@@ -2,25 +2,8 @@ local utils = require("kustomize.utils")
 local path = require("plenary.path")
 M = {}
 
-local function check_plenary()
-  local ok = pcall(require, "plenary.job")
-  if not ok then
-    utils.error("kustomize build requires https://github.com/nvim-lua/plenary.nvim")
-    return false
-  end
-  return true
-end
-
-local function check_kubeconform()
-  local ok = utils.check_exec("kubeconform")
-  if not ok then
-    return false
-  end
-  return true
-end
-
 M.validate = function()
-  if not (check_plenary() and check_kubeconform()) then
+  if not (utils.check_plenary() and utils.check_exec("kubeconform")) then
     return
   end
   local fileToValidate

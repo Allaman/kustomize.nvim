@@ -4,18 +4,8 @@ local path = require("plenary.path")
 
 local M = {}
 
--- TODO: move to utils or init?
-local function check_plenary()
-  local ok = pcall(require, "plenary.scandir")
-  if not ok then
-    utils.error("kustomize build requires https://github.com/nvim-lua/plenary.nvim")
-    return false
-  end
-  return true
-end
-
 M.resources = function()
-  if not check_plenary() then
+  if not utils.check_plenary() then
     return
   end
   local bufName = vim.api.nvim_buf_get_name(0)
@@ -39,7 +29,6 @@ M.resources = function()
   else
     utils.warn("Buffer is not a kustomization.y(a)ml")
   end
-  print(vim.inspect(resourceList))
   local row, _ = unpack(vim.api.nvim_win_get_cursor(0))
   vim.api.nvim_buf_set_lines(0, row, row, true, resourceList)
 end

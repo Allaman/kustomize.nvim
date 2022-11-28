@@ -1,5 +1,4 @@
 local utils = require("kustomize.utils")
-local path = require("plenary.path")
 M = {}
 
 local function get_visual_selection()
@@ -22,12 +21,16 @@ local function get_visual_selection()
 end
 
 local function join_paths(a, b)
+  local path = require("plenary.path")
   local file = path:new(a, b)
   local absolute = path:new({ file, sep = utils.path_separator() }):absolute()
   return absolute
 end
 
 M.open = function()
+  if not (utils.check_plenary()) then
+    return
+  end
   local selectedString = get_visual_selection()
   if not selectedString then
     return
