@@ -6,6 +6,8 @@ local open = require("kustomize.open")
 local resources = require("kustomize.resources")
 local validate = require("kustomize.validate")
 
+M.options = {}
+
 M.build = function()
   build.build()
 end
@@ -26,7 +28,7 @@ M.validate = function()
   validate.validate()
 end
 
-M.setup = function()
+M.setDefaults = function()
   vim.keymap.set("n", "<leader>kb", function()
     M.build()
   end, { desc = "Kustomize build" })
@@ -42,6 +44,14 @@ M.setup = function()
   vim.keymap.set("n", "<leader>kv", function()
     M.validate()
   end, { desc = "Validate manifests" })
+end
+
+M.setup = function(options)
+  if options.defaults then
+    --- if options.defaults = true then set default configurations for user
+    --- if options.defaults = false then user must set their own configurations
+    M.setDefaults()
+  end
 end
 
 return M
