@@ -1,2 +1,4 @@
 *.gif
 .DS_STORE
+.tests/
+.luarc.json
