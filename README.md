@@ -37,12 +37,13 @@ With Packer:
 
 ## Default mappings
 
-| Mode | Mapping      | Action          | Lua                                   | Command               |
-| ---- | ------------ | --------------- | ------------------------------------- | --------------------- |
-| n    | \<leader\>kb | Kustomize build | `lua require("kustomize").build()`    | `:KustomizeBuild`     |
-| n    | \<leader\>kk | List kinds      | `lua require("kustomize").kinds()`    | `:KustomizeKindsList` |
-| v    | \<leader\>ko | Open file       | `lua require("kustomize").open()`     | `:KustomizeOpen`      |
-| v    | \<leader\>kv | Validate file   | `lua require("kustomize").validate()` | `:KustomizeValidate`  |
+| Mode | Mapping      | Action          | Lua                                    | Command                    |
+| ---- | ------------ | --------------- | -------------------------------------- | -------------------------- |
+| n    | \<leader\>kb | Kustomize build | `lua require("kustomize").build()`     | `:KustomizeBuild`          |
+| n    | \<leader\>kk | List kinds      | `lua require("kustomize").kinds()`     | `:KustomizeListKinds`      |
+| n    | \<leader\>kr | Print resources | `lua require("kustomize").resources()` | `:KustomizePrintResources` |
+| v    | \<leader\>ko | Open file       | `lua require("kustomize").open()`      | `:KustomizeOpenResource`   |
+| v    | \<leader\>kv | Validate file   | `lua require("kustomize").validate()`  | `:KustomizeValidate`       |
 
 You can define your own keybindings/override the default mappings:
 
