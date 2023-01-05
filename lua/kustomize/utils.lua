@@ -29,7 +29,7 @@ M.delete_output_keybinding = function(win, buf)
 end
 
 M.create_output = function()
-  vim.api.nvim_command("botright vnew")
+  vim.api.nvim_command("vsplit")
   local win = vim.api.nvim_get_current_win()
   local buf = vim.api.nvim_create_buf(true, true)
   return win, buf
