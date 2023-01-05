@@ -1,7 +1,7 @@
 local utils = require("kustomize.utils")
 local M = {}
 
-local function create_output()
+local function configure_buffer()
   local win, buf = utils.create_output()
   vim.api.nvim_win_set_buf(win, buf)
   vim.api.nvim_buf_set_name(buf, "Kustomize #" .. buf)
@@ -29,7 +29,7 @@ M.build = function()
           local error = table.concat(j:stderr_result(), "\n")
           utils.error("Failed with code " .. code .. "\n" .. error)
         else
-          local buf = create_output()
+          local buf = configure_buffer()
           vim.api.nvim_buf_set_lines(buf, -1, -1, true, j:result())
         end
       end),
