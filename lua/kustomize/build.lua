@@ -2,9 +2,7 @@ local utils = require("kustomize.utils")
 local M = {}
 
 local function create_output()
-  vim.api.nvim_command("botright vnew")
-  local win = vim.api.nvim_get_current_win()
-  local buf = vim.api.nvim_create_buf(true, true)
+  local win, buf = utils.create_output()
   vim.api.nvim_win_set_buf(win, buf)
   vim.api.nvim_buf_set_name(buf, "Kustomize #" .. buf)
   vim.api.nvim_buf_set_option(buf, "filetype", "yaml")

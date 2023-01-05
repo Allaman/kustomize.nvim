@@ -22,6 +22,14 @@ M.delete_output = function(win, buf)
   vim.api.nvim_buf_delete(buf, { force = true })
 end
 
+
+M.create_output = function()
+  vim.api.nvim_command("botright vnew")
+  local win = vim.api.nvim_get_current_win()
+  local buf = vim.api.nvim_create_buf(true, true)
+  return win, buf
+end
+
 M.check_exec = function(command)
   if vim.fn.executable(command) ~= 1 then
     error(command .. " was not found on your path")
