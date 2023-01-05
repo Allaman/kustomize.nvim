@@ -5,6 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.0](https://github.com/Allaman/kustomize.nvim/compare/v0.5.0...v1.0.0) (2023-01-05)
+
+
+### ⚠ BREAKING CHANGES
+
+* rename commands
+
+### Features
+
+* delete buffer after closing output window [#9](https://github.com/Allaman/kustomize.nvim/issues/9) ([9c4398d](https://github.com/Allaman/kustomize.nvim/commit/9c4398daad0fe95473f017b7bb4de8ba16fe2b2d))
+
+
+### Bug Fixes
+
+* make 'M' local variable ([f8a3792](https://github.com/Allaman/kustomize.nvim/commit/f8a379247491ef2b058769c0fd2f255d62a75b45))
+* make M local ([afe38b0](https://github.com/Allaman/kustomize.nvim/commit/afe38b0d6a7f3a94769231555419dd5c8240f3b2))
+
+
+### Code Refactoring
+
+* rename commands ([e7d1216](https://github.com/Allaman/kustomize.nvim/commit/e7d12160dc1d3239a84de9f75504f625154dcfbd))
+
 ## [0.5.0](https://github.com/Allaman/kustomize.nvim/compare/v0.4.2...v0.5.0) (2023-01-05)
 
 
