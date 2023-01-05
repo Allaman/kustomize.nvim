@@ -37,7 +37,6 @@ end
 
 M.check_exec = function(command)
   if vim.fn.executable(command) ~= 1 then
-    error(command .. " was not found on your path")
     return false
   end
   return true

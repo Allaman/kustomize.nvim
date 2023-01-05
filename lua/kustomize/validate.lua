@@ -4,6 +4,7 @@ local M = {}
 
 M.validate = function()
   if not (utils.check_plenary() and utils.check_exec("kubeconform")) then
+    utils.error("kubeconform" .. " was not found on your path")
     return
   end
   local fileToValidate

@@ -12,6 +12,7 @@ end
 
 M.build = function()
   if not (utils.check_plenary() and utils.check_exec("kustomize")) then
+    utils.error("kustomize" .. " was not found on your path")
     return
   end
   local bufName = vim.api.nvim_buf_get_name(0)
