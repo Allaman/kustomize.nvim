@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.0](https://github.com/Allaman/kustomize.nvim/compare/v0.4.2...v0.5.0) (2023-01-05)
+
+
+### Features
+
+* add 'open' use case ([f14e04f](https://github.com/Allaman/kustomize.nvim/commit/f14e04f94f700b39ae6dc3a9db6d32a8586753aa))
+* add "validate manifests" use case ([d843a71](https://github.com/Allaman/kustomize.nvim/commit/d843a71b917c26b68389afe4fb75c9be20180144))
+* add new "resources" function ([158fd25](https://github.com/Allaman/kustomize.nvim/commit/158fd250c8e84a898aacfd2f10c854db993dedca))
+* better error handling for kustomize build ([aab7a9b](https://github.com/Allaman/kustomize.nvim/commit/aab7a9b751f29b14b05980e93c2516d527584ba0))
+* **customization:** adds support for custom user configurations/overrides ([#2](https://github.com/Allaman/kustomize.nvim/issues/2)) ([34e240c](https://github.com/Allaman/kustomize.nvim/commit/34e240c98d3cee0440980b8557da9813b659b27e))
+
+
+### Bug Fixes
+
+* add missing require statement ([3f503c3](https://github.com/Allaman/kustomize.nvim/commit/3f503c3cff7f72adc1afc6b5d07d9491c477aeb7))
+* do not create buffer on kustomize error ([ae4280a](https://github.com/Allaman/kustomize.nvim/commit/ae4280acf80346194308f915d2e5b3c05a3b9d47))
+* support kustomization.yml ([6d5af96](https://github.com/Allaman/kustomize.nvim/commit/6d5af961c50dab5629994e14988d4993a81ef1c3))
+* vim commands ([e778ae4](https://github.com/Allaman/kustomize.nvim/commit/e778ae4622d30bbf884c3b76395ba4cf5504de8b))
+
 ## [0.4.2] - 2022-11-28
 
 ### Fixed
