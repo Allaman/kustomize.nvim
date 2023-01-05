@@ -27,7 +27,11 @@ With Packer:
     "allaman/kustomize.nvim",
     requires = "nvim-lua/plenary.nvim",
     ft = "yaml",
-    config = "require('kustomize').setup()",
+    config = function()
+      require('kustomize').setup({
+        defaults = true
+      })
+    end,
   })
 ```
 
@@ -40,7 +44,25 @@ With Packer:
 | v    | \<leader\>ko | Open file       | `lua require("kustomize").open()`     | `:KustomizeOpen`      |
 | v    | \<leader\>kv | Validate file   | `lua require("kustomize").validate()` | `:KustomizeValidate`  |
 
-You can define your own keybindings. Just don't call `setup()` and create mappings on your own.
+You can define your own keybindings/override the default mappings:
+
+```lua
+  use({
+    "allaman/kustomize.nvim",
+    requires = "nvim-lua/plenary.nvim",
+    ft = "yaml",
+    config = function()
+      require('kustomize').setup({
+        defaults = false
+      })
+      -- default keybindings
+      vim.keymap.set("n", "<leader>kb", "<cmd>lua require('kustomize').build()<cr>", { noremap = true })
+      vim.keymap.set("n", "<leader>kk", "<cmd>lua require('kustomize').kinds()<cr>", { noremap = true })
+      vim.keymap.set("v", "<leader>ko", "<cmd>lua require('kustomize').open()<cr>", { noremap = true })
+      vim.keymap.set("v", "<leader>kv", "<cmd>lua require('kustomize').validate()<cr>", { noremap = true })
+    end,
+  })
+```
 
 ## Use cases
 
