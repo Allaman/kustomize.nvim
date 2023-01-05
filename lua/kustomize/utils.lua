@@ -1,4 +1,4 @@
-M = {}
+local M = {}
 
 M.warn = function(msg)
   vim.notify(msg, vim.log.levels.WARN, { title = "TodoComments" })
