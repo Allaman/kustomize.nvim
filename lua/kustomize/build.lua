@@ -1,5 +1,5 @@
 local utils = require("kustomize.utils")
-M = {}
+local M = {}
 
 local function create_output()
   vim.api.nvim_command("botright vnew")

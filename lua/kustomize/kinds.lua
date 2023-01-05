@@ -1,4 +1,4 @@
-M = {}
+local M = {}
 
 M.list = function()
   local bufnr = vim.api.nvim_win_get_buf(0)

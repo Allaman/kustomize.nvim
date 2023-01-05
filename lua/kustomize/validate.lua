@@ -1,6 +1,6 @@
 local utils = require("kustomize.utils")
 local path = require("plenary.path")
-M = {}
+local M = {}
 
 M.validate = function()
   if not (utils.check_plenary() and utils.check_exec("kubeconform")) then

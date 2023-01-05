@@ -1,5 +1,5 @@
 local utils = require("kustomize.utils")
-M = {}
+local M = {}
 
 local function get_visual_selection()
   -- v is like '< except it's always updated
