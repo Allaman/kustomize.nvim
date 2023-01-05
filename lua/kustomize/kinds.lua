@@ -16,9 +16,7 @@ M.list = function()
   local win, buf = utils.create_output()
   vim.api.nvim_win_set_buf(win, buf)
   vim.api.nvim_buf_set_name(buf, "Kinds #" .. buf)
-  vim.keymap.set("n", "q", function()
-    utils.delete_output(win, buf)
-  end, { buffer = buf })
+  utils.delete_output_keybinding(win, buf)
   vim.api.nvim_buf_set_lines(buf, 0, 0, true, kinds)
 end
 

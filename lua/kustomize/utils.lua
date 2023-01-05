@@ -22,6 +22,11 @@ M.delete_output = function(win, buf)
   vim.api.nvim_buf_delete(buf, { force = true })
 end
 
+M.delete_output_keybinding = function(win, buf)
+  vim.keymap.set("n", "q", function()
+    M.delete_output(win, buf)
+  end, { buffer = buf })
+end
 
 M.create_output = function()
   vim.api.nvim_command("botright vnew")
