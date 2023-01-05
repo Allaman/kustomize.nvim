@@ -1,11 +1,11 @@
 local M = {}
 
 M.warn = function(msg)
-  vim.notify(msg, vim.log.levels.WARN, { title = "TodoComments" })
+  vim.notify(msg, vim.log.levels.WARN, { title = "Kustomize.nvim" })
 end
 
 M.error = function(msg)
-  vim.notify(msg, vim.log.levels.ERROR, { title = "TodoComments" })
+  vim.notify(msg, vim.log.levels.ERROR, { title = "Kustomize.nvim" })
 end
 
 M.path_separator = function()
