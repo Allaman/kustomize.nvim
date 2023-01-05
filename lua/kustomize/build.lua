@@ -8,7 +8,9 @@ local function create_output()
   vim.api.nvim_win_set_buf(win, buf)
   vim.api.nvim_buf_set_name(buf, "Kustomize #" .. buf)
   vim.api.nvim_buf_set_option(buf, "filetype", "yaml")
-  vim.keymap.set("n", "q", ":q<cr>", { buffer = buf })
+  vim.keymap.set("n", "q", function()
+    utils.delete_output(win, buf)
+  end, { buffer = buf })
   return buf
 end
 

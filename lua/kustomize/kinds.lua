@@ -1,3 +1,4 @@
+local utils = require("kustomize.utils")
 local M = {}
 
 M.list = function()
@@ -17,7 +18,9 @@ M.list = function()
   local buf = vim.api.nvim_create_buf(true, true)
   vim.api.nvim_win_set_buf(win, buf)
   vim.api.nvim_buf_set_name(buf, "Kinds #" .. buf)
-  vim.keymap.set("n", "q", ":q<cr>", { buffer = buf })
+  vim.keymap.set("n", "q", function()
+    utils.delete_output(win, buf)
+  end, { buffer = buf })
   vim.api.nvim_buf_set_lines(buf, 0, 0, true, kinds)
 end
 

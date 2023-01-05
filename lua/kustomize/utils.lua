@@ -17,6 +17,11 @@ M.path_separator = function()
   end
 end
 
+M.delete_output = function(win, buf)
+  vim.api.nvim_win_close(win, "force")
+  vim.api.nvim_buf_delete(buf, { force = true })
+end
+
 M.check_exec = function(command)
   if vim.fn.executable(command) ~= 1 then
     error(command .. " was not found on your path")
