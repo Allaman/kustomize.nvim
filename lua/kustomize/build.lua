@@ -22,6 +22,7 @@ M.kustomize_build = function(dirName)
 end
 
 M.build = function()
+  -- TODO: move to init.lua?
   if not utils.is_module_available("plenary") then
     utils.error("Could not load https://github.com/nvim-lua/plenary.nvim")
     return
@@ -39,8 +40,8 @@ M.build = function()
   local err, manifest = M.kustomize_build(dirName)
   -- https://stackoverflow.com/questions/1252539/most-efficient-way-to-determine-if-a-lua-table-is-empty-contains-no-entries
   if next(err) ~= nil then
-    local err_string = table.concat(err, "\n")
-    utils.error("Failed with error " .. err_string .. "\n")
+    local err_msg = table.concat(err, "\n")
+    utils.error("Failed with error " .. err_msg)
     return
   end
   local buf = configure_buffer()
