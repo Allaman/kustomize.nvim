@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.2](https://github.com/Allaman/kustomize.nvim/compare/v1.0.1...v1.0.2) (2023-01-06)
+
+
+### Bug Fixes
+
+* title in warn and error functions ([f7c612a](https://github.com/Allaman/kustomize.nvim/commit/f7c612aad688cce231065c02d3531d46a440148b))
+* unix detection for path_separator() ([7c7b6cd](https://github.com/Allaman/kustomize.nvim/commit/7c7b6cd15db29b1b8af16ae1ad351913b4eaec87))
+
 ## [1.0.1](https://github.com/Allaman/kustomize.nvim/compare/v1.0.0...v1.0.1) (2023-01-05)
 
 
