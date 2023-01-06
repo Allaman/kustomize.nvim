@@ -30,11 +30,7 @@ function M.setup()
   M.load("echasnovski/mini.nvim")
 
   -- Set up 'mini.test'
-  require("mini.test").setup({
-    find_files = function()
-      return vim.fn.globpath("tests/kustomize/", "**/test_*.lua", true, true)
-    end,
-  })
+  require("mini.test").setup()
 end
 
 M.setup()
