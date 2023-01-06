@@ -5,7 +5,8 @@ local path = require("plenary.path")
 local M = {}
 
 M.resources = function()
-  if not utils.check_plenary() then
+  if not utils.is_module_available("plenary") then
+    utils.error("Could not load https://github.com/nvim-lua/plenary.nvim")
     return
   end
   local bufName = vim.api.nvim_buf_get_name(0)

@@ -28,7 +28,8 @@ local function join_paths(a, b)
 end
 
 M.open = function()
-  if not (utils.check_plenary()) then
+  if not (utils.is_module_available("plenary")) then
+    utils.error("Could not load https://github.com/nvim-lua/plenary.nvim")
     return
   end
   local path = require("plenary.path")

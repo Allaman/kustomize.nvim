@@ -3,7 +3,10 @@ local path = require("plenary.path")
 local M = {}
 
 M.validate = function()
-  if not (utils.check_plenary() and utils.check_exec("kubeconform")) then
+  if not utils.is_module_available("plenary") then
+    utils.error("Could not load https://github.com/nvim-lua/plenary.nvim")
+  end
+  if not utils.check_exec("kubeconform") then
     utils.error("kubeconform" .. " was not found on your path")
     return
   end

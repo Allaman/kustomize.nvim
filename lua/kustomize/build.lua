@@ -10,9 +10,14 @@ local function configure_buffer()
   return buf
 end
 
+
 M.build = function()
-  if not (utils.check_plenary() and utils.check_exec("kustomize")) then
-    utils.error("kustomize" .. " was not found on your path")
+  if not utils.is_module_available("plenary") then
+    utils.error("Could not load https://github.com/nvim-lua/plenary.nvim")
+    return
+  end
+  if not utils.check_exec("kustomize") then
+    utils.error("kustomize was not found on your PATH")
     return
   end
   local bufName = vim.api.nvim_buf_get_name(0)

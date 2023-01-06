@@ -46,10 +46,9 @@ M.is_kustomization_yaml = function(fileName)
   return fileName == "kustomization.yaml" or fileName == "kustomization.yml"
 end
 
-M.check_plenary = function()
-  local ok = pcall(require, "plenary")
+M.is_module_available = function(module)
+  local ok = pcall(require, module)
   if not ok then
-    error("kustomize build requires https://github.com/nvim-lua/plenary.nvim")
     return false
   end
   return true
