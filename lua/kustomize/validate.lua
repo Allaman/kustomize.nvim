@@ -2,7 +2,18 @@ local utils = require("kustomize.utils")
 local path = require("plenary.path")
 local M = {}
 
+M.run_validation = function(fileToValidate)
+  local Job = require("plenary.job")
+  local job = Job:new({
+    command = "kubeconform",
+    args = { "--ignore-missing-schemas", "--strict", fileToValidate },
+  })
+  job:sync()
+  return job:result()
+end
+
 M.validate = function()
+  -- TODO: move to init.lua?
   if not utils.is_module_available("plenary") then
     utils.error("Could not load https://github.com/nvim-lua/plenary.nvim")
   end
@@ -31,22 +42,11 @@ M.validate = function()
       end
     end
   end
-
-  local Job = require("plenary.job")
-  Job:new({
-    command = "kubeconform",
-    args = { "--ignore-missing-schemas", "--strict", fileToValidate },
-    -- https://github.com/nvim-lua/plenary.nvim/issues/189
-    on_exit = vim.schedule_wrap(function(j, code)
-      -- print(vim.inspect(j:result()))
-      if code == 1 then
-        local error = table.concat(j:result(), "\n") -- error is printet to stdout
-        utils.error("Failed with code " .. code .. "\n" .. error)
-      else
-        print("No misconfiguration found")
-      end
-    end),
-  }):sync()
+  local out = M.run_validation(fileToValidate)
+  if out ~= nil then
+    local err_msg = table.concat(out, "\n")
+    utils.error("Failed with: " .. err_msg)
+  end
   -- can create an empty file http://www.lua.org/manual/5.1/manual.html#pdf-os.tmpname
   -- TODO: error handlin?
   os.remove(t)
