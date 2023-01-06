@@ -10,6 +10,16 @@ local function configure_buffer()
   return buf
 end
 
+M.kustomize_build = function(dirName)
+  local Job = require("plenary.job")
+  local job = Job:new({
+    command = "kustomize",
+    args = { "build", "." },
+    cwd = dirName,
+  })
+  job:sync()
+  return job:stderr_result(), job:result()
+end
 
 M.build = function()
   if not utils.is_module_available("plenary") then
@@ -22,27 +32,19 @@ M.build = function()
   end
   local bufName = vim.api.nvim_buf_get_name(0)
   local fileName = vim.fs.basename(bufName)
-  if utils.is_kustomization_yaml(fileName) then
-    local Job = require("plenary.job")
-    local dirName = vim.fs.dirname(bufName)
-    Job:new({
-      command = "kustomize",
-      args = { "build", "." },
-      cwd = dirName,
-      -- https://github.com/nvim-lua/plenary.nvim/issues/189
-      on_exit = vim.schedule_wrap(function(j, code)
-        if code == 1 then
-          local error = table.concat(j:stderr_result(), "\n")
-          utils.error("Failed with code " .. code .. "\n" .. error)
-        else
-          local buf = configure_buffer()
-          vim.api.nvim_buf_set_lines(buf, -1, -1, true, j:result())
-        end
-      end),
-    }):sync()
-  else
-    utils.warn("Buffer is not a kustomization.y(a)ml")
+  if not utils.is_kustomization_yaml(fileName) then
+    utils.error("Buffer is not a kustomization.y(a)ml")
   end
+  local dirName = vim.fs.dirname(bufName)
+  local err, manifest = M.kustomize_build(dirName)
+  -- https://stackoverflow.com/questions/1252539/most-efficient-way-to-determine-if-a-lua-table-is-empty-contains-no-entries
+  if next(err) ~= nil then
+    local err_string = table.concat(err, "\n")
+    utils.error("Failed with error " .. err_string .. "\n")
+    return
+  end
+  local buf = configure_buffer()
+  vim.api.nvim_buf_set_lines(buf, -1, -1, true, manifest)
 end
 
 return M
