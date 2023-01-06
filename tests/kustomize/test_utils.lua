@@ -23,6 +23,14 @@ describe("utils.lua:", function()
   it("should not find 'nvimmmmmm' in PATH", function()
     assert(not utils.check_exec("nviam"))
   end)
+
+  it("should load module mini.test", function()
+    assert(utils.is_module_available("mini.test"))
+  end)
+
+  it("should load module fooo", function()
+    assert(not utils.is_module_available("foo"))
+  end)
 end)
 
 -- return T
