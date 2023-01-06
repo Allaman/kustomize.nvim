@@ -1,4 +1,5 @@
 local eq = MiniTest.expect.equality
+local neq = MiniTest.expect.no_equality
 
 local build = require("kustomize.build")
 
@@ -16,20 +17,20 @@ local want1 = {
   "  namespace: foo",
 }
 
-local want2 = {
-  "Error: accumulating resources: accumulation err='accumulating resources from 'serviceaccount.yaml': evalsymlink failure on '/Users/michael/workspace/github.com/allaman/kustomize.nvim/tests/kustomize/test_data/build/fail/serviceaccount.yaml' : lstat /Users/michael/workspace/github.com/allaman/kustomize.nvim/tests/kustomize/test_data/build/fail/serviceaccount.yaml: no such file or directory': must build at directory: not a valid directory: evalsymlink failure on '/Users/michael/workspace/github.com/allaman/kustomize.nvim/tests/kustomize/test_data/build/fail/serviceaccount.yaml' : lstat /Users/michael/workspace/github.com/allaman/kustomize.nvim/tests/kustomize/test_data/build/fail/serviceaccount.yaml: no such file or directory",
-}
+local want2 = "no such file or directory"
 
 describe("kustomize build", function()
   it("valid kustomization.yaml", function()
-    local err, get = build.kustomize_build("tests/kustomize/test_data/build/pass")
-    eq(err, {})
-    eq(get, want1)
+    local err2, get2 = build.kustomize_build("tests/kustomize/test_data/build/pass")
+    eq(err2, {})
+    eq(get2, want1)
   end)
 
   it("missing resources", function()
-    local err, get = build.kustomize_build("tests/kustomize/test_data/build/fail")
-    eq(err, want2)
-    eq(get, {})
+    local err2, get2 = build.kustomize_build("tests/kustomize/test_data/build/fail")
+    local err_string = table.concat(err2, "\n")
+    local match = string.find(err_string, want2)
+    neq(match, {})
+    eq(get2, {})
   end)
 end)

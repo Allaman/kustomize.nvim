@@ -4,4 +4,3 @@ kind: Kustomization
 namespace: foo
 resources:
   - serviceaccount.yaml
-  - serviceaccount2.yaml
