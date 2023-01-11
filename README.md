@@ -41,8 +41,8 @@ With Packer:
 | n    | \<leader\>kb | Kustomize build  | `lua require("kustomize").build()`           | `:KustomizeBuild`          |
 | n    | \<leader\>kk | List kinds       | `lua require("kustomize").kinds()`           | `:KustomizeListKinds`      |
 | n    | \<leader\>kr | Print resources  | `lua require("kustomize").print_resources()` | `:KustomizePrintResources` |
-| v    | \<leader\>ko | List 'resources' | `lua require("kustomize").list_resources()`  | `:KustomizeListResources`  |
-| v    | \<leader\>kv | Validate file    | `lua require("kustomize").validate()`        | `:KustomizeValidate`       |
+| n    | \<leader\>ko | List 'resources' | `lua require("kustomize").list_resources()`  | `:KustomizeListResources`  |
+| n    | \<leader\>kv | Validate file    | `lua require("kustomize").validate()`        | `:KustomizeValidate`       |
 
 You can define your own keybindings/override the default mappings:
 
