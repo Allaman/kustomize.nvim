@@ -58,8 +58,9 @@ You can define your own keybindings/override the default mappings:
       -- default keybindings, adjust to your needs
       vim.keymap.set("n", "<leader>kb", "<cmd>lua require('kustomize').build()<cr>", { noremap = true })
       vim.keymap.set("n", "<leader>kk", "<cmd>lua require('kustomize').kinds()<cr>", { noremap = true })
-      vim.keymap.set("v", "<leader>ko", "<cmd>lua require('kustomize').open()<cr>", { noremap = true })
-      vim.keymap.set("v", "<leader>kv", "<cmd>lua require('kustomize').validate()<cr>", { noremap = true })
+      vim.keymap.set("n", "<leader>kl", "<cmd>lua require('kustomize').list_resources()<cr>", { noremap = true })
+      vim.keymap.set("n", "<leader>kp", "<cmd>lua require('kustomize').print_resources()<cr>", { noremap = true })
+      vim.keymap.set("n", "<leader>kv", "<cmd>lua require('kustomize').validate()<cr>", { noremap = true })
     end,
   })
 ```
