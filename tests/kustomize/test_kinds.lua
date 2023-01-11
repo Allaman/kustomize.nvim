@@ -34,31 +34,31 @@ end
 
 T["check_success_treesitter"] = function()
   local bufNr = create_buffer(test_data)
-  local get = kinds.find_kinds_treesitter(bufNr)
+  local get = kinds.find_kinds(bufNr)
   eq(want, get)
 end
 
 T["check_emptyness_treesitter"] = function()
   local bufNr = create_buffer({ "" })
-  local get = kinds.find_kinds_treesitter(bufNr)
+  local get = kinds.find_kinds(bufNr)
   eq({}, get)
 end
 
 T["check_invalidBuffer_treesitter"] = function()
   expect.error(function()
-    kinds.find_kinds_treesitter(1337)
+    kinds.find_kinds(1337)
   end)
 end
 
 T["check_nil_treesitter"] = function()
   expect.error(function()
-    kinds.find_kinds_treesitter(nil)
+    kinds.find_kinds(nil)
   end)
 end
 
 T["check_wrong_param_treesitter"] = function()
   expect.error(function()
-    kinds.find_kinds_treesitter("needs a buffer number as input")
+    kinds.find_kinds("needs a buffer number as input")
   end)
 end
 
