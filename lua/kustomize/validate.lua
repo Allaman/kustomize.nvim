@@ -43,9 +43,11 @@ M.validate = function()
     end
   end
   local out = M.run_validation(fileToValidate)
-  if out ~= nil then
-    local err_msg = table.concat(out, "\n")
+  local err_msg = table.concat(out, "\n")
+  if not utils.isempty(err_msg) then
     utils.error("Failed with: " .. err_msg)
+  else
+    utils.info("no issues found")
   end
   -- can create an empty file http://www.lua.org/manual/5.1/manual.html#pdf-os.tmpname
   -- TODO: error handlin?

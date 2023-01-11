@@ -1,11 +1,19 @@
 local M = {}
 
+M.info = function(msg)
+  vim.notify(msg, vim.log.levels.INFO, { title = "Kustomize.nvim" })
+end
+
 M.warn = function(msg)
   vim.notify(msg, vim.log.levels.WARN, { title = "Kustomize.nvim" })
 end
 
 M.error = function(msg)
   vim.notify(msg, vim.log.levels.ERROR, { title = "Kustomize.nvim" })
+end
+
+M.isempty = function(s)
+  return s == nil or s == ""
 end
 
 M.path_separator = function()
