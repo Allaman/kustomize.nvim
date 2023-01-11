@@ -35,6 +35,19 @@ M.create_output = function()
   return win, buf
 end
 
+M.is_treesitter_available = function(bufNr)
+  local ok, _ = pcall(require, "nvim-treesitter")
+  if not ok then
+    return false
+  end
+
+  local highlighter = require("vim.treesitter.highlighter")
+  if not highlighter.active[bufNr] then
+    return false
+  end
+  return true
+end
+
 M.check_exec = function(command)
   if vim.fn.executable(command) ~= 1 then
     return false

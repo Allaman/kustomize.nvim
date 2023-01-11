@@ -29,9 +29,13 @@ function M.setup()
 
   M.load("echasnovski/mini.nvim")
   M.load("nvim-lua/plenary.nvim")
+  M.load("nvim-treesitter/nvim-treesitter")
 
   -- Set up 'mini.test'
   require("mini.test").setup()
+  require("nvim-treesitter.configs").setup({})
+  require("nvim-treesitter.install").commands.TSInstall["run!"]("yaml")
+  vim.cmd([[sleep 2000m]]) -- TSInstall is non blocking...
 end
 
 M.setup()

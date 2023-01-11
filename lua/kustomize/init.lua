@@ -2,7 +2,6 @@ local M = {}
 
 local build = require("kustomize.build")
 local kinds = require("kustomize.kinds")
-local open = require("kustomize.open")
 local resources = require("kustomize.resources")
 local validate = require("kustomize.validate")
 
@@ -16,12 +15,12 @@ M.kinds = function()
   kinds.list()
 end
 
-M.open = function()
-  open.open()
+M.list_resources = function()
+  resources.list()
 end
 
-M.resources = function()
-  resources.resources()
+M.print_resources = function()
+  resources.print()
 end
 
 M.validate = function()
@@ -35,11 +34,11 @@ M.setDefaults = function()
   vim.keymap.set("n", "<leader>kk", function()
     M.kinds()
   end, { desc = "List kinds" })
-  vim.keymap.set("v", "<leader>ko", function()
-    M.open()
-  end, { desc = "Open" })
-  vim.keymap.set("n", "<leader>kr", function()
-    M.resources()
+  vim.keymap.set("n", "<leader>kl", function()
+    M.list_resources()
+  end, { desc = "List resources" })
+  vim.keymap.set("n", "<leader>kp", function()
+    M.print_resources()
   end, { desc = "Print resources in folder" })
   vim.keymap.set("n", "<leader>kv", function()
     M.validate()
