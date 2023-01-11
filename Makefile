@@ -3,3 +3,6 @@ help: ## Prints help for targets with comments
 
 test: ## Run tests
 	@nvim --headless --noplugin -u ./tests/init.lua -c "lua MiniTest.run()"
+
+clean: ## Delete .tests/ (test config for Neovim instance)
+	@rm -fr .tests
