@@ -1,5 +1,5 @@
 local new_set = MiniTest.new_set
-local expect, eq = MiniTest.expect, MiniTest.expect.equality
+local expect, eq, neq = MiniTest.expect, MiniTest.expect.equality, MiniTest.expect.no_equality
 
 local T = new_set()
 local utils = require("kustomize.utils")
@@ -35,6 +35,13 @@ T["should not find resources"] = function()
   local bufNr = create_buffer({ "" })
   local get = resources.get_resources(bufNr)
   eq({}, get)
+end
+
+T["build path of valid file"] = function()
+  vim.cmd("e tests/kustomize/test_data/build/pass/kustomzation.yaml")
+  local get = resources.build_paths("serviceaccount.yaml")
+  local match = string.find(get, "tests/kustomize/test_data/build/pass/serviceaccount.yaml")
+  neq(match, nil)
 end
 
 return T
