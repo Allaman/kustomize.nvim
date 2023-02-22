@@ -1,6 +1,8 @@
 local utils = require("kustomize.utils")
 local M = {}
 
+---configure buffer for output
+---@return integer
 local function configure_buffer()
   local win, buf = utils.create_output()
   vim.api.nvim_win_set_buf(win, buf)
@@ -10,6 +12,10 @@ local function configure_buffer()
   return buf
 end
 
+---run 'kustomize build' in the provided directory
+---@param dirName string
+---@return table
+---@return table
 M.kustomize_build = function(dirName)
   local Job = require("plenary.job")
   local job = Job:new({

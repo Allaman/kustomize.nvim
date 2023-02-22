@@ -4,7 +4,10 @@ local path = require("plenary.path")
 
 local M = {}
 
-function M.get_resources(bufNr)
+---find all items of a 'resources:' key in a YAML buffer
+---@param bufNr number
+---@return table
+function M.find_resources(bufNr)
   local q = require("vim.treesitter.query")
   local language_tree = vim.treesitter.get_parser(bufNr)
   local syntax_tree = language_tree:parse()
@@ -26,6 +29,7 @@ function M.get_resources(bufNr)
 ) @resource
 ]]
   )
+  ---@type table<string>
   local resources = {}
   for _, captures, _ in query:iter_matches(root, bufNr) do
     -- resource is second capture
@@ -48,7 +52,8 @@ M.list = function()
     utils.error("could not load nvim-treesitter")
     return
   end
-  local resources = M.get_resources(bufNr)
+  local resources = M.find_resources(bufNr)
+  ---@type table<{ filename: string }>
   local files = {}
   for _, r in ipairs(resources) do
     table.insert(files, { filename = M.build_paths(r) })
@@ -60,12 +65,17 @@ M.list = function()
   end
 end
 
+---create a quickfix list filled with items
+---@param items table
 M.set_list = function(items)
   -- TODO: option to configure loc list or qf list
   vim.fn.setqflist({}, " ", { title = "Kustomize", id = "$", items = items })
   vim.cmd.copen()
 end
 
+---creates an absolute path from a resource item
+---@param resource string
+---@return any
 M.build_paths = function(resource)
   local function join_paths(a, b)
     local file = path:new(a, b)
@@ -94,6 +104,7 @@ M.print = function()
   end
   local bufName = vim.api.nvim_buf_get_name(0)
   local fileName = vim.fs.basename(bufName)
+  ---@type table<string>
   local resourceList = {}
   if utils.is_kustomization_yaml(fileName) then
     local dirName = vim.fs.dirname(bufName)

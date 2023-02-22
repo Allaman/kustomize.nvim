@@ -27,13 +27,13 @@ end
 
 T["should find resources"] = function()
   local bufNr = create_buffer(test_data)
-  local get = resources.get_resources(bufNr)
+  local get = resources.find_resources(bufNr)
   eq(want, get)
 end
 
 T["should not find resources"] = function()
   local bufNr = create_buffer({ "" })
-  local get = resources.get_resources(bufNr)
+  local get = resources.find_resources(bufNr)
   eq({}, get)
 end
 

@@ -1,6 +1,9 @@
 local utils = require("kustomize.utils")
 local M = {}
 
+---find all 'kind:' keys in a YAML buffer
+---@param bufNr integer
+---@return table
 M.find_kinds = function(bufNr)
   local q = require("vim.treesitter.query")
 

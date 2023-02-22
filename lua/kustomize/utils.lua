@@ -1,21 +1,32 @@
 local M = {}
 
+---info notification
+---@param msg string
 M.info = function(msg)
   vim.notify(msg, vim.log.levels.INFO, { title = "Kustomize.nvim" })
 end
 
+---warning notification
+---@param msg string
 M.warn = function(msg)
   vim.notify(msg, vim.log.levels.WARN, { title = "Kustomize.nvim" })
 end
 
+---error notification
+---@param msg string
 M.error = function(msg)
   vim.notify(msg, vim.log.levels.ERROR, { title = "Kustomize.nvim" })
 end
 
+---checks if a string is empty
+---@param s string
+---@return boolean
 M.isempty = function(s)
   return s == nil or s == ""
 end
 
+---returns OS dependant path separator
+---@return string
 M.path_separator = function()
   local is_windows = vim.fn.has("win32") == 1 or vim.fn.has("unix") == 1
   if is_windows == true then
@@ -25,17 +36,26 @@ M.path_separator = function()
   end
 end
 
+---delete a buffer
+---@param win integer
+---@param buf integer
 M.delete_output = function(win, buf)
   vim.api.nvim_win_close(win, "force")
   vim.api.nvim_buf_delete(buf, { force = true })
 end
 
+---create keybinding for a buffer
+---@param win integer
+---@param buf integer
 M.delete_output_keybinding = function(win, buf)
   vim.keymap.set("n", "q", function()
     M.delete_output(win, buf)
   end, { buffer = buf })
 end
 
+---create a vsplit buffer in the current window
+---@return integer
+---@return integer
 M.create_output = function()
   vim.api.nvim_command("vsplit")
   local win = vim.api.nvim_get_current_win()
@@ -43,6 +63,9 @@ M.create_output = function()
   return win, buf
 end
 
+---checks if treesitter is available
+---@param bufNr integer
+---@return boolean
 M.is_treesitter_available = function(bufNr)
   local ok, _ = pcall(require, "nvim-treesitter")
   if not ok then
@@ -56,6 +79,9 @@ M.is_treesitter_available = function(bufNr)
   return true
 end
 
+---checks if a command is available on the host
+---@param command string
+---@return boolean
 M.check_exec = function(command)
   if vim.fn.executable(command) ~= 1 then
     return false
@@ -63,10 +89,16 @@ M.check_exec = function(command)
   return true
 end
 
+---checks if fileName is a Kustomization file
+---@param fileName string
+---@return boolean
 M.is_kustomization_yaml = function(fileName)
   return fileName == "kustomization.yaml" or fileName == "kustomization.yml"
 end
 
+---checks if a module is available
+---@param module string
+---@return boolean
 M.is_module_available = function(module)
   local ok = pcall(require, module)
   if not ok then

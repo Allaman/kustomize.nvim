@@ -2,6 +2,9 @@ local utils = require("kustomize.utils")
 local path = require("plenary.path")
 local M = {}
 
+---run 'kubeconform' on the input file
+---@param fileToValidate string
+---@return table
 M.run_validation = function(fileToValidate)
   local Job = require("plenary.job")
   local job = Job:new({
