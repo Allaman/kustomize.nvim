@@ -1,7 +1,7 @@
 local utils = require("kustomize.utils")
 local M = {}
 
----find all 'kind:' keys in a YAML buffer
+---find all 'kind:' keys and the according metadata.name value
 ---@param bufNr integer
 ---@return table
 M.find_kinds = function(bufNr)
@@ -18,20 +18,30 @@ M.find_kinds = function(bufNr)
 (document
 (block_node
 (block_mapping
-(block_mapping_pair key: (flow_node) @key_name value: (flow_node) @value_name) (#offset! @value_name))))
-  (#match? @key_name "kind")
-) @value_name
+(block_mapping_pair
+  key: (flow_node) @kind_key_name
+  value: (flow_node) @kind_value (#match? @kind_key_name "kind") )
+(block_mapping_pair
+  value: (block_node
+    (block_mapping
+      (block_mapping_pair
+        key: (flow_node) @key_name value: (flow_node) @name_value (#match? @key_name "name$"))))
+))))
+) @name_value @kind_value
 ]]
   )
   local kinds = {}
   -- https://alpha2phi.medium.com/neovim-101-tree-sitter-d8c5a714cb03
   for _, captures, _ in query:iter_matches(root, bufNr) do
     -- second return value is col
-    local row, _, _ = captures[1]:start()
-    -- value_name is second capture
-    table.insert(kinds, { q.get_node_text(captures[2], bufNr), row })
+    local row, _ = captures[1]:start()
+    -- captures[1] = "kind"
+    -- captures[2] = kind_value
+    -- captures[3] = "name"
+    -- captures[4] = name_value
+    table.insert(kinds, { q.get_node_text(captures[2], bufNr), q.get_node_text(captures[4], bufNr), row })
   end
-  return kinds -- { {"kind", line}, ... }
+  return kinds -- { {"kind", "name", line}, ... }
 end
 
 ---create a loclist filled with kinds
@@ -59,8 +69,8 @@ M.list = function()
   for _, kind in ipairs(kinds_list) do
     local item = {
       bufnr = bufNr,
-      lnum = kind[2],
-      text = kind[1],
+      lnum = kind[3],
+      text = kind[1] .. " - " .. kind[2],
     }
     table.insert(kinds, item)
   end
