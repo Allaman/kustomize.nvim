@@ -31,6 +31,12 @@ describe("utils.lua:", function()
   it("should load module fooo", function()
     assert(not utils.is_module_available("foo"))
   end)
+
+  it("should count table entries", function()
+    local want = 3
+    local get = utils.table_length({ "one", "two", "three" })
+    eq(want, get)
+  end)
 end)
 
 -- return T

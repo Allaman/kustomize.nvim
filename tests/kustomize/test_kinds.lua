@@ -23,7 +23,7 @@ local test_data = {
   "    app.kubernetes.io/name: deployment-test",
 }
 
-local want = { "Kustomization", "ServiceAccount" }
+local want = { { "Kustomization", 3 }, { "ServiceAccount", 10 } }
 
 local create_buffer = function(content)
   local _, bufNr = utils.create_output()

@@ -25,6 +25,17 @@ M.isempty = function(s)
   return s == nil or s == ""
 end
 
+---returns the number of items in a table
+---@param t table
+---@return integer
+M.table_length = function(t)
+  local count = 0
+  for _ in pairs(t) do
+    count = count + 1
+  end
+  return count
+end
+
 ---returns OS dependant path separator
 ---@return string
 M.path_separator = function()
