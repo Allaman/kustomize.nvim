@@ -34,6 +34,17 @@ With Packer:
   })
 ```
 
+With Lazy
+
+```lua
+{
+  "allaman/kustomize.nvim",
+  requires = "nvim-lua/plenary.nvim",
+  ft = "yaml",
+  opts = { defaults = true },
+}
+```
+
 ## Default mappings
 
 | Mode | Mapping      | Action           | Lua                                          | Command                    |
