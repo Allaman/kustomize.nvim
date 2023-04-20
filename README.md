@@ -88,7 +88,7 @@ You can define your own keybindings/override the default mappings:
 
 </details>
 
-If your buffer contains a `kustomization.yaml` this command will run `kustomize build . ` in the buffer's directory. The generated YAML will printed to a new buffer. The new buffer can be closed by just typing `q`.
+This command will run `kustomize build .` in the current buffer's directory. The generated YAML will printed to a new buffer. The new buffer can be closed by just typing `q`.
 This allows me to quickly inspect the YAML that Kustomize generates (and ultimately is applied to the cluster). In addition, I get fast feedback on any errors in my YAML sources.
 
 ### List "kinds"

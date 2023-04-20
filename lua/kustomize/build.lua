@@ -38,10 +38,6 @@ M.build = function()
     return
   end
   local bufName = vim.api.nvim_buf_get_name(0)
-  local fileName = vim.fs.basename(bufName)
-  if not utils.is_kustomization_yaml(fileName) then
-    utils.error("Buffer is not a kustomization.y(a)ml")
-  end
   local dirName = vim.fs.dirname(bufName)
   local err, manifest = M.kustomize_build(dirName)
   -- https://stackoverflow.com/questions/1252539/most-efficient-way-to-determine-if-a-lua-table-is-empty-contains-no-entries
