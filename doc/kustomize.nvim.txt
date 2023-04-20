@@ -1,4 +1,4 @@
-*kustomize.nvim.txt*       For Neovim >= 0.8.0      Last change: 2023 March 02
+*kustomize.nvim.txt*       For Neovim >= 0.9.0      Last change: 2023 April 20
 
 ==============================================================================
 Table of Contents                           *kustomize.nvim-table-of-contents*
@@ -16,6 +16,7 @@ the |kustomize.nvim-use-cases| to check out what this plugin can do!
 REQUIREMENTS                                     *kustomize.nvim-requirements*
 
 
+- Neovim >= 0.9
 - `kustomize` in your PATH to |kustomize.nvim-build-manifests|
 - kubeconform <https://github.com/yannh/kubeconform> in your PATH to |kustomize.nvim-validate-manifests|
 - plenary.nvim <https://github.com/nvim-lua/plenary.nvim>
@@ -96,12 +97,11 @@ USE CASES                                           *kustomize.nvim-use-cases*
 
 BUILD MANIFESTS ~
 
-ShowcaseIf your buffer contains a `kustomization.yaml` this command will run `kustomize
-build .` in the buffer’s directory. The generated YAML will printed to a new
-buffer. The new buffer can be closed by just typing `q`. This allows me to
-quickly inspect the YAML that Kustomize generates (and ultimately is applied to
-the cluster). In addition, I get fast feedback on any errors in my YAML
-sources.
+ShowcaseThis command will run `kustomize build .` in the current buffer’s directory.
+The generated YAML will printed to a new buffer. The new buffer can be closed
+by just typing `q`. This allows me to quickly inspect the YAML that Kustomize
+generates (and ultimately is applied to the cluster). In addition, I get fast
+feedback on any errors in my YAML sources.
 
 
 LIST “KINDS” ~
