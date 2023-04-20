@@ -22,7 +22,7 @@ jobs:
         run: |
           nvim --version
           [ ! -d tests ] && exit 0
-          curl -sLo /tmp/kubeconform.tar.gz https://github.com/yannh/kubeconform/releases/download/v0.5.0/kubeconform-linux-amd64.tar.gz
+          curl -sLo /tmp/kubeconform.tar.gz https://github.com/yannh/kubeconform/releases/download/v0.6.1/kubeconform-linux-amd64.tar.gz
           tar -xC /tmp -f /tmp/kubeconform.tar.gz
           mv /tmp/kubeconform /usr/local/bin/kubeconform
           nvim --headless --noplugin -u ./tests/init.lua -c "lua MiniTest.run()"
