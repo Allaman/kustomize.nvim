@@ -6,12 +6,13 @@ local M = {}
 ---@return table
 M.find_kinds = function(bufNr)
   local q = require("vim.treesitter.query")
+  local t = require("vim.treesitter")
 
   local language_tree = vim.treesitter.get_parser(bufNr)
   local syntax_tree = language_tree:parse()
   local root = syntax_tree[1]:root()
 
-  local query = vim.treesitter.parse_query(
+  local query = q.parse(
     "yaml",
     [[
 (
@@ -39,7 +40,7 @@ M.find_kinds = function(bufNr)
     -- captures[2] = kind_value
     -- captures[3] = "name"
     -- captures[4] = name_value
-    table.insert(kinds, { q.get_node_text(captures[2], bufNr), q.get_node_text(captures[4], bufNr), row })
+    table.insert(kinds, { t.get_node_text(captures[2], bufNr), t.get_node_text(captures[4], bufNr), row })
   end
   return kinds -- { {"kind", "name", line}, ... }
 end

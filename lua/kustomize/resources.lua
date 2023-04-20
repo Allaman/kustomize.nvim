@@ -9,11 +9,13 @@ local M = {}
 ---@return table
 function M.find_resources(bufNr)
   local q = require("vim.treesitter.query")
+  local t = require("vim.treesitter")
+
   local language_tree = vim.treesitter.get_parser(bufNr)
   local syntax_tree = language_tree:parse()
   local root = syntax_tree[1]:root()
 
-  local query = vim.treesitter.parse_query(
+  local query = q.parse(
     "yaml",
     [[
 (
@@ -33,7 +35,7 @@ function M.find_resources(bufNr)
   local resources = {}
   for _, captures, _ in query:iter_matches(root, bufNr) do
     -- resource is second capture
-    table.insert(resources, q.get_node_text(captures[2], bufNr))
+    table.insert(resources, t.get_node_text(captures[2], bufNr))
   end
   return resources
 end

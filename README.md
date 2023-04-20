@@ -12,6 +12,7 @@ Jump to the [use cases](#use-cases) to check out what this plugin can do!
 
 ## Requirements
 
+- Neovim >= 0.9
 - `kustomize` in your PATH to [build manifests](#build-manifests)
 - [kubeconform](https://github.com/yannh/kubeconform) in your PATH to [validate manifests](#validate-resources)
 - [plenary.nvim](https://github.com/nvim-lua/plenary.nvim)
