@@ -46,7 +46,7 @@ M.list = function()
   local fileName = vim.fs.basename(bufName)
 
   if not utils.is_kustomization_yaml(fileName) then
-    utils.error("buffer is not a kustomization.yaml")
+    utils.error("buffer is not a kustomization.y(a)ml")
     return
   end
 
