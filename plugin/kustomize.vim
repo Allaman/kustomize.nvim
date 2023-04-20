@@ -1,6 +1,6 @@
 " Title:        kustomize.nvim
 " Description:  A plugin providing some shortcuts for working with Kustomize
-" Last Change:  11 January 2023
+" Last Change:  21 April 2023
 " Maintainer:   Michael <https://github.com/allaman>
 
 " Prevents the plugin from being loaded multiple times. If the loaded
