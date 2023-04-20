@@ -13,11 +13,11 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
-      - name: Install Neovim
-        shell: bash
-        run: |
-          wget -q https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.deb -O /tmp/nvim.deb
-          sudo dpkg -i /tmp/nvim.deb
+      - name: Install Neovim Nightly
+        uses: rhysd/action-setup-vim@v1
+        with:
+          neovim: true
+          version: nightly
       - name: Run Tests
         run: |
           nvim --version
