@@ -31,15 +31,19 @@ M.setDefaults = function()
   vim.keymap.set("n", "<leader>kb", function()
     M.build()
   end, { desc = "Kustomize build" })
+
   vim.keymap.set("n", "<leader>kk", function()
     M.kinds()
   end, { desc = "List kinds" })
+
   vim.keymap.set("n", "<leader>kl", function()
     M.list_resources()
   end, { desc = "List resources" })
+
   vim.keymap.set("n", "<leader>kp", function()
     M.print_resources()
   end, { desc = "Print resources in folder" })
+
   vim.keymap.set("n", "<leader>kv", function()
     M.validate()
   end, { desc = "Validate manifests" })
