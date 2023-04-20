@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.0.0](https://github.com/Allaman/kustomize.nvim/compare/v3.1.0...v4.0.0) (2023-04-20)
+
+
+### ⚠ BREAKING CHANGES
+
+* update vim.treesitter API calls
+
+### Features
+
+* update vim.treesitter API calls ([861c8d5](https://github.com/Allaman/kustomize.nvim/commit/861c8d50256758d2a0aab9bf4aee40c41c5ebe96))
+
+
+### Bug Fixes
+
+* [#27](https://github.com/Allaman/kustomize.nvim/issues/27) ([acf920d](https://github.com/Allaman/kustomize.nvim/commit/acf920d8f7f06fef4d98b4a1f744308932335e82))
+* [#28](https://github.com/Allaman/kustomize.nvim/issues/28) ([42d9a69](https://github.com/Allaman/kustomize.nvim/commit/42d9a69ddcc5fa1a56c981ae9f2a89fb0eaddbc4))
+* test_validate ([8115789](https://github.com/Allaman/kustomize.nvim/commit/8115789890c7d774b37b17f123ffeb2bbb22dcc2))
+
 ## [3.1.0](https://github.com/Allaman/kustomize.nvim/compare/v3.0.0...v3.1.0) (2023-02-23)
 
 
