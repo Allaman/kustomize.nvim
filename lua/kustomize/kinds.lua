@@ -48,7 +48,6 @@ end
 ---create a loclist filled with kinds
 ---@param items table
 M.set_list = function(items)
-  utils.info("found " .. utils.table_length(items) .. " resources")
   vim.fn.setloclist(0, {}, " ", { title = "Kustomize", items = items })
   -- vim.cmd.lopen({ args = { '"5"' } }) not working
   vim.cmd("lopen 20")
@@ -75,7 +74,10 @@ M.list = function()
     }
     table.insert(kinds, item)
   end
-  M.set_list(kinds)
+  utils.info("found " .. utils.table_length(kinds) .. " resources")
+  if utils.table_length(kinds) > 0 then
+    M.set_list(kinds)
+  end
 end
 
 return M
