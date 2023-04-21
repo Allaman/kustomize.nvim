@@ -2,20 +2,24 @@ local utils = require("kustomize.utils")
 local path = require("plenary.path")
 local M = {}
 
----run 'kubeconform' on the input file
+---run 'kubeconform' command on the input file
+---@param config table
 ---@param fileToValidate string
 ---@return table
-M.run_validation = function(fileToValidate)
+M.run_validation = function(config, fileToValidate)
+  local base_args = config.options.validate.kubeconform_args
+  local args = { unpack(base_args) }
+  table.insert(args, fileToValidate)
   local Job = require("plenary.job")
   local job = Job:new({
     command = "kubeconform",
-    args = { "--ignore-missing-schemas", "--strict", fileToValidate },
+    args = args,
   })
   job:sync()
-  return job:result()
+  return job:stderr_result(), job:result()
 end
 
-M.validate = function()
+M.validate = function(config)
   -- TODO: move to init.lua?
   if not utils.is_module_available("plenary") then
     utils.error("Could not load https://github.com/nvim-lua/plenary.nvim")
@@ -45,11 +49,14 @@ M.validate = function()
       end
     end
   end
-  local out = M.run_validation(fileToValidate)
-  local err_msg = table.concat(out, "\n")
-  if not utils.isempty(err_msg) then
+  local err, out = M.run_validation(config, fileToValidate)
+  if next(err) ~= nil then
+    local err_msg = table.concat(err, "\n")
     utils.error("Failed with: " .. err_msg)
-  else
+  elseif next(out) ~= nil then
+    local out_msg = table.concat(out, "\n")
+    utils.info("Issue found: " .. out_msg)
+  elseif next(out) == nil then
     utils.info("no issues found")
   end
   -- can create an empty file http://www.lua.org/manual/5.1/manual.html#pdf-os.tmpname

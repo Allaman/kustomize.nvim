@@ -1,11 +1,11 @@
 local M = {}
 
+local config = require("kustomize.config")
+
 local build = require("kustomize.build")
 local kinds = require("kustomize.kinds")
 local resources = require("kustomize.resources")
 local validate = require("kustomize.validate")
-
-M.options = {}
 
 M.build = function()
   build.build()
@@ -24,10 +24,10 @@ M.print_resources = function()
 end
 
 M.validate = function()
-  validate.validate()
+  validate.validate(config)
 end
 
-M.setDefaults = function()
+M.set_default_mappings = function()
   vim.keymap.set("n", "<leader>kb", function()
     M.build()
   end, { desc = "Kustomize build" })
@@ -49,11 +49,14 @@ M.setDefaults = function()
   end, { desc = "Validate manifests" })
 end
 
-M.setup = function(options)
-  if options.defaults then
-    --- if options.defaults = true then set default configurations for user
-    --- if options.defaults = false then user must set their own configurations
-    M.setDefaults()
+M.setup = function(opts)
+  -- Overwrite default config with user-supplied options
+  for key, value in pairs(opts) do
+    config.options[key] = value
+  end
+
+  if config.options.enable_key_mappings then
+    M.set_default_mappings()
   end
 end
 

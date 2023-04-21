@@ -4,6 +4,7 @@
   <p>
     <img src="https://img.shields.io/badge/NeoVim-%2357A143.svg?&style=for-the-badge&logo=neovim&logoColor=white" alt="Neovim"/>
     <img src="https://img.shields.io/badge/lua-%232C2D72.svg?style=for-the-badge&logo=lua&logoColor=white" alt="Lua"/>
+    <img src="https://github.com/Allaman/kustomize.nvim/actions/workflows/ci.yml/badge.svg" alt="CI"/>
   </p>
 </div>
 
@@ -42,7 +43,7 @@ With Lazy
   "allaman/kustomize.nvim",
   requires = "nvim-lua/plenary.nvim",
   ft = "yaml",
-  opts = { defaults = true },
+  config = true,
 }
 ```
 
@@ -63,10 +64,9 @@ You can define your own keybindings/override the default mappings:
     "allaman/kustomize.nvim",
     requires = "nvim-lua/plenary.nvim",
     ft = "yaml",
-    config = function()
-      require('kustomize').setup({
-        defaults = false
-      })
+    opts = { enable_key_mappings = false },
+    config = function(opts)
+      require('kustomize').setup({opts})
       -- default keybindings, adjust to your needs
       vim.keymap.set("n", "<leader>kb", "<cmd>lua require('kustomize').build()<cr>", { noremap = true })
       vim.keymap.set("n", "<leader>kk", "<cmd>lua require('kustomize').kinds()<cr>", { noremap = true })
@@ -75,6 +75,23 @@ You can define your own keybindings/override the default mappings:
       vim.keymap.set("n", "<leader>kv", "<cmd>lua require('kustomize').validate()<cr>", { noremap = true })
     end,
   })
+```
+
+## Default configuration
+
+This is the default configuration that can be (partially) overwritten by you.
+
+```lua
+{
+    enable_key_mappings = true,
+    validate = { kubeconform_args = { "--strict", "--ignore-missing-schemas" } }
+}
+```
+
+With Lazy.nvim for instance:
+
+```lua
+  opts = { validate = { kubeconform_args = { "--strict" } } },
 ```
 
 ## Use cases
