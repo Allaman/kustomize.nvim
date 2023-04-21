@@ -7,6 +7,11 @@
     <img src="https://github.com/Allaman/kustomize.nvim/actions/workflows/ci.yml/badge.svg" alt="CI"/>
   </p>
 </div>
+<div align="center">
+  <p>
+    <img src="https://github.com/Allaman/kustomize.nvim/actions/workflows/ci.yml/badge.svg" alt="CI"/>
+  </p>
+</div>
 
 I work a lot with [Kustomize](https://kustomize.io/) and I love Neovim. So why not write a plugin for some tasks for that I usually switch to a shell.
 Jump to the [use cases](#use-cases) to check out what this plugin can do!
