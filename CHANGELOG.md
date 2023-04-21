@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.1.0](https://github.com/Allaman/kustomize.nvim/compare/v4.0.0...v4.1.0) (2023-04-21)
+
+
+### Features
+
+* introduce config table [#8](https://github.com/Allaman/kustomize.nvim/issues/8) and enhance kubeconform output ([44a458c](https://github.com/Allaman/kustomize.nvim/commit/44a458cd869c044d25804049f8c2a6a1e652e3ec))
+
 ## [4.0.0](https://github.com/Allaman/kustomize.nvim/compare/v3.1.0...v4.0.0) (2023-04-20)
 
 
