@@ -9,6 +9,7 @@ Table of Contents                           *kustomize.nvim-table-of-contents*
   - Default configuration               |kustomize.nvim-default-configuration|
   - Use cases                                       |kustomize.nvim-use-cases|
 kustomize.nvim
+
 I work a lot with Kustomize <https://kustomize.io/> and I love Neovim. So why
 not write a plugin for some tasks for that I usually switch to a shell. Jump to
 the |kustomize.nvim-use-cases| to check out what this plugin can do!
