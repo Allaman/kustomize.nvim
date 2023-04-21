@@ -33,9 +33,7 @@ With Packer:
     requires = "nvim-lua/plenary.nvim",
     ft = "yaml",
     config = function()
-      require('kustomize').setup({
-        defaults = true
-      })
+      require('kustomize').setup()
     end,
   })
 ```
