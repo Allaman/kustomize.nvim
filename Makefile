@@ -4,5 +4,13 @@ help: ## Prints help for targets with comments
 test: ## Run tests
 	@nvim --headless --noplugin -u ./tests/init.lua -c "lua MiniTest.run()"
 
+gif: ## Create gifs
+	vhs ./doc/tapes/kustomize.nvim-build.tape
+	vhs ./doc/tapes/kustomize.nvim-deprecations.tape
+	vhs ./doc/tapes/kustomize.nvim-kinds.tape
+	vhs ./doc/tapes/kustomize.nvim-open.tape
+	vhs ./doc/tapes/kustomize.nvim-print.tape
+	vhs ./doc/tapes/kustomize.nvim-validate.tape
+
 clean: ## Delete .tests/ (test config for Neovim instance)
 	@rm -fr .tests
