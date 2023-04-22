@@ -6,6 +6,7 @@ local build = require("kustomize.build")
 local kinds = require("kustomize.kinds")
 local resources = require("kustomize.resources")
 local validate = require("kustomize.validate")
+local deprecations = require("kustomize.deprecations")
 
 M.build = function()
   build.build()
@@ -25,6 +26,10 @@ end
 
 M.validate = function()
   validate.validate(config)
+end
+
+M.deprecations = function()
+  deprecations.check(config)
 end
 
 M.set_default_mappings = function()
@@ -47,6 +52,10 @@ M.set_default_mappings = function()
   vim.keymap.set("n", "<leader>kv", function()
     M.validate()
   end, { desc = "Validate manifests" })
+
+  vim.keymap.set("n", "<leader>kd", function()
+    M.deprecations()
+  end, { desc = "Check for deprecations" })
 end
 
 M.setup = function(opts)

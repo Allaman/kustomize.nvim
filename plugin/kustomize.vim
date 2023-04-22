@@ -1,6 +1,6 @@
 " Title:        kustomize.nvim
 " Description:  A plugin providing some shortcuts for working with Kustomize
-" Last Change:  21 April 2023
+" Last Change:  22 April 2023
 " Maintainer:   Michael <https://github.com/allaman>
 
 " Prevents the plugin from being loaded multiple times. If the loaded
@@ -17,3 +17,4 @@ command! -nargs=0 KustomizeListKinds lua require("kustomize").kinds()
 command! -nargs=0 KustomizeListResources lua require("kustomize").list_resources()
 command! -nargs=0 KustomizePrintResources lua require("kustomize").print_resources()
 command! -nargs=0 KustomizeValidate lua require("kustomize").validate()
+command! -nargs=0 KustomizeDeprecations lua require("kustomize").deprecations()
