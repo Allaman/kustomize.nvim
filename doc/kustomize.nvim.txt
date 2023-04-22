@@ -1,4 +1,4 @@
-*kustomize.nvim.txt*       For Neovim >= 0.9.0      Last change: 2023 April 21
+*kustomize.nvim.txt*       For Neovim >= 0.9.0      Last change: 2023 April 22
 
 ==============================================================================
 Table of Contents                           *kustomize.nvim-table-of-contents*
@@ -21,6 +21,7 @@ REQUIREMENTS                                     *kustomize.nvim-requirements*
 - Neovim >= 0.9
 - `kustomize` in your PATH to |kustomize.nvim-build-manifests|
 - kubeconform <https://github.com/yannh/kubeconform> in your PATH to |kustomize.nvim-validate-manifests|
+- kubent <https://github.com/doitintl/kube-no-trouble> in your PATH to |kustomize.nvim-check-for-deprecations|
 - plenary.nvim <https://github.com/nvim-lua/plenary.nvim>
 - nvim-treesitter <https://github.com/nvim-treesitter/nvim-treesitter> and `yaml` parser
 
@@ -54,22 +55,25 @@ With Lazy
 
 DEFAULT MAPPINGS                             *kustomize.nvim-default-mappings*
 
-  ---------------------------------------------------------------------------------------------------------
-  Mode   Mapping      Action        Lua                                          Command
-  ------ ------------ ------------- -------------------------------------------- --------------------------
-  n      <leader>kb   Kustomize     lua require("kustomize").build()             :KustomizeBuild
-                      build                                                      
+  ----------------------------------------------------------------------------------------------------------
+  Mode   Mapping      Action         Lua                                          Command
+  ------ ------------ -------------- -------------------------------------------- --------------------------
+  n      <leader>kb   Kustomize      lua require("kustomize").build()             :KustomizeBuild
+                      build                                                       
 
-  n      <leader>kk   List kinds    lua require("kustomize").kinds()             :KustomizeListKinds
+  n      <leader>kk   List kinds     lua require("kustomize").kinds()             :KustomizeListKinds
 
-  n      <leader>kr   Print         lua require("kustomize").print_resources()   :KustomizePrintResources
-                      resources                                                  
+  n      <leader>kr   Print          lua require("kustomize").print_resources()   :KustomizePrintResources
+                      resources                                                   
 
-  n      <leader>ko   List          lua require("kustomize").list_resources()    :KustomizeListResources
-                      ‘resources’                                                
+  n      <leader>ko   List           lua require("kustomize").list_resources()    :KustomizeListResources
+                      ‘resources’                                                 
 
-  n      <leader>kv   Validate file lua require("kustomize").validate()          :KustomizeValidate
-  ---------------------------------------------------------------------------------------------------------
+  n      <leader>kv   Validate file  lua require("kustomize").validate()          :KustomizeValidate
+
+  n      <leader>kd   Check API      lua require("kustomize").deprecations()      :KustomizeDeprecations
+                      deprecations                                                
+  ----------------------------------------------------------------------------------------------------------
 You can define your own keybindings/override the default mappings:
 
 >lua
@@ -86,6 +90,7 @@ You can define your own keybindings/override the default mappings:
           vim.keymap.set("n", "<leader>kl", "<cmd>lua require('kustomize').list_resources()<cr>", { noremap = true })
           vim.keymap.set("n", "<leader>kp", "<cmd>lua require('kustomize').print_resources()<cr>", { noremap = true })
           vim.keymap.set("n", "<leader>kv", "<cmd>lua require('kustomize').validate()<cr>", { noremap = true })
+          vim.keymap.set("n", "<leader>kd", "<cmd>lua require('kustomize').deprecations()<cr>", { noremap = true })
         end,
       })
 <
@@ -99,6 +104,7 @@ This is the default configuration that can be (partially) overwritten by you.
     {
         enable_key_mappings = true,
         validate = { kubeconform_args = { "--strict", "--ignore-missing-schemas" } }
+        deprecations = { kube_version = "1.25" }
     }
 <
 
@@ -165,6 +171,16 @@ validator that can detect a misconfiguration before you apply your manifests to
 your cluster. This command runs `kubeconform --strict --ignore-missing-schemas`
 on the current buffer. The buffer’s content may be a file on disk or content
 not (yet) saved, e.g. the output of |kustomize.nvim-build-manifests|.
+
+
+CHECK FOR DEPRECATIONS ~
+
+Showcasekubent <https://github.com/doitintl/kube-no-trouble> is a tool to search for
+deprecated Kubernetes APIs. This plugins utilizes the plugin to check the
+manifests in the current buffer for deprecated Kubernetes APIs. The buffer’s
+content may be a file on disk or content not (yet) saved, e.g. the output of
+|kustomize.nvim-build-manifests|. The Kubernetes target version can be set with
+`deprecations = { kube_version = "1.25" }`.
 
 Generated by panvimdoc <https://github.com/kdheepak/panvimdoc>
 
