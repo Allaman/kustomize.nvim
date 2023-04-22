@@ -25,6 +25,9 @@ jobs:
           curl -sLo /tmp/kubeconform.tar.gz https://github.com/yannh/kubeconform/releases/download/v0.6.1/kubeconform-linux-amd64.tar.gz
           tar -xC /tmp -f /tmp/kubeconform.tar.gz
           mv /tmp/kubeconform /usr/local/bin/kubeconform
+          curl -sLo /tmp/kubent.tar.gz https://github.com/doitintl/kube-no-trouble/releases/download/0.7.0/kubent-0.7.0-linux-amd64.tar.gz
+          tar -xC /tmp -f /tmp/kubent.tar.gz
+          mv /tmp/kubent /usr/local/bin/kubent
           nvim --headless --noplugin -u ./tests/init.lua -c "lua MiniTest.run()"
   docs:
     runs-on: ubuntu-latest
