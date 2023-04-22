@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.2.0](https://github.com/Allaman/kustomize.nvim/compare/v4.1.0...v4.2.0) (2023-04-22)
+
+
+### Features
+
+* add KustomizeDeprecations command [#26](https://github.com/Allaman/kustomize.nvim/issues/26) ([1227725](https://github.com/Allaman/kustomize.nvim/commit/1227725150150fc90b25acaf573fbfd8f3dc6d57))
+
+
+### Bug Fixes
+
+* use utils.warn if validation finds an issue ([75370b1](https://github.com/Allaman/kustomize.nvim/commit/75370b14c9bb6ae85c2dc29258cdbec50766d259))
+
 ## [4.1.0](https://github.com/Allaman/kustomize.nvim/compare/v4.0.0...v4.1.0) (2023-04-21)
 
 
