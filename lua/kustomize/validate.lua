@@ -55,7 +55,7 @@ M.validate = function(config)
     utils.error("Failed with: " .. err_msg)
   elseif next(out) ~= nil then
     local out_msg = table.concat(out, "\n")
-    utils.info("Issue found: " .. out_msg)
+    utils.warn("Issue found: " .. out_msg)
   elseif next(out) == nil then
     utils.info("no issues found")
   end
