@@ -9,6 +9,11 @@
 <div align="center">
   <p>
     <img src="https://github.com/Allaman/kustomize.nvim/actions/workflows/ci.yml/badge.svg" alt="CI"/>
+    <img src="https://img.shields.io/github/repo-size/Allaman/kustomize" alt="size"/>
+    <img src="https://img.shields.io/github/issues/Allaman/kustomize.nvim.svg" alt="issues"/>
+    <img src="https://img.shields.io/github/last-commit/Allaman/kustomize.nvim" alt="last commit"/>
+    <img src="https://img.shields.io/github/license/Allaman/kustomize.nvim" alt="license"/>
+    <img src="https://img.shields.io/github/v/release/Allaman/kustomize.nvim?sort=semver" alt="release"/>
   </p>
 </div>
 
