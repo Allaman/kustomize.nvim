@@ -10,7 +10,7 @@ local test_data = {
   "apiVersion: kustomize.config.k8s.io/v1beta1",
   "kind: Kustomization",
   "commonLabels:",
-  "  app.kubernetes.io/name: deployment-test",
+  "  app.kubernetes.io/part-of: test",
   "resources:",
   "  - deployment.yaml",
   "---",
@@ -23,7 +23,7 @@ local test_data = {
   "    app.kubernetes.io/name: deployment-test",
 }
 
-local want = { { "Kustomization", "deployment-test", 3 }, { "ServiceAccount", "test", 10 } }
+local want = { { "Kustomization", "Kustomization", 3 }, { "ServiceAccount", "test", 10 } }
 
 local create_buffer = function(content)
   local _, bufNr = utils.create_output()

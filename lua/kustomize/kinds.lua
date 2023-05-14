@@ -12,6 +12,8 @@ M.find_kinds = function(bufNr)
   local syntax_tree = language_tree:parse()
   local root = syntax_tree[1]:root()
 
+  -- the "?" in line 16 leads to a match, even if a match for the second "block_mapping_pair" can not be found
+  -- e.g. in the case of "Kustomization" resources, where no "name" key is specified
   local query = q.parse(
     "yaml",
     [[
@@ -26,7 +28,7 @@ M.find_kinds = function(bufNr)
   value: (block_node
     (block_mapping
       (block_mapping_pair
-        key: (flow_node) @key_name value: (flow_node) @name_value (#match? @key_name "name$"))))
+        key: (flow_node) @key_name value: (flow_node) @name_value (#match? @key_name "name$"))))?
 ))))
 ) @name_value @kind_value
 ]]
@@ -36,11 +38,17 @@ M.find_kinds = function(bufNr)
   for _, captures, _ in query:iter_matches(root, bufNr) do
     -- second return value is col
     local row, _ = captures[1]:start()
+    local kind = t.get_node_text(captures[2], bufNr)
+    local kind_name = t.get_node_text(captures[4], bufNr)
     -- captures[1] = "kind"
     -- captures[2] = kind_value
     -- captures[3] = "name"
     -- captures[4] = name_value
-    table.insert(kinds, { t.get_node_text(captures[2], bufNr), t.get_node_text(captures[4], bufNr), row })
+    if string.find(kind, "Kustomization") then
+      -- Resources of kind "Kustomization" do not have a "name" key
+      kind_name = "Kustomization"
+    end
+    table.insert(kinds, { kind, kind_name, row })
   end
   return kinds -- { {"kind", "name", line}, ... }
 end
