@@ -8,22 +8,24 @@ local kinds = require("kustomize.kinds")
 local test_data = {
   "---",
   "apiVersion: kustomize.config.k8s.io/v1beta1",
-  "kind: Kustomization",
-  "commonLabels:",
-  "  app.kubernetes.io/part-of: test",
-  "resources:",
-  "  - deployment.yaml",
-  "---",
-  "apiVersion: kustomize.config.k8s.io/v1beta1",
   "kind: ServiceAccount",
   "metadata:",
   "  name: test",
   "  kind: ShouldNotMatch",
   "  labels:",
   "    app.kubernetes.io/name: deployment-test",
+  "---",
+  "apiVersion: kustomize.config.k8s.io/v1beta1",
+  "kind: Kustomization",
+  "commonLabels:",
+  "  app.kubernetes.io/name: ShouldNotMatch",
+  "resources:",
+  "  - deployment.yaml",
 }
 
-local want = { { "Kustomization", "Kustomization", 3 }, { "ServiceAccount", "test", 10 } }
+local want = {
+  { "ServiceAccount", "test", 3 },
+}
 
 local create_buffer = function(content)
   local _, bufNr = utils.create_output()

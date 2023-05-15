@@ -25,10 +25,12 @@ M.find_kinds = function(bufNr)
   key: (flow_node) @kind_key_name
   value: (flow_node) @kind_value (#match? @kind_key_name "kind") )
 (block_mapping_pair
+  key: (flow_node) @metadata (#match? @metadata "metadata")
   value: (block_node
     (block_mapping
       (block_mapping_pair
-        key: (flow_node) @key_name value: (flow_node) @name_value (#match? @key_name "name$"))))?
+        key: (flow_node) @key_name
+        value: (flow_node) @name_value (#match? @key_name "name$"))))
 ))))
 ) @name_value @kind_value
 ]]
@@ -39,15 +41,12 @@ M.find_kinds = function(bufNr)
     -- second return value is col
     local row, _ = captures[1]:start()
     local kind = t.get_node_text(captures[2], bufNr)
-    local kind_name = t.get_node_text(captures[4], bufNr)
+    local kind_name = t.get_node_text(captures[5], bufNr)
     -- captures[1] = "kind"
     -- captures[2] = kind_value
     -- captures[3] = "name"
-    -- captures[4] = name_value
-    if string.find(kind, "Kustomization") then
-      -- Resources of kind "Kustomization" do not have a "name" key
-      kind_name = "Kustomization"
-    end
+    -- captures[4] = "metadata"
+    -- captures[5] = name_value
     table.insert(kinds, { kind, kind_name, row })
   end
   return kinds -- { {"kind", "name", line}, ... }
