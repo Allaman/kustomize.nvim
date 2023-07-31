@@ -1,4 +1,4 @@
-*kustomize.nvim.txt*        For Neovim >= 0.9.0       Last change: 2023 May 15
+*kustomize.nvim.txt*       For Neovim >= 0.9.0       Last change: 2023 July 31
 
 ==============================================================================
 Table of Contents                           *kustomize.nvim-table-of-contents*
@@ -49,6 +49,8 @@ With Lazy
       ft = "yaml",
       config = true,
     }
+    
+    Run `:checkhealth kustomize` for a health check.
 <
 
 
