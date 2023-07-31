@@ -53,6 +53,8 @@ With Lazy
   ft = "yaml",
   config = true,
 }
+
+Run `:checkhealth kustomize` for a health check.
 ```
 
 ## Default mappings

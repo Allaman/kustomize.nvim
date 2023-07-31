@@ -118,4 +118,19 @@ M.is_module_available = function(module)
   return true
 end
 
+--- Check if the minimum Neovim version is satisfied
+--- Expects only the minor version, e.g. "9" for 0.9.1
+---@param version number
+---@return boolean
+M.is_neovim_version_satisfied = function(version)
+  return version <= tonumber(vim.version().minor)
+end
+
+---checks if a command is available
+---@param command string
+---@return boolean
+M.is_executable_available = function(command)
+  return vim.fn.executable(command) == 1
+end
+
 return M
