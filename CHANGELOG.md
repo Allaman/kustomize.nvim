@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.3.0](https://github.com/Allaman/kustomize.nvim/compare/v4.2.2...v4.3.0) (2023-07-31)
+
+
+### Features
+
+* Add checkhealth [#35](https://github.com/Allaman/kustomize.nvim/issues/35) ([fd5efb2](https://github.com/Allaman/kustomize.nvim/commit/fd5efb2e7ec65dd708a422bdd02fd48d00d75533))
+
 ## [4.2.2](https://github.com/Allaman/kustomize.nvim/compare/v4.2.1...v4.2.2) (2023-05-15)
 
 
