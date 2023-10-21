@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.4.0](https://github.com/Allaman/kustomize.nvim/compare/v4.3.0...v4.4.0) (2023-10-21)
+
+
+### Features
+
+* Add namespace to list kinds ([7a88d4c](https://github.com/Allaman/kustomize.nvim/commit/7a88d4c36902ddb153bf0d11f082c10406e470d9))
+
+
+### Bug Fixes
+
+* path separator ([cb8726f](https://github.com/Allaman/kustomize.nvim/commit/cb8726fc0effdcf28711c9024a0f853e2323d997))
+
 ## [4.3.0](https://github.com/Allaman/kustomize.nvim/compare/v4.2.2...v4.3.0) (2023-07-31)
 
 
