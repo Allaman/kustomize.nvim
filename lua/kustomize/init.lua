@@ -13,7 +13,7 @@ M.build = function()
 end
 
 M.kinds = function()
-  kinds.list()
+  kinds.list(config)
 end
 
 M.list_resources = function()

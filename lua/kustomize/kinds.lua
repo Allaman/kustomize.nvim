@@ -12,9 +12,7 @@ M.find_kinds = function(bufNr)
   local syntax_tree = language_tree:parse()
   local root = syntax_tree[1]:root()
 
-  -- the "?" in line 16 leads to a match, even if a match for the second "block_mapping_pair" can not be found
-  -- e.g. in the case of "Kustomization" resources, where no "name" key is specified
-  local query = q.parse(
+  local query_without_namespace = q.parse(
     "yaml",
     [[
 (
@@ -35,21 +33,67 @@ M.find_kinds = function(bufNr)
 ) @name_value @kind_value
 ]]
   )
+
+  local query_with_namespace = q.parse(
+    "yaml",
+    [[
+(
+(document
+(block_node
+(block_mapping
+(block_mapping_pair
+  key: (flow_node) @kind_key_name
+  value: (flow_node) @kind_value (#match? @kind_key_name "kind") )
+(block_mapping_pair
+  key: (flow_node) @metadata (#match? @metadata "metadata")
+  value: (block_node
+    (block_mapping
+      (block_mapping_pair
+        key: (flow_node) @name_key_name
+        value: (flow_node) @name_value (#match? @name_key_name "name$"))
+      (block_mapping_pair
+        key: (flow_node) @namespace_key_name
+        value: (flow_node) @namespace_value (#match? @namespace_key_name "namespace"))
+      )
+    )
+))))
+) @name_value @kind_value @namespace_value
+]]
+  )
+
   local kinds = {}
-  -- https://alpha2phi.medium.com/neovim-101-tree-sitter-d8c5a714cb03
-  for _, captures, _ in query:iter_matches(root, bufNr) do
-    -- second return value is col
+  local matched_rows = {} -- Track the rows that have been matched
+  local unsorted_matches = {} -- Temporarily store matches here
+
+  -- Iterate over the first query matches
+  for _, captures, _ in query_with_namespace:iter_matches(root, bufNr) do
     local row, _ = captures[1]:start()
     local kind = t.get_node_text(captures[2], bufNr)
     local kind_name = t.get_node_text(captures[5], bufNr)
-    -- captures[1] = "kind"
-    -- captures[2] = kind_value
-    -- captures[3] = "name"
-    -- captures[4] = "metadata"
-    -- captures[5] = name_value
-    table.insert(kinds, { kind, kind_name, row })
+    local namespace = t.get_node_text(captures[7], bufNr)
+    table.insert(unsorted_matches, { kind, kind_name, namespace, row })
+    matched_rows[row] = true
   end
-  return kinds -- { {"kind", "name", line}, ... }
+
+  -- Iterate over the second query matches
+  for _, captures, _ in query_without_namespace:iter_matches(root, bufNr) do
+    local row, _ = captures[1]:start()
+    if not matched_rows[row] then -- Only process if row hasn't been matched already
+      local kind = t.get_node_text(captures[2], bufNr)
+      local kind_name = t.get_node_text(captures[5], bufNr)
+      table.insert(unsorted_matches, { kind, kind_name, "", row }) -- Empty namespace
+    end
+  end
+
+  -- Sort the matches by row number and populate the 'kinds' table
+  table.sort(unsorted_matches, function(a, b)
+    return a[4] < b[4]
+  end)
+  for _, match in ipairs(unsorted_matches) do
+    table.insert(kinds, match)
+  end
+
+  return kinds -- { {"kind", "name", "namespace", line}, ... }
 end
 
 ---create a loclist filled with kinds
@@ -60,7 +104,9 @@ M.set_list = function(items)
   vim.cmd("lopen 20")
 end
 
-M.list = function()
+M.list = function(config)
+  local show_filepath = config.options.kinds.show_filepath
+  local show_line = config.options.kinds.show_line
   local bufNr = vim.api.nvim_win_get_buf(0)
   local ft = vim.api.nvim_buf_get_option(bufNr, "ft")
   if ft ~= "yaml" then
@@ -76,9 +122,18 @@ M.list = function()
   for _, kind in ipairs(kinds_list) do
     local item = {
       bufnr = bufNr,
-      lnum = kind[3],
+      lnum = kind[4],
       text = kind[1] .. " - " .. kind[2],
     }
+    if kind[3] ~= "" then
+      item.text = item.text .. " - " .. kind[3]
+    end
+    if not show_filepath then
+      item.bufnr = ""
+    end
+    if not show_line then
+      item.lnum = 0
+    end
     table.insert(kinds, item)
   end
   utils.info("found " .. utils.table_length(kinds) .. " resources")

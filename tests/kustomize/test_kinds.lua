@@ -16,6 +16,15 @@ local test_data = {
   "    app.kubernetes.io/name: deployment-test",
   "---",
   "apiVersion: kustomize.config.k8s.io/v1beta1",
+  "kind: ServiceAccount",
+  "metadata:",
+  "  name: test",
+  "  namespace: foo",
+  "  kind: ShouldNotMatch",
+  "  labels:",
+  "    app.kubernetes.io/name: deployment-test",
+  "---",
+  "apiVersion: kustomize.config.k8s.io/v1beta1",
   "kind: Kustomization",
   "commonLabels:",
   "  app.kubernetes.io/name: ShouldNotMatch",
@@ -24,7 +33,8 @@ local test_data = {
 }
 
 local want = {
-  { "ServiceAccount", "test", 3 },
+  { "ServiceAccount", "test", "", 3 },
+  { "ServiceAccount", "test", "foo", 11 },
 }
 
 local create_buffer = function(content)
