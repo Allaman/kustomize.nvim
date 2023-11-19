@@ -5,7 +5,7 @@ local M = {}
 ---run 'kubeconform' command on the input file
 ---@param config table
 ---@param fileToValidate string
----@return table
+---@return table, table
 M.run_validation = function(config, fileToValidate)
   local base_args = config.options.validate.kubeconform_args
   local args = { unpack(base_args) }
