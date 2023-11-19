@@ -9,12 +9,12 @@ local want = {
 
 describe("validate", function()
   it("valid Kubernetes deployment", function()
-    local err, out = validate.run_validation(config, "tests/kustomize/test_data/validate/pass.yaml")
+    local _, out = validate.run_validation(config, "tests/kustomize/test_data/validate/pass.yaml")
     eq(out, {})
   end)
 
   it("invalid Kubernetes deployment", function()
-    local err, out = validate.run_validation(config, "tests/kustomize/test_data/validate/fail.yaml")
+    local _, out = validate.run_validation(config, "tests/kustomize/test_data/validate/fail.yaml")
     eq(out, want)
   end)
 end)
