@@ -108,11 +108,6 @@ M.list = function(config)
   local show_filepath = config.options.kinds.show_filepath
   local show_line = config.options.kinds.show_line
   local bufNr = vim.api.nvim_win_get_buf(0)
-  local ft = vim.api.nvim_buf_get_option(bufNr, "ft")
-  if ft ~= "yaml" then
-    utils.error("Expecting yaml file")
-    return
-  end
   if not utils.is_treesitter_available(bufNr) then
     utils.error("cannot load nvim-treesitter")
     return
