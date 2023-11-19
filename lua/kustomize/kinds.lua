@@ -102,6 +102,9 @@ M.set_list = function(items)
   vim.fn.setloclist(0, {}, " ", { title = "Kustomize", items = items })
   -- vim.cmd.lopen({ args = { '"5"' } }) not working
   vim.cmd("lopen 20")
+  if utils.is_module_available("telescope") then
+    vim.api.nvim_set_keymap("n", "<leader>kt", "<cmd>Telescope loclist<cr>", { desc = "Telescope loclist" })
+  end
 end
 
 M.list = function(config)
