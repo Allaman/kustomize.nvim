@@ -66,7 +66,7 @@ M.find_kinds = function(bufNr)
   local unsorted_matches = {} -- Temporarily store matches here
 
   -- Iterate over the first query matches
-  for _, captures, _ in query_with_namespace:iter_matches(root, bufNr) do
+  for _, captures, _ in query_with_namespace:iter_matches(root, bufNr, 0, 0, {}) do
     local row, _ = captures[1]:start()
     local kind = t.get_node_text(captures[2], bufNr)
     local kind_name = t.get_node_text(captures[5], bufNr)
@@ -76,7 +76,7 @@ M.find_kinds = function(bufNr)
   end
 
   -- Iterate over the second query matches
-  for _, captures, _ in query_without_namespace:iter_matches(root, bufNr) do
+  for _, captures, _ in query_without_namespace:iter_matches(root, bufNr, 0, 0, {}) do
     local row, _ = captures[1]:start()
     if not matched_rows[row] then -- Only process if row hasn't been matched already
       local kind = t.get_node_text(captures[2], bufNr)
