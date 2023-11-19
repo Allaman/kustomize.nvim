@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.5.0](https://github.com/Allaman/kustomize.nvim/compare/v4.4.0...v4.5.0) (2023-11-19)
+
+
+### Features
+
+* **kinds:** Add telescope loclist keybinding ([bc8e8cd](https://github.com/Allaman/kustomize.nvim/commit/bc8e8cd09e6fb91d5902b26a17cfd6eee1fe331d))
+
+
+### Bug Fixes
+
+* docstring with correct values ([4ea8047](https://github.com/Allaman/kustomize.nvim/commit/4ea80479cc32bf4e16f559ccbf4bb79a9a3f96db))
+* Remove unnecassary ft check ([a0b3ed9](https://github.com/Allaman/kustomize.nvim/commit/a0b3ed9ef4b4fa4ee8aa4e64e13b889ffc349ad6))
+* set default values in iter_matches ([a84ab1b](https://github.com/Allaman/kustomize.nvim/commit/a84ab1baed7a94e4a5a6282c594aaf8eb758554a))
+
 ## [4.4.0](https://github.com/Allaman/kustomize.nvim/compare/v4.3.0...v4.4.0) (2023-10-21)
 
 
