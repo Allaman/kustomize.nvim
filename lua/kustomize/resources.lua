@@ -33,7 +33,7 @@ function M.find_resources(bufNr)
   )
   ---@type table<string>
   local resources = {}
-  for _, captures, _ in query:iter_matches(root, bufNr) do
+  for _, captures, _ in query:iter_matches(root, bufNr, 0, 0, {}) do
     -- resource is second capture
     table.insert(resources, t.get_node_text(captures[2], bufNr))
   end
@@ -44,7 +44,9 @@ M.list = function()
   local bufName = vim.api.nvim_buf_get_name(0)
   local bufNr = vim.api.nvim_win_get_buf(0)
   local fileName = vim.fs.basename(bufName)
-
+  if fileName == nil then
+    return
+  end
   if not utils.is_kustomization_yaml(fileName) then
     utils.error("buffer is not a kustomization.y(a)ml")
     return
