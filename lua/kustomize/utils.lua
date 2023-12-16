@@ -51,7 +51,7 @@ end
 ---@param win integer
 ---@param buf integer
 M.delete_output = function(win, buf)
-  vim.api.nvim_win_close(win, "force")
+  vim.api.nvim_win_close(win, true)
   vim.api.nvim_buf_delete(buf, { force = true })
 end
 

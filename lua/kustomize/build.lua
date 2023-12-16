@@ -7,7 +7,7 @@ local function configure_buffer()
   local win, buf = utils.create_output()
   vim.api.nvim_win_set_buf(win, buf)
   vim.api.nvim_buf_set_name(buf, "Kustomize #" .. buf)
-  vim.api.nvim_buf_set_option(buf, "filetype", "yaml")
+  vim.api.nvim_set_option_value("filetype", "yaml", { buf, buf })
   utils.delete_output_keybinding(win, buf)
   return buf
 end
@@ -39,6 +39,9 @@ M.build = function()
   end
   local bufName = vim.api.nvim_buf_get_name(0)
   local dirName = vim.fs.dirname(bufName)
+  if dirName == nil then
+    return
+  end
   local err, manifest = M.kustomize_build(dirName)
   -- https://stackoverflow.com/questions/1252539/most-efficient-way-to-determine-if-a-lua-table-is-empty-contains-no-entries
   if next(err) ~= nil then

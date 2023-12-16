@@ -5,7 +5,7 @@ local M = {}
 ---run 'kubent' command on the input file
 ---@param config table
 ---@param input string
----@return table
+---@return table, table
 M.run_deprecations_check = function(config, input)
   local kube_version = config.options.deprecations.kube_version
   local Job = require("plenary.job")
