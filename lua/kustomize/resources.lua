@@ -72,7 +72,6 @@ end
 ---create a quickfix list filled with items
 ---@param items table
 M.set_list = function(items)
-  -- TODO: option to configure loc list or qf list
   vim.fn.setqflist({}, " ", { title = "Kustomize", id = "$", items = items })
   vim.cmd.copen()
 end
@@ -86,10 +85,6 @@ M.build_paths = function(resource)
     local absolute = path:new({ file, sep = utils.path_separator() }):absolute()
     return absolute
   end
-  if not (utils.is_module_available("plenary")) then
-    utils.error("Could not load https://github.com/nvim-lua/plenary.nvim")
-    return
-  end
   local bufName = vim.api.nvim_buf_get_name(0)
   -- resources are relative to the current kustomization.yaml
   -- so we need to track the current directory to build a valid path
@@ -102,12 +97,11 @@ M.build_paths = function(resource)
 end
 
 M.print = function()
-  if not utils.is_module_available("plenary") then
-    utils.error("Could not load https://github.com/nvim-lua/plenary.nvim")
-    return
-  end
   local bufName = vim.api.nvim_buf_get_name(0)
   local fileName = vim.fs.basename(bufName)
+  if fileName == nil then
+    return
+  end
   ---@type table<string>
   local resourceList = {}
   if utils.is_kustomization_yaml(fileName) then

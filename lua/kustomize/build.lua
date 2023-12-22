@@ -28,11 +28,6 @@ M.kustomize_build = function(dirName)
 end
 
 M.build = function()
-  -- TODO: move to init.lua?
-  if not utils.is_module_available("plenary") then
-    utils.error("Could not load https://github.com/nvim-lua/plenary.nvim")
-    return
-  end
   if not utils.check_exec("kustomize") then
     utils.error("kustomize was not found on your PATH")
     return
