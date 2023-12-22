@@ -23,8 +23,7 @@ M.check = function(config)
     return
   end
   local fileToValidate
-  local t = os.tmpname()
-  local tmpFile = t .. ".yaml"
+  local tmpFile = utils.create_temp_file_string("yaml")
   local bufName = vim.api.nvim_buf_get_name(0)
   if path:new(bufName):is_file() then
     -- file exists on disk
@@ -54,10 +53,7 @@ M.check = function(config)
   elseif next(out) == nil then
     utils.info("No deprecations found!")
   end
-  -- can create an empty file http://www.lua.org/manual/5.1/manual.html#pdf-os.tmpname
-  -- TODO: error handlin?
-  os.remove(t)
-  os.remove(tmpFile)
+  utils.delete_file(tmpFile)
 end
 
 return M
