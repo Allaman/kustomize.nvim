@@ -133,4 +133,29 @@ M.is_executable_available = function(command)
   return vim.fn.executable(command) == 1
 end
 
+---create_temp_file creates a temporary file name
+---@param extension string|nil
+---@return string
+M.create_temp_file_string = function(extension)
+  local t = os.tmpname()
+  -- could create an empty file http://www.lua.org/manual/5.1/manual.html#pdf-os.tmpname
+  os.remove(t)
+  if extension == nil then
+    return t
+  end
+  return t .. "." .. extension
+end
+
+---delete_file deletes a file
+---@param file string
+M.delete_file = function(file)
+  local ok, message
+  -- can create an empty file http://www.lua.org/manual/5.1/manual.html#pdf-os.tmpname
+  ok, message = os.remove(file)
+  if not ok then
+    assert(type(message) == "string")
+    M.error(message)
+  end
+end
+
 return M
