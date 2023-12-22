@@ -7,7 +7,7 @@ local function configure_buffer()
   local win, buf = utils.create_output()
   vim.api.nvim_win_set_buf(win, buf)
   vim.api.nvim_buf_set_name(buf, "Kustomize #" .. buf)
-  vim.api.nvim_set_option_value("filetype", "yaml", { buf, buf })
+  vim.api.nvim_set_option_value("filetype", "yaml", { buf = buf })
   utils.delete_output_keybinding(win, buf)
   return buf
 end
