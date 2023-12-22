@@ -1,5 +1,7 @@
 local M = {}
 
+local utils = require("kustomize.utils")
+
 local config = require("kustomize.config")
 
 local build = require("kustomize.build")
@@ -59,6 +61,10 @@ M.set_default_mappings = function()
 end
 
 M.setup = function(opts)
+  if not utils.is_module_available("plenary") then
+    utils.error("Could not load https://github.com/nvim-lua/plenary.nvim")
+    return
+  end
   -- Overwrite default config with user-supplied options
   for key, value in pairs(opts) do
     config.options[key] = value
