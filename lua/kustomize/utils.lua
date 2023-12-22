@@ -154,7 +154,26 @@ M.delete_file = function(file)
   ok, message = os.remove(file)
   if not ok then
     assert(type(message) == "string")
-    M.error(message)
+    M.error("could not delete file: " .. message)
+  end
+end
+
+---create_file_from_current_buffer_content creates a file with the current buffer's content
+---@param file_name string
+M.create_file_from_current_buffer_content = function(file_name)
+  local bufferData = vim.api.nvim_buf_get_text(0, 0, 0, -1, -1, {})
+  local f, message = io.open(file_name, "w+b")
+  if f ~= nil then
+    local data = table.concat(bufferData, "\n")
+    f:write(data)
+    f:flush()
+    if not f:close() then
+      M.warn("temporary file handler could not be closed")
+    end
+  else
+    assert(type(message) == "string")
+    M.error("could not open file: " .. message)
+    return
   end
 end
 

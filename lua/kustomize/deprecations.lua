@@ -25,23 +25,14 @@ M.check = function(config)
   local fileToValidate
   local tmpFile = utils.create_temp_file_string("yaml")
   local bufName = vim.api.nvim_buf_get_name(0)
-  if path:new(bufName):is_file() then
+  local is_file = path:new(bufName):is_file()
+  if is_file then
     -- file exists on disk
     fileToValidate = path:new({ bufName, sep = utils.path_separator() }):absolute()
   else
     -- if buffer content is not file on disk
-    -- TODO: move to utils as it is also used in validation.lua
-    local bufferData = vim.api.nvim_buf_get_text(0, 0, 0, -1, -1, {})
     fileToValidate = tmpFile
-    local f = io.open(tmpFile, "w+b")
-    if f ~= nil then
-      local data = table.concat(bufferData, "\n")
-      f:write(data)
-      f:flush()
-      if not f:close() then
-        utils.warn("temporary file handler could not be closed")
-      end
-    end
+    utils.create_file_from_current_buffer_content(tmpFile)
   end
   local err, out = M.run_deprecations_check(config, fileToValidate)
   if next(err) ~= nil then
@@ -53,7 +44,9 @@ M.check = function(config)
   elseif next(out) == nil then
     utils.info("No deprecations found!")
   end
-  utils.delete_file(tmpFile)
+  if not is_file then
+    utils.delete_file(tmpFile)
+  end
 end
 
 return M
