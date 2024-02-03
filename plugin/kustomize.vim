@@ -13,8 +13,8 @@ let g:loaded_exampleplugin = 1
 
 " Exposes the plugin's functions for use as commands in Neovim.
 command! -nargs=0 KustomizeBuild lua require("kustomize").build()
-command! -nargs=0 KustomizeListKinds lua require("kustomize").kinds()
+command! -nargs=* KustomizeListKinds lua require("kustomize").kinds(<f-args>)
 command! -nargs=0 KustomizeListResources lua require("kustomize").list_resources()
 command! -nargs=0 KustomizePrintResources lua require("kustomize").print_resources()
 command! -nargs=0 KustomizeValidate lua require("kustomize").validate()
-command! -nargs=0 KustomizeDeprecations lua require("kustomize").deprecations()
+command! -nargs=? KustomizeDeprecations lua require("kustomize").deprecations(<f-args>)

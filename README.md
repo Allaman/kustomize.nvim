@@ -59,14 +59,14 @@ Run `:checkhealth kustomize` for a health check.
 
 ## Default mappings
 
-| Mode | Mapping      | Action                 | Lua                                          | Command                    |
-| ---- | ------------ | ---------------------- | -------------------------------------------- | -------------------------- |
-| n    | \<leader\>kb | Kustomize build        | `lua require("kustomize").build()`           | `:KustomizeBuild`          |
-| n    | \<leader\>kk | List kinds             | `lua require("kustomize").kinds()`           | `:KustomizeListKinds`      |
-| n    | \<leader\>kr | Print resources        | `lua require("kustomize").print_resources()` | `:KustomizePrintResources` |
-| n    | \<leader\>ko | List 'resources'       | `lua require("kustomize").list_resources()`  | `:KustomizeListResources`  |
-| n    | \<leader\>kv | Validate file          | `lua require("kustomize").validate()`        | `:KustomizeValidate`       |
-| n    | \<leader\>kd | Check API deprecations | `lua require("kustomize").deprecations()`    | `:KustomizeDeprecations`   |
+| Mode | Mapping      | Action                 | Lua                                             | Command                       |
+| ---- | ------------ | ---------------------- | ----------------------------------------------- | ----------------------------- |
+| n    | \<leader\>kb | Kustomize build        | `lua require("kustomize").build()`              | `:KustomizeBuild`             |
+| n    | \<leader\>kk | List kinds             | `lua require("kustomize").kinds({opts})`        | `:KustomizeListKinds opts`    |
+| n    | \<leader\>kr | Print resources        | `lua require("kustomize").print_resources()`    | `:KustomizePrintResources`    |
+| n    | \<leader\>ko | List 'resources'       | `lua require("kustomize").list_resources()`     | `:KustomizeListResources`     |
+| n    | \<leader\>kv | Validate file          | `lua require("kustomize").validate()`           | `:KustomizeValidate`          |
+| n    | \<leader\>kd | Check API deprecations | `lua require("kustomize").deprecations({opts})` | `:KustomizeDeprecations opts` |
 
 You can define your own keybindings/override the default mappings, for instance:
 
@@ -145,6 +145,16 @@ show_line = false,
 },
 ```
 
+You can also dynamically overwrite the values of your config file with
+
+```
+:lua require("kustomize").kinds({show_line=true, show_filepath=true})
+```
+
+```
+:KustomizeListKinds show_line=true, show_filepath=true
+```
+
 ### Open file/directory
 
 <details>
@@ -200,3 +210,13 @@ When writing a new deployment I usually split the resources into files according
 </details>
 
 [kubent](https://github.com/doitintl/kube-no-trouble) is a tool to search for deprecated Kubernetes APIs. This plugin utilizes the plugin to check the manifests in the current buffer for deprecated Kubernetes APIs. The buffer's content may be a file on disk or content not (yet) saved, e.g. the output of [Build manifests](#build-manifests). The Kubernetes target version can be set with `deprecations = { kube_version = "1.25" }`.
+
+You can also dynamically overwrite the values of your config file with
+
+```
+:lua require("kustomize").deprecations({kube_version=1.25})
+```
+
+```
+:KustomizeDeprecations kube_version=1.16
+```
