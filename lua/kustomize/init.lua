@@ -11,9 +11,9 @@ local resources = require("kustomize.resources")
 local validate = require("kustomize.validate")
 local deprecations = require("kustomize.deprecations")
 
---- reload_config reloads the initial config of the plugin
---- which the user expects. This reverts any changes to the
---- config by calling commands/Lua APIs with arguments
+---reload_config reloads the initial config of the plugin
+---which the user expects. This reverts any changes to the
+---config by calling commands/Lua APIs with arguments
 local function reload_config()
   if initialConfig then
     config = vim.deepcopy(initialConfig, { noref = true })
@@ -22,10 +22,10 @@ local function reload_config()
   end
 end
 
---- parseArguments processes arguments in the form key=value from either
---- a command (e.g. KustomizeListKinds key=val) or from
---- a Lua binding (e.g. :lua require("kustomize").kinds({key=val}))
---- and returns a table of the form {key=arg} for all args
+---parseArguments processes arguments in the form key=value from either
+---a command (e.g. KustomizeListKinds key=val) or from
+---a Lua binding (e.g. :lua require("kustomize").kinds({key=val}))
+---and returns a table of the form {key=arg} for all args
 ---@param ... unknown
 ---@return table
 local function parseArguments(...)
