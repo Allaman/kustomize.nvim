@@ -47,7 +47,7 @@ With Lazy
       "allaman/kustomize.nvim",
       requires = "nvim-lua/plenary.nvim",
       ft = "yaml",
-      config = true,
+      opts = {}
     }
 <
 
@@ -56,25 +56,25 @@ Run `:checkhealth kustomize` for a health check.
 
 DEFAULT MAPPINGS                             *kustomize.nvim-default-mappings*
 
-  ----------------------------------------------------------------------------------------------------------------
-  Mode   Mapping      Action         Lua                                             Command
-  ------ ------------ -------------- ----------------------------------------------- -----------------------------
-  n      <leader>kb   Kustomize      lua require("kustomize").build()                :KustomizeBuild
-                      build                                                          
+  ----------------------------------------------------------------------------------------------------------
+  Mode   Mapping      Action         Lua                                          Command
+  ------ ------------ -------------- -------------------------------------------- --------------------------
+  n      <leader>kb   Kustomize      lua require("kustomize").build()             :KustomizeBuild
+                      build                                                       
 
-  n      <leader>kk   List kinds     lua require("kustomize").kinds({opts})          :KustomizeListKinds opts
+  n      <leader>kk   List kinds     lua require("kustomize").kinds()             :KustomizeListKinds
 
-  n      <leader>kr   Print          lua require("kustomize").print_resources()      :KustomizePrintResources
-                      resources                                                      
+  n      <leader>kr   Print          lua require("kustomize").print_resources()   :KustomizePrintResources
+                      resources                                                   
 
-  n      <leader>ko   List           lua require("kustomize").list_resources()       :KustomizeListResources
-                      ‘resources’                                                    
+  n      <leader>ko   List           lua require("kustomize").list_resources()    :KustomizeListResources
+                      ‘resources’                                                 
 
-  n      <leader>kv   Validate file  lua require("kustomize").validate()             :KustomizeValidate
+  n      <leader>kv   Validate file  lua require("kustomize").validate()          :KustomizeValidate
 
-  n      <leader>kd   Check API      lua require("kustomize").deprecations({opts})   :KustomizeDeprecations opts
-                      deprecations                                                   
-  ----------------------------------------------------------------------------------------------------------------
+  n      <leader>kd   Check API      lua require("kustomize").deprecations()      :KustomizeDeprecations
+                      deprecations                                                
+  ----------------------------------------------------------------------------------------------------------
 You can define your own keybindings/override the default mappings, for
 instance:
 
@@ -107,7 +107,7 @@ This is the default configuration that can be (partially) overwritten by you.
         enable_key_mappings = true,
         validate = { kubeconform_args = { "--strict", "--ignore-missing-schemas" } }
         deprecations = { kube_version = "1.25" },
-        kinds = { show_filepath = true, show_line = true },
+        kinds = { show_filepath = true, show_line = true, exclude_pattern = {} },
     }
 <
 
@@ -116,6 +116,9 @@ With Lazy.nvim for instance:
 >lua
       opts = { validate = { kubeconform_args = { "--strict" } } },
 <
+
+And some command / Lua APIs support arguments. See
+|kustomize.nvim-list-"kinds"| and |kustomize.nvim-check-for-deprecations|.
 
 
 USE CASES                                           *kustomize.nvim-use-cases*
@@ -159,11 +162,11 @@ installed, you can toggle `Telescope loclist` with `<leader>kt`
 You can also dynamically overwrite the values of your config file with
 
 >
-    :lua require("kustomize").kinds({show_line=true, show_filepath=true})
+    :lua require("kustomize").kinds({show_line=true, show_filepath=true, exclude_pattern={"Namespace", "Ingress"}})
 <
 
 >
-    :KustomizeListKinds show_line=true, show_filepath=true
+    :KustomizeListKinds show_line=true, show_filepath=true, exclude_pattern={"Namespace", "Ingress"}
 <
 
 
