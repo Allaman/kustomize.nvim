@@ -39,7 +39,7 @@ local want = {
 
 local create_buffer = function(content)
   local _, bufNr = utils.create_output()
-  vim.api.nvim_buf_set_option(bufNr, "filetype", "yaml")
+  vim.api.nvim_set_option_value("filetype", "yaml", { buf = bufNr })
   vim.api.nvim_buf_set_lines(bufNr, -1, -1, true, content)
   return bufNr
 end
