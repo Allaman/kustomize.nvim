@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.7.0](https://github.com/Allaman/kustomize.nvim/compare/v4.6.0...v4.7.0) (2024-02-03)
+
+
+### Features
+
+* Add exclude_patterns to kind list [#53](https://github.com/Allaman/kustomize.nvim/issues/53) ([58f8b2a](https://github.com/Allaman/kustomize.nvim/commit/58f8b2a4ddda24a7bf8602ac679e08751643502f))
+
 ## [4.6.0](https://github.com/Allaman/kustomize.nvim/compare/v4.5.2...v4.6.0) (2024-02-03)
 
 
