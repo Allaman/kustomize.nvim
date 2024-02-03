@@ -1,10 +1,21 @@
 local utils = require("kustomize.utils")
 local M = {}
+local function containsAnyOf(s, patterns)
+  for _, pattern in ipairs(patterns) do
+    if string.find(s, pattern) then
+      return true
+    end
+  end
+  return false
+end
 
 ---find all 'kind:' keys and the according metadata.name value
+---filter results by a provided string expression of the form
+--- {"name1", "name2", "name3", ...}
 ---@param bufNr integer
+---@param exclude_pattern table
 ---@return table
-M.find_kinds = function(bufNr)
+M.find_kinds = function(bufNr, exclude_pattern)
   local q = require("vim.treesitter.query")
   local t = require("vim.treesitter")
 
@@ -93,6 +104,17 @@ M.find_kinds = function(bufNr)
     table.insert(kinds, match)
   end
 
+  if exclude_pattern then
+    -- Remove entry based on exclude_pattern
+    for k, v in ipairs(kinds) do
+      local kind = v[1]
+      if containsAnyOf(kind, exclude_pattern) then
+        -- TODO should I compact the resulting table to use ipairs instead of pairs?
+        kinds[k] = nil
+      end
+    end
+  end
+
   return kinds -- { {"kind", "name", "namespace", line}, ... }
 end
 
@@ -110,14 +132,15 @@ end
 M.list = function(config)
   local show_filepath = config.options.kinds.show_filepath
   local show_line = config.options.kinds.show_line
+  local exclude_pattern = config.options.kinds.exclude_pattern
   local bufNr = vim.api.nvim_win_get_buf(0)
   if not utils.is_treesitter_available(bufNr) then
     utils.error("cannot load nvim-treesitter")
     return
   end
-  local kinds_list = M.find_kinds(bufNr)
+  local kinds_list = M.find_kinds(bufNr, exclude_pattern)
   local kinds = {}
-  for _, kind in ipairs(kinds_list) do
+  for _, kind in pairs(kinds_list) do
     local item = {
       bufnr = bufNr,
       lnum = kind[4],

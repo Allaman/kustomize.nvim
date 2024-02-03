@@ -51,7 +51,7 @@ With Lazy
   "allaman/kustomize.nvim",
   requires = "nvim-lua/plenary.nvim",
   ft = "yaml",
-  config = true,
+  opts = {}
 }
 ```
 
@@ -59,14 +59,14 @@ Run `:checkhealth kustomize` for a health check.
 
 ## Default mappings
 
-| Mode | Mapping      | Action                 | Lua                                             | Command                       |
-| ---- | ------------ | ---------------------- | ----------------------------------------------- | ----------------------------- |
-| n    | \<leader\>kb | Kustomize build        | `lua require("kustomize").build()`              | `:KustomizeBuild`             |
-| n    | \<leader\>kk | List kinds             | `lua require("kustomize").kinds({opts})`        | `:KustomizeListKinds opts`    |
-| n    | \<leader\>kr | Print resources        | `lua require("kustomize").print_resources()`    | `:KustomizePrintResources`    |
-| n    | \<leader\>ko | List 'resources'       | `lua require("kustomize").list_resources()`     | `:KustomizeListResources`     |
-| n    | \<leader\>kv | Validate file          | `lua require("kustomize").validate()`           | `:KustomizeValidate`          |
-| n    | \<leader\>kd | Check API deprecations | `lua require("kustomize").deprecations({opts})` | `:KustomizeDeprecations opts` |
+| Mode | Mapping      | Action                 | Lua                                          | Command                    |
+| ---- | ------------ | ---------------------- | -------------------------------------------- | -------------------------- |
+| n    | \<leader\>kb | Kustomize build        | `lua require("kustomize").build()`           | `:KustomizeBuild`          |
+| n    | \<leader\>kk | List kinds             | `lua require("kustomize").kinds()`           | `:KustomizeListKinds`      |
+| n    | \<leader\>kr | Print resources        | `lua require("kustomize").print_resources()` | `:KustomizePrintResources` |
+| n    | \<leader\>ko | List 'resources'       | `lua require("kustomize").list_resources()`  | `:KustomizeListResources`  |
+| n    | \<leader\>kv | Validate file          | `lua require("kustomize").validate()`        | `:KustomizeValidate`       |
+| n    | \<leader\>kd | Check API deprecations | `lua require("kustomize").deprecations()`    | `:KustomizeDeprecations`   |
 
 You can define your own keybindings/override the default mappings, for instance:
 
@@ -98,7 +98,7 @@ This is the default configuration that can be (partially) overwritten by you.
     enable_key_mappings = true,
     validate = { kubeconform_args = { "--strict", "--ignore-missing-schemas" } }
     deprecations = { kube_version = "1.25" },
-    kinds = { show_filepath = true, show_line = true },
+    kinds = { show_filepath = true, show_line = true, exclude_pattern = {} },
 }
 ```
 
@@ -107,6 +107,8 @@ With Lazy.nvim for instance:
 ```lua
   opts = { validate = { kubeconform_args = { "--strict" } } },
 ```
+
+And some command / Lua APIs support arguments. See [List "kinds"](#list-kinds) and [Check for deprecations](#check-for-deprecations).
 
 ## Use cases
 
@@ -148,11 +150,11 @@ show_line = false,
 You can also dynamically overwrite the values of your config file with
 
 ```
-:lua require("kustomize").kinds({show_line=true, show_filepath=true})
+:lua require("kustomize").kinds({show_line=true, show_filepath=true, exclude_pattern={"Namespace", "Ingress"}})
 ```
 
 ```
-:KustomizeListKinds show_line=true, show_filepath=true
+:KustomizeListKinds show_line=true, show_filepath=true, exclude_pattern={"Namespace", "Ingress"}
 ```
 
 ### Open file/directory

@@ -42,6 +42,17 @@ local function parseArguments(...)
       -- handle command calls
       -- Split the argument on the first '=' character
       local key, value = arg:match("^(.-)=(.*)$")
+      -- filter value must be of type table
+      -- HACK when using kustomize.lua instead of kustomize.vim I can probably solve this more elegant???
+      if key == "exclude_pattern" then
+        local function eval(s)
+          return assert(load(s))()
+        end
+        local function str2obj(s)
+          return eval("return " .. s)
+        end
+        value = str2obj(value)
+      end
       if key and value then
         namedArgs[key] = value
       end
