@@ -1,4 +1,4 @@
-*kustomize.nvim.txt*     For Neovim >= 0.9.0     Last change: 2024 February 03
+*kustomize.nvim.txt*       For Neovim >= 0.9.0      Last change: 2024 March 02
 
 ==============================================================================
 Table of Contents                           *kustomize.nvim-table-of-contents*
@@ -23,24 +23,12 @@ REQUIREMENTS                                     *kustomize.nvim-requirements*
 - kubent <https://github.com/doitintl/kube-no-trouble> in your PATH to |kustomize.nvim-check-for-deprecations|
 - plenary.nvim <https://github.com/nvim-lua/plenary.nvim>
 - nvim-treesitter <https://github.com/nvim-treesitter/nvim-treesitter> and `yaml` parser
+- (optionally) LuaSnip <https://github.com/L3MON4D3/LuaSnip> snippets (default is disabled)
 
 
 QUICKSTART                                         *kustomize.nvim-quickstart*
 
-With Packer
-
->lua
-      use({
-        "allaman/kustomize.nvim",
-        requires = "nvim-lua/plenary.nvim",
-        ft = "yaml",
-        config = function()
-          require('kustomize').setup()
-        end,
-      })
-<
-
-With Lazy
+With Lazy.nvim <https://github.com/folke/lazy.nvim>
 
 >lua
     {
@@ -51,30 +39,30 @@ With Lazy
     }
 <
 
-Run `:checkhealth kustomize` for a health check.
+Run`:checkhealth kustomize` for a health check.
 
 
 DEFAULT MAPPINGS                             *kustomize.nvim-default-mappings*
 
-  ----------------------------------------------------------------------------------------------------------
-  Mode   Mapping      Action         Lua                                          Command
-  ------ ------------ -------------- -------------------------------------------- --------------------------
-  n      <leader>kb   Kustomize      lua require("kustomize").build()             :KustomizeBuild
-                      build                                                       
+  ---------------------------------------------------------------------------------------------------------
+  Mode   Mapping      Action        Lua                                          Command
+  ------ ------------ ------------- -------------------------------------------- --------------------------
+  n      <leader>kb   Kustomize     lua require("kustomize").build()             :KustomizeBuild
+                      build                                                      
 
-  n      <leader>kk   List kinds     lua require("kustomize").kinds()             :KustomizeListKinds
+  n      <leader>kk   List kinds    lua require("kustomize").kinds()             :KustomizeListKinds
 
-  n      <leader>kr   Print          lua require("kustomize").print_resources()   :KustomizePrintResources
-                      resources                                                   
+  n      <leader>kr   Print         lua require("kustomize").print_resources()   :KustomizePrintResources
+                      resources                                                  
 
-  n      <leader>ko   List           lua require("kustomize").list_resources()    :KustomizeListResources
-                      ‘resources’                                                 
+  n      <leader>ko   List          lua require("kustomize").list_resources()    :KustomizeListResources
+                      ‘resources’                                                
 
-  n      <leader>kv   Validate file  lua require("kustomize").validate()          :KustomizeValidate
+  n      <leader>kv   Validate file lua require("kustomize").validate()          :KustomizeValidate
 
-  n      <leader>kd   Check API      lua require("kustomize").deprecations()      :KustomizeDeprecations
-                      deprecations                                                
-  ----------------------------------------------------------------------------------------------------------
+  n      <leader>kd   Check API     lua require("kustomize").deprecations()      :KustomizeDeprecations
+                      deprecation                                                
+  ---------------------------------------------------------------------------------------------------------
 You can define your own keybindings/override the default mappings, for
 instance:
 
@@ -105,6 +93,7 @@ This is the default configuration that can be (partially) overwritten by you.
 >lua
     {
         enable_key_mappings = true,
+        enable_lua_snip = false,
         validate = { kubeconform_args = { "--strict", "--ignore-missing-schemas" } }
         deprecations = { kube_version = "1.25" },
         kinds = { show_filepath = true, show_line = true, exclude_pattern = {} },
@@ -124,6 +113,12 @@ And some command / Lua APIs support arguments. See
 USE CASES                                           *kustomize.nvim-use-cases*
 
 
+SNIPPETS ~
+
+If enabled, kustomize.nvim includes some useful snippets for LuaSnip. All
+snippets start with `kust`.
+
+Showcase
 BUILD MANIFESTS ~
 
 ShowcaseThis command will run `kustomize build .` in the current buffer’s directory.
@@ -156,6 +151,8 @@ installed, you can toggle `Telescope loclist` with `<leader>kt`
     -- setting those to false removes "clutter" but you cannot "jump" to a resource anymore
     show_filepath = false,
     show_line = false,
+    -- filter resources you are not interested in
+    exclude_pattern = {"Namespace", "Ingress"}
     },
 <
 
