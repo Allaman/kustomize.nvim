@@ -134,7 +134,7 @@ end
 
 M.setup = function(opts)
   if not utils.is_module_available("plenary") then
-    utils.error("Could not load https://github.com/nvim-lua/plenary.nvim")
+    utils.error("Could not load nvim-lua/plenary.nvim")
     return
   end
   -- Overwrite default config with user-supplied options
@@ -148,6 +148,14 @@ M.setup = function(opts)
 
   if config.options.enable_key_mappings then
     M.set_default_mappings()
+  end
+
+  if config.options.enable_lua_snip then
+    if not utils.is_module_available("luasnip") then
+      utils.error("Could not load L3MON4D3/LuaSnip")
+      return
+    end
+    require("snippets").load_snippets()
   end
 end
 

@@ -96,6 +96,7 @@ This is the default configuration that can be (partially) overwritten by you.
 ```lua
 {
     enable_key_mappings = true,
+	enable_lua_snip = false,
     validate = { kubeconform_args = { "--strict", "--ignore-missing-schemas" } }
     deprecations = { kube_version = "1.25" },
     kinds = { show_filepath = true, show_line = true, exclude_pattern = {} },
@@ -111,6 +112,17 @@ With Lazy.nvim for instance:
 And some command / Lua APIs support arguments. See [List "kinds"](#list-kinds) and [Check for deprecations](#check-for-deprecations).
 
 ## Use cases
+
+### Snippets
+
+If enabled, kustomize.nvim includes some useful snippets for LuaSnip. All snippets start with `kust`.
+
+<details>
+<summary>Showcase</summary
+
+[![kustomize.nvim-snippets.gif](https://s9.gifyu.com/images/SFBIC.gif)](https://gifyu.com/image/SFBIC)
+
+</details>
 
 ### Build manifests
 

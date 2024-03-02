@@ -46,6 +46,12 @@ M.check = function()
     _ok("nvim-lua/plenary.nvim found")
   end
 
+  if not utils.is_module_available("luasnip") then
+    _warn("this plugin (optionally) requires L3MON4D3/LuaSnip for LuaSnip integration")
+  else
+    _ok("L3MON4D3/LuaSnip found")
+  end
+
   local ok, _ = pcall(require, "nvim-treesitter")
   if not ok then
     _error("this plugin requires nvim-treesitter/nvim-treesitter")
