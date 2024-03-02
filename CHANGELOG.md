@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.8.0](https://github.com/Allaman/kustomize.nvim/compare/v4.7.0...v4.8.0) (2024-03-02)
+
+
+### Features
+
+* Add LuaSnip integration ([795e2b8](https://github.com/Allaman/kustomize.nvim/commit/795e2b89e8ce4798b78ff97ba093dc780c533413))
+
 ## [4.7.0](https://github.com/Allaman/kustomize.nvim/compare/v4.6.0...v4.7.0) (2024-02-03)
 
 
