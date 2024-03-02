@@ -28,23 +28,11 @@ Jump to the [use cases](#use-cases) to check out what this plugin can do!
 - [kubent](https://github.com/doitintl/kube-no-trouble) in your PATH to [check for deprecations](#check-for-deprecations)
 - [plenary.nvim](https://github.com/nvim-lua/plenary.nvim)
 - [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) and `yaml` parser
+- (optionally) [LuaSnip](https://github.com/L3MON4D3/LuaSnip) snippets (default is disabled)
 
 ## Quickstart
 
-With Packer
-
-```lua
-  use({
-    "allaman/kustomize.nvim",
-    requires = "nvim-lua/plenary.nvim",
-    ft = "yaml",
-    config = function()
-      require('kustomize').setup()
-    end,
-  })
-```
-
-With Lazy
+With [Lazy.nvim](https://github.com/folke/lazy.nvim):
 
 ```lua
 {
@@ -59,14 +47,14 @@ Run `:checkhealth kustomize` for a health check.
 
 ## Default mappings
 
-| Mode | Mapping      | Action                 | Lua                                          | Command                    |
-| ---- | ------------ | ---------------------- | -------------------------------------------- | -------------------------- |
-| n    | \<leader\>kb | Kustomize build        | `lua require("kustomize").build()`           | `:KustomizeBuild`          |
-| n    | \<leader\>kk | List kinds             | `lua require("kustomize").kinds()`           | `:KustomizeListKinds`      |
-| n    | \<leader\>kr | Print resources        | `lua require("kustomize").print_resources()` | `:KustomizePrintResources` |
-| n    | \<leader\>ko | List 'resources'       | `lua require("kustomize").list_resources()`  | `:KustomizeListResources`  |
-| n    | \<leader\>kv | Validate file          | `lua require("kustomize").validate()`        | `:KustomizeValidate`       |
-| n    | \<leader\>kd | Check API deprecations | `lua require("kustomize").deprecations()`    | `:KustomizeDeprecations`   |
+| Mode | Mapping      | Action                | Lua                                          | Command                    |
+| ---- | ------------ | --------------------- | -------------------------------------------- | -------------------------- |
+| n    | \<leader\>kb | Kustomize build       | `lua require("kustomize").build()`           | `:KustomizeBuild`          |
+| n    | \<leader\>kk | List kinds            | `lua require("kustomize").kinds()`           | `:KustomizeListKinds`      |
+| n    | \<leader\>kr | Print resources       | `lua require("kustomize").print_resources()` | `:KustomizePrintResources` |
+| n    | \<leader\>ko | List 'resources'      | `lua require("kustomize").list_resources()`  | `:KustomizeListResources`  |
+| n    | \<leader\>kv | Validate file         | `lua require("kustomize").validate()`        | `:KustomizeValidate`       |
+| n    | \<leader\>kd | Check API deprecation | `lua require("kustomize").deprecations()`    | `:KustomizeDeprecations`   |
 
 You can define your own keybindings/override the default mappings, for instance:
 
@@ -156,6 +144,8 @@ kinds = {
 -- setting those to false removes "clutter" but you cannot "jump" to a resource anymore
 show_filepath = false,
 show_line = false,
+-- filter resources you are not interested in
+exclude_pattern = {"Namespace", "Ingress"}
 },
 ```
 
