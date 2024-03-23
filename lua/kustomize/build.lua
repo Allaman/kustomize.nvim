@@ -20,7 +20,7 @@ M.kustomize_build = function(dirName)
   local Job = require("plenary.job")
   local job = Job:new({
     command = "kustomize",
-    args = { "build", "." },
+    args = { "build", "--enable-helm", "--load-restrictor=LoadRestrictionsNone", "." },
     cwd = dirName,
   })
   job:sync()
