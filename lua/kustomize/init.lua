@@ -53,6 +53,17 @@ local function parseArguments(...)
         end
         value = str2obj(value)
       end
+      -- additional_args value must be of type table
+      -- HACK when using kustomize.lua instead of kustomize.vim I can probably solve this more elegant???
+      if key == "additional_args" then
+        local function eval(s)
+          return assert(load(s))()
+        end
+        local function str2obj(s)
+          return eval("return " .. s)
+        end
+        value = str2obj(value)
+      end
       if key and value then
         namedArgs[key] = value
       end
@@ -62,8 +73,17 @@ local function parseArguments(...)
   return namedArgs
 end
 
-M.build = function()
-  build.build()
+M.build = function(...)
+  local namedArgs = parseArguments(...)
+
+  -- overwrite config with provided arguments
+  for key, value in pairs(namedArgs) do
+    config.options.build[key] = value
+  end
+
+  build.build(config)
+
+  reload_config()
 end
 
 M.kinds = function(...)

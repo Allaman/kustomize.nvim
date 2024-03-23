@@ -83,11 +83,12 @@ This is the default configuration that can be (partially) overwritten by you.
 
 ```lua
 {
-    enable_key_mappings = true,
-	enable_lua_snip = false,
-    validate = { kubeconform_args = { "--strict", "--ignore-missing-schemas" } }
-    deprecations = { kube_version = "1.25" },
-    kinds = { show_filepath = true, show_line = true, exclude_pattern = {} },
+  enable_key_mappings = true,
+  enable_lua_snip = false,
+  validate = { kubeconform_args = { "--strict", "--ignore-missing-schemas" } },
+  build = { additional_args = {} },
+  deprecations = { kube_version = "1.25" },
+  kinds = { show_filepath = true, show_line = true, exclude_pattern = "" },
 }
 ```
 
@@ -123,6 +124,24 @@ If enabled, kustomize.nvim includes some useful snippets for LuaSnip. All snippe
 
 This command will run `kustomize build .` in the current buffer's directory. The generated YAML will be printed to a new buffer. The new buffer can be closed by just typing `q`.
 This allows me to quickly inspect the YAML that Kustomize generates (and ultimately is applied to the cluster). In addition, I get fast feedback on any errors in my YAML sources.
+
+You can add additional arguments to the build call via config file:
+
+```lua
+build = {
+  additional_args = {"--enable-helm", "--load-restrictor=LoadRestrictionsNone"}
+},
+```
+
+You can also dynamically overwrite the values of your config file with
+
+```
+lua require("kustomize").build({additional_args={"--enable-helm", "--load-restrictor=LoadRestrictionsNone"}})
+```
+
+```
+:KustomizeBuild additional_args={"--enable-helm", "--load-restrictor=LoadRestrictionsNone"}
+```
 
 ### List "kinds"
 
