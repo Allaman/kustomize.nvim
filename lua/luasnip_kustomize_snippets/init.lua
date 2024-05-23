@@ -19,8 +19,9 @@ M.load_snippets = function()
       kind: Kustomization
       namespace: foo
       labels:
-        app.kubernetes.io/managed-by: kustomize
-        app.kubernetes.io/name: foo
+        - pairs:
+            foo: bar
+          includeTemplates: true
       commonAnnotations:
         foo: bar
       nameSuffix: foo
