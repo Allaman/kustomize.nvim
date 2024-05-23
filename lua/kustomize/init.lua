@@ -175,7 +175,7 @@ M.setup = function(opts)
       utils.error("Could not load L3MON4D3/LuaSnip")
       return
     end
-    require("snippets").load_snippets()
+    require("luasnip_kustomize_snippets").load_snippets()
   end
 end
 
