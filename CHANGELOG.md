@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.9.2](https://github.com/Allaman/kustomize.nvim/compare/v4.9.1...v4.9.2) (2024-08-29)
+
+
+### Bug Fixes
+
+* **kinds:** Use empty table as default for exclude_pattern [#60](https://github.com/Allaman/kustomize.nvim/issues/60) ([c3a0b4b](https://github.com/Allaman/kustomize.nvim/commit/c3a0b4b71e9ef824c23772fa54d8fe30f67fd598))
+
 ## [4.9.1](https://github.com/Allaman/kustomize.nvim/compare/v4.9.0...v4.9.1) (2024-05-23)
 
 
