@@ -6,7 +6,7 @@ M.options = {
   validate = { kubeconform_args = { "--strict", "--ignore-missing-schemas" } },
   build = { additional_args = {} },
   deprecations = { kube_version = "1.25" },
-  kinds = { show_filepath = true, show_line = true, exclude_pattern = "" },
+  kinds = { show_filepath = true, show_line = true, exclude_pattern = {} },
 }
 
 return M
