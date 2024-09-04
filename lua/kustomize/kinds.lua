@@ -120,11 +120,12 @@ end
 
 ---create a loclist filled with kinds
 ---@param items table
-M.set_list = function(items)
+---@param enable_telescope_key_mapping boolean
+M.set_list = function(items, enable_telescope_key_mapping)
   vim.fn.setloclist(0, {}, " ", { title = "Kustomize", items = items })
   -- vim.cmd.lopen({ args = { '"5"' } }) not working
   vim.cmd("lopen 20")
-  if utils.is_module_available("telescope") then
+  if utils.is_module_available("telescope") and enable_telescope_key_mapping then
     vim.api.nvim_set_keymap("n", "<leader>kt", "<cmd>Telescope loclist<cr>", { desc = "Telescope loclist" })
   end
 end
@@ -159,7 +160,7 @@ M.list = function(config)
   end
   utils.info("found " .. utils.table_length(kinds) .. " resources")
   if utils.table_length(kinds) > 0 then
-    M.set_list(kinds)
+    M.set_list(kinds, config.options.enable_key_mappings)
   end
 end
 
