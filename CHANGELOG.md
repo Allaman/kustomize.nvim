@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.9.3](https://github.com/Allaman/kustomize.nvim/compare/v4.9.2...v4.9.3) (2024-09-08)
+
+
+### Bug Fixes
+
+* **kinds,resources:** enforce query.iter_matches old behavior ([d6a18e3](https://github.com/Allaman/kustomize.nvim/commit/d6a18e3b65cc7f148999a8b32688778b5e17c522))
+* **kinds:** Respect enable_key_mappings [#63](https://github.com/Allaman/kustomize.nvim/issues/63) ([4641121](https://github.com/Allaman/kustomize.nvim/commit/4641121298c1e0f8b21c2e13a95712e2fc69110f))
+
 ## [4.9.2](https://github.com/Allaman/kustomize.nvim/compare/v4.9.1...v4.9.2) (2024-08-29)
 
 
