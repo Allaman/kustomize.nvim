@@ -77,7 +77,9 @@ M.find_kinds = function(bufNr, exclude_pattern)
   local unsorted_matches = {} -- Temporarily store matches here
 
   -- Iterate over the first query matches
-  for _, captures, _ in query_with_namespace:iter_matches(root, bufNr, 0, 0, {}) do
+  -- TODO: https://github.com/neovim/neovim/commit/6913c5e1d975a11262d08b3339d50b579e6b6bb8
+  -- {all = false} forces the old behavior
+  for _, captures, _ in query_with_namespace:iter_matches(root, bufNr, 0, 0, { all = false }) do
     local row, _ = captures[1]:start()
     local kind = t.get_node_text(captures[2], bufNr)
     local kind_name = t.get_node_text(captures[5], bufNr)
@@ -87,7 +89,9 @@ M.find_kinds = function(bufNr, exclude_pattern)
   end
 
   -- Iterate over the second query matches
-  for _, captures, _ in query_without_namespace:iter_matches(root, bufNr, 0, 0, {}) do
+  -- TODO: https://github.com/neovim/neovim/commit/6913c5e1d975a11262d08b3339d50b579e6b6bb8
+  -- {all = false} forces the old behavior
+  for _, captures, _ in query_without_namespace:iter_matches(root, bufNr, 0, 0, { all = false }) do
     local row, _ = captures[1]:start()
     if not matched_rows[row] then -- Only process if row hasn't been matched already
       local kind = t.get_node_text(captures[2], bufNr)

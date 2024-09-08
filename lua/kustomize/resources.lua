@@ -33,7 +33,9 @@ function M.find_resources(bufNr)
   )
   ---@type table<string>
   local resources = {}
-  for _, captures, _ in query:iter_matches(root, bufNr, 0, 0, {}) do
+  -- TODO: https://github.com/neovim/neovim/commit/6913c5e1d975a11262d08b3339d50b579e6b6bb8
+  -- {all = false} forces the old behavior
+  for _, captures, _ in query:iter_matches(root, bufNr, 0, 0, { all = false }) do
     -- resource is second capture
     table.insert(resources, t.get_node_text(captures[2], bufNr))
   end
