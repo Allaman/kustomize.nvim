@@ -55,6 +55,7 @@ Run `:checkhealth kustomize` for a health check.
 | n    | \<leader\>kl | List 'resources'       | `:KustomizeListResources`  |
 | n    | \<leader\>kv | Validate file          | `:KustomizeValidate`       |
 | n    | \<leader\>kd | Check API deprecations | `:KustomizeDeprecations`   |
+| n    |              | Run custom commands    | `:KustomizeRun <command>`  |
 
 You can define your own keybindings after setting `opts.enable_key_mappings = false`:
 
@@ -277,5 +278,7 @@ You can define and run arbitrary commands on yaml files, for instance:
         },
     },
 ```
+
+Keep in mind, that the last argument of the command must accept a file.
 
 Then you can run `:KustomizeRun trivy` to run the specified command. Auto-completion is supported!
