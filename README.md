@@ -83,7 +83,6 @@ This is the default configuration that can be overwritten, also in parts, by you
 {
   enable_key_mappings = true,
   enable_lua_snip = false,
-    -- TODO:
   build = { additional_args = {} },
   kinds = { show_filepath = true, show_line = true, exclude_pattern = {} },
   -- built-in commands
@@ -105,8 +104,6 @@ With Lazy.nvim for instance:
 ```lua
   opts = { enable_lua_snip = true },
 ```
-
-<!-- TODO: -->
 
 ## Use cases
 
