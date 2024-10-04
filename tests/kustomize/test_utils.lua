@@ -39,4 +39,16 @@ describe("utils.lua:", function()
   end)
 end)
 
+describe("parse arguments", function()
+  it("valid", function()
+    local args = "show_line=true show_filepath=true exclude_pattern=CronJob,ServiceAccount"
+    local get = utils.parseArguments(args)
+    eq(get, {
+      exclude_pattern = { "CronJob", "ServiceAccount" },
+      show_filepath = true,
+      show_line = true,
+    })
+  end)
+end)
+
 -- return T

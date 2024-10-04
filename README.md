@@ -28,7 +28,7 @@ Jump to the [use cases](#use-cases) to check out what this plugin can do!
 - [kubent](https://github.com/doitintl/kube-no-trouble) in your PATH to [check for deprecations](#check-for-deprecations)
 - [plenary.nvim](https://github.com/nvim-lua/plenary.nvim)
 - [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) and `yaml` parser
-- (optionally) [LuaSnip](https://github.com/L3MON4D3/LuaSnip) snippets (default is disabled)
+- (optionally) [LuaSnip](https://github.com/L3MON4D3/LuaSnip) for snippets support (default is disabled)
 
 ## Quickstart
 
@@ -47,16 +47,16 @@ Run `:checkhealth kustomize` for a health check.
 
 ## Default mappings
 
-| Mode | Mapping      | Action                | Lua                                          | Command                    |
-| ---- | ------------ | --------------------- | -------------------------------------------- | -------------------------- |
-| n    | \<leader\>kb | Kustomize build       | `lua require("kustomize").build()`           | `:KustomizeBuild`          |
-| n    | \<leader\>kk | List kinds            | `lua require("kustomize").kinds()`           | `:KustomizeListKinds`      |
-| n    | \<leader\>kr | Print resources       | `lua require("kustomize").print_resources()` | `:KustomizePrintResources` |
-| n    | \<leader\>ko | List 'resources'      | `lua require("kustomize").list_resources()`  | `:KustomizeListResources`  |
-| n    | \<leader\>kv | Validate file         | `lua require("kustomize").validate()`        | `:KustomizeValidate`       |
-| n    | \<leader\>kd | Check API deprecation | `lua require("kustomize").deprecations()`    | `:KustomizeDeprecations`   |
+| Mode | Mapping      | Action                 | Command                    |
+| ---- | ------------ | ---------------------- | -------------------------- |
+| n    | \<leader\>kb | Kustomize build        | `:KustomizeBuild`          |
+| n    | \<leader\>kk | List kinds             | `:KustomizeListKinds`      |
+| n    | \<leader\>kp | Print resources        | `:KustomizePrintResources` |
+| n    | \<leader\>kl | List 'resources'       | `:KustomizeListResources`  |
+| n    | \<leader\>kv | Validate file          | `:KustomizeValidate`       |
+| n    | \<leader\>kd | Check API deprecations | `:KustomizeDeprecations`   |
 
-You can define your own keybindings/override the default mappings, for instance:
+You can define your own keybindings after setting `opts.enable_key_mappings = false`:
 
 ```lua
   use({
@@ -66,39 +66,46 @@ You can define your own keybindings/override the default mappings, for instance:
     opts = { enable_key_mappings = false },
     config = function(opts)
       require('kustomize').setup({opts})
-      -- default keybindings, adjust to your needs
-      vim.keymap.set("n", "<leader>kb", "<cmd>lua require('kustomize').build()<cr>", { noremap = true })
-      vim.keymap.set("n", "<leader>kk", "<cmd>lua require('kustomize').kinds()<cr>", { noremap = true })
-      vim.keymap.set("n", "<leader>kl", "<cmd>lua require('kustomize').list_resources()<cr>", { noremap = true })
-      vim.keymap.set("n", "<leader>kp", "<cmd>lua require('kustomize').print_resources()<cr>", { noremap = true })
-      vim.keymap.set("n", "<leader>kv", "<cmd>lua require('kustomize').validate()<cr>", { noremap = true })
-      vim.keymap.set("n", "<leader>kd", "<cmd>lua require('kustomize').deprecations()<cr>", { noremap = true })
+      -- adjust to your needs if not using the default key mappings
+      vim.api.nvim_set_keymap("n", "<leader>kb", "<cmd>KustomizeBuild<cr>", { desc = "Build Kustomize" })
+      vim.api.nvim_set_keymap("n", "<leader>kk", "<cmd>KustomizeListKinds<cr>", { desc = "List Kubernetes Kinds" })
+      -- ...
     end,
   })
 ```
 
 ## Default configuration
 
-This is the default configuration that can be (partially) overwritten by you.
+This is the default configuration that can be overwritten, also in parts, by you.
 
 ```lua
 {
   enable_key_mappings = true,
   enable_lua_snip = false,
-  validate = { kubeconform_args = { "--strict", "--ignore-missing-schemas" } },
+    -- TODO:
   build = { additional_args = {} },
-  deprecations = { kube_version = "1.25" },
-  kinds = { show_filepath = true, show_line = true, exclude_pattern = "" },
+  kinds = { show_filepath = true, show_line = true, exclude_pattern = {} },
+  -- built-in commands
+  run = {
+    validate = {
+      cmd = "kubeconform",
+      args = { "--strict", "--ignore-missing-schemas" },
+    },
+    deprecations = {
+      cmd = "kubent",
+      args = { "-t", "1.26", "-c=false", "--helm3=false", "-l=error", "-e", "-f" },
+    },
+  },
 }
 ```
 
 With Lazy.nvim for instance:
 
 ```lua
-  opts = { validate = { kubeconform_args = { "--strict" } } },
+  opts = { enable_lua_snip = true },
 ```
 
-And some command / Lua APIs support arguments. See [List "kinds"](#list-kinds) and [Check for deprecations](#check-for-deprecations).
+<!-- TODO: -->
 
 ## Use cases
 
@@ -136,11 +143,7 @@ build = {
 You can also dynamically overwrite the values of your config file with
 
 ```
-lua require("kustomize").build({additional_args={"--enable-helm", "--load-restrictor=LoadRestrictionsNone"}})
-```
-
-```
-:KustomizeBuild additional_args={"--enable-helm", "--load-restrictor=LoadRestrictionsNone"}
+:KustomizeBuild --enable-helm --load-restrictor=LoadRestrictionsNone
 ```
 
 ### List "kinds"
@@ -154,29 +157,30 @@ lua require("kustomize").build({additional_args={"--enable-helm", "--load-restri
 
 Sometimes, I just want to roughly check the YAMLs generated by Kustomize. A good hint is to check the `kind:` key of the generated YAML manifests. This command will parse all `kind:` keys in the current buffer with the help of tree-sitter and prints their values to a loclist allowing you to easily jump around all resources. You could use it on any YAML file with multiple resources, for instance generated by [Build manifests](#build-manifests). Only Resources with `metadata.name` are recognized, e.g. `Kustomization` resources are not detected.
 
-The output consists of `<the buffer name> |<the line nr>| <which kind> <name> <namespace>`. Cluster-wide resources omit the namespace value. You can hide the buffer name and line number by adding the following snippet to the opts table:
-
-If [Telescope.nvim](https://github.com/nvim-telescope/telescope.nvim) is installed, you can toggle `Telescope loclist` with `<leader>kt`
+The output consists of `<buffer-name> |<line-nr>| <kind> <name> <namespace>`. Cluster-wide resources omit the namespace value. You can hide the buffer name and line number by adding the following snippet to the opts table:
 
 ```lua
-kinds = {
--- setting those to false removes "clutter" but you cannot "jump" to a resource anymore
-show_filepath = false,
-show_line = false,
--- filter resources you are not interested in
-exclude_pattern = {"Namespace", "Ingress"}
-},
+  kinds = {
+      show_filepath = false,
+      show_line = false,
+  },
+```
+
+You can exclude certain resources from the results via:
+
+```lua
+  kinds = {
+      exclude_pattern = { "CronJob", "ServiceAccount" }
+  },
 ```
 
 You can also dynamically overwrite the values of your config file with
 
 ```
-:lua require("kustomize").kinds({show_line=true, show_filepath=true, exclude_pattern={"Namespace", "Ingress"}})
+:KustomizeListKinds show_line=false show_filepath=false exclude_pattern=Namespace,Ingress
 ```
 
-```
-:KustomizeListKinds show_line=true, show_filepath=true, exclude_pattern={"Namespace", "Ingress"}
-```
+If [Telescope.nvim](https://github.com/nvim-telescope/telescope.nvim) is installed, you can toggle `Telescope loclist` with `<leader>kt` (if default mappings are enabled).
 
 ### Open file/directory
 
@@ -187,7 +191,7 @@ You can also dynamically overwrite the values of your config file with
 
 </details>
 
-You list your YAMLs that should be included by Kustomize for the build of the final manifests like so:
+In a kustomiation.yaml you list your YAMLs that should be included by Kustomize for the build of the final manifests like so:
 
 ```yaml
 ---
@@ -223,6 +227,16 @@ When writing a new deployment I usually split the resources into files according
 
 [kubeconform](https://github.com/yannh/kubeconform) is a Kubernetes manifests validator that can detect a misconfiguration before you apply your manifests to your cluster. This command runs `kubeconform --strict --ignore-missing-schemas` on the current buffer. The buffer's content may be a file on disk or content not (yet) saved, e.g. the output of [Build manifests](#build-manifests).
 
+You can overwrite the default args like so
+
+```lua
+  run = {
+    validate = {
+      args = { "--strict" },
+      },
+  }
+```
+
 ### Check for deprecations
 
 <details>
@@ -232,14 +246,36 @@ When writing a new deployment I usually split the resources into files according
 
 </details>
 
-[kubent](https://github.com/doitintl/kube-no-trouble) is a tool to search for deprecated Kubernetes APIs. This plugin utilizes the plugin to check the manifests in the current buffer for deprecated Kubernetes APIs. The buffer's content may be a file on disk or content not (yet) saved, e.g. the output of [Build manifests](#build-manifests). The Kubernetes target version can be set with `deprecations = { kube_version = "1.25" }`.
+[kubent](https://github.com/doitintl/kube-no-trouble) is a tool to search for deprecated Kubernetes APIs. This plugin utilizes the plugin to check the manifests in the current buffer for deprecated Kubernetes APIs. The buffer's content may be a file on disk or content not (yet) saved, e.g. the output of [Build manifests](#build-manifests).
 
-You can also dynamically overwrite the values of your config file with
+You can overwrite the default args like so
 
-```
-:lua require("kustomize").deprecations({kube_version=1.25})
+```lua
+  run = {
+    deprecations = {
+      args = { "-t", "1.30", "-l=error", "-e", "-f" },
+    }
 ```
 
+### Run custom commands
+
+You can define and run arbitrary commands on yaml files, for instance:
+
+```lua
+    run = {
+        trivy = {
+        cmd = "trivy",
+        args = { "-q", "fs" },
+        },
+        deprecations29 = {
+        cmd = "kubent",
+        args = { "-t", "1.29", "-c=false", "--helm3=false", "-l=error", "-e", "-f" },
+        },
+        deprecations30 = {
+        cmd = "kubent",
+        args = { "-t", "1.29", "-c=false", "--helm3=false", "-l=error", "-e", "-f" },
+        },
+    },
 ```
-:KustomizeDeprecations kube_version=1.16
-```
+
+Then you can run `:KustomizeRun trivy` to run the specified command. Auto-completion is supported!

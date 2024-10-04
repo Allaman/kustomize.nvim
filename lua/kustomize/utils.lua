@@ -177,4 +177,47 @@ M.create_file_from_current_buffer_content = function(file_name)
   end
 end
 
+-- Helper function to parse key-value pairs from command arguments
+M.parseArguments = function(arg_str)
+  print(arg_str)
+  local result = {}
+
+  local arg_tbl = vim.split(arg_str, " ", { trimempty = true })
+  for _, arg in ipairs(arg_tbl) do
+    local key, value = unpack(vim.split(arg, "=", { trimempty = true }))
+
+    local splitted_values = vim.split(value, ",")
+    if table.getn(splitted_values) > 1 then
+      -- process list
+      value = vim.split(value, ",")
+    end
+    -- Handle boolean values
+    if value == "true" then
+      value = true
+    end
+    if value == "false" then
+      value = false
+    end
+    result[key] = value
+  end
+  return result
+end
+
+---reload_config reloads the initial config of the plugin
+---which the user expects. This reverts any changes to the
+---config by calling commands/Lua APIs with arguments
+M.reload_config = function()
+  local config = require("kustomize.config")
+
+  if KUSTOMIZE_INITIAL_CONFIG then
+    -- in place modification instead of
+    -- config = vim.deepcopy(KUSTOMIZE_INITIAL_CONFIG)
+    for k, v in pairs(KUSTOMIZE_INITIAL_CONFIG) do
+      config[k] = vim.deepcopy(v)
+    end
+  else
+    M.error("Initial configuration is not available.")
+  end
+end
+
 return M

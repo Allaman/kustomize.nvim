@@ -1,4 +1,5 @@
 local M = {}
+_G._TEST = true
 
 function M.root(root)
   local f = debug.getinfo(1, "S").source:sub(2)
@@ -35,7 +36,7 @@ function M.setup()
   require("mini.test").setup()
   require("nvim-treesitter.configs").setup({})
   require("nvim-treesitter.install").commands.TSInstall["run!"]("yaml")
-  vim.cmd([[sleep 10000m]]) -- TSInstall is non blocking...
+  vim.cmd([[sleep 2000m]]) -- TSInstall is non blocking...
 end
 
 M.setup()

@@ -15,7 +15,7 @@ end
 ---@param bufNr integer
 ---@param exclude_pattern table
 ---@return table
-M.find_kinds = function(bufNr, exclude_pattern)
+local find_kinds = function(bufNr, exclude_pattern)
   local q = require("vim.treesitter.query")
   local t = require("vim.treesitter")
 
@@ -125,7 +125,7 @@ end
 ---create a loclist filled with kinds
 ---@param items table
 ---@param enable_telescope_key_mapping boolean
-M.set_list = function(items, enable_telescope_key_mapping)
+local set_list = function(items, enable_telescope_key_mapping)
   vim.fn.setloclist(0, {}, " ", { title = "Kustomize", items = items })
   -- vim.cmd.lopen({ args = { '"5"' } }) not working
   vim.cmd("lopen 20")
@@ -143,7 +143,7 @@ M.list = function(config)
     utils.error("cannot load nvim-treesitter")
     return
   end
-  local kinds_list = M.find_kinds(bufNr, exclude_pattern)
+  local kinds_list = find_kinds(bufNr, exclude_pattern)
   local kinds = {}
   for _, kind in pairs(kinds_list) do
     local item = {
@@ -164,8 +164,13 @@ M.list = function(config)
   end
   utils.info("found " .. utils.table_length(kinds) .. " resources")
   if utils.table_length(kinds) > 0 then
-    M.set_list(kinds, config.options.enable_key_mappings)
+    set_list(kinds, config.options.enable_key_mappings)
   end
+end
+
+if _TEST then
+  -- export function only for unit testing
+  M._find_kinds = find_kinds
 end
 
 return M

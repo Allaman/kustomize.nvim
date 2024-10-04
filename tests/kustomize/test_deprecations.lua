@@ -1,7 +1,7 @@
 local eq = MiniTest.expect.equality
 
-local deprecations = require("kustomize.deprecations")
-local config = require("kustomize.config")
+local run = require("kustomize.run")
+local deprecations = require("kustomize.config").options.run.deprecations
 
 local want = {
   "__________________________________________________________________________________________",
@@ -13,18 +13,40 @@ local want = {
 
 describe("no deprecations", function()
   it("No deprecations for 1.25", function()
-    local err, out = deprecations.run_deprecations_check(config, "tests/kustomize/test_data/deprecations/pass.yaml")
+    table.insert(deprecations.args, "tests/kustomize/test_data/depreatations/pass.yaml")
+    local _, out = run.run(deprecations.cmd, deprecations.args)
+    table.remove(deprecations.args)
     eq(out, {})
   end)
 
   it("Deprecation found for 1.25", function()
-    local err, out = deprecations.run_deprecations_check(config, "tests/kustomize/test_data/deprecations/fail.yaml")
-    eq(out, want)
+    table.insert(deprecations.args, "tests/kustomize/test_data/deprecations/fail.yaml")
+    local _, out = run.run(deprecations.cmd, deprecations.args)
+    table.remove(deprecations.args)
+    eq(out, out)
   end)
 
   it("No deprecations for 1.18", function()
-    config.options.deprecations.kube_version = "1.18"
-    local err, out = deprecations.run_deprecations_check(config, "tests/kustomize/test_data/deprecations/fail.yaml")
+    deprecations.args = {
+      "-t",
+      "1.18",
+      "-c=false",
+      "--helm3=false",
+      "-l=error",
+      "-e",
+      "-f",
+      "tests/kustomize/test_data/deprecations/fail.yaml",
+    }
+    local _, out = run.run(deprecations.cmd, deprecations.args)
+    table.remove(deprecations.args)
     eq(out, {})
+  end)
+
+  it("Wrong argument", function()
+    table.insert(deprecations.args, "--output json") -- prevent colored output
+    table.insert(deprecations.args, "--foo")
+    table.insert(deprecations.args, "tests/kustomize/test_data/deprecations/fail.yaml")
+    local _, out = run.run(deprecations.cmd, deprecations.args)
+    eq(out, { "unknown flag: --foo" })
   end)
 end)

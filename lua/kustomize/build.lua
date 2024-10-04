@@ -1,4 +1,5 @@
 local utils = require("kustomize.utils")
+local config = require("kustomize.config")
 local M = {}
 
 ---configure buffer for output
@@ -14,10 +15,9 @@ end
 
 ---run 'kustomize build' in the provided directory
 ---@param dirName string
----@param config table
 ---@return table
 ---@return table
-M.kustomize_build = function(dirName, config)
+local function kustomize_build(dirName)
   local additional_args = config.options.build.additional_args
   local Job = require("plenary.job")
   local job = Job:new({
@@ -29,7 +29,8 @@ M.kustomize_build = function(dirName, config)
   return job:stderr_result(), job:result()
 end
 
-M.build = function(config)
+---run kustomize_build and display the result in a new buffer
+M.build = function()
   if not utils.check_exec("kustomize") then
     utils.error("kustomize was not found on your PATH")
     return
@@ -39,7 +40,7 @@ M.build = function(config)
   if dirName == nil then
     return
   end
-  local err, manifest = M.kustomize_build(dirName, config)
+  local err, manifest = kustomize_build(dirName)
   -- https://stackoverflow.com/questions/1252539/most-efficient-way-to-determine-if-a-lua-table-is-empty-contains-no-entries
   if next(err) ~= nil then
     local err_msg = table.concat(err, "\n")
@@ -48,6 +49,11 @@ M.build = function(config)
   end
   local buf = configure_buffer()
   vim.api.nvim_buf_set_lines(buf, -1, -1, true, manifest)
+end
+
+if _TEST then
+  -- export function only for unit testing
+  M._kustomize_build = kustomize_build
 end
 
 return M
