@@ -52,10 +52,10 @@ M.run_checked = function(cmd, args)
 
   if next(err) ~= nil then
     local err_msg = table.concat(err, "\n")
-    utils.error("Failed " .. cmd .. " with: " .. err_msg)
+    utils.error("Failed " .. cmd .. " with:\n" .. err_msg)
   elseif next(out) ~= nil then
     local out_msg = table.concat(out, "\n")
-    utils.warn("Output from " .. cmd .. ": " .. out_msg)
+    utils.warn("Output from " .. cmd .. ":\n" .. out_msg)
   elseif next(out) == nil then
     utils.info("No output captured from " .. cmd)
   end
