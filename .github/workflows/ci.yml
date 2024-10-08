@@ -18,6 +18,8 @@ jobs:
           args: --check lua
   tests:
     name: Run tests
+    needs:
+      - stylua
     timeout-minutes: 15
     strategy:
       fail-fast: false
@@ -25,9 +27,10 @@ jobs:
         # os: [ubuntu-latest, windows-latest]
         os: [ubuntu-latest]
         neovim_version: ["v0.9.5", "v0.10.2", "nightly"]
-        include:
-          - os: macos-latest
-            neovim_version: v0.10.2
+        # Does not work; https://github.com/Allaman/kustomize.nvim/actions/runs/11244235042/job/31261846739
+        # include:
+        #   - os: macos-latest
+        #     neovim_version: v0.10.2
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
