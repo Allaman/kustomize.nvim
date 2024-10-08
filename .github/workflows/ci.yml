@@ -45,10 +45,10 @@ jobs:
           if [[ "$OS" = "macos" ]]; then OS=darwin; fi
           echo $OS
           [ ! -d tests ] && exit 0
-          curl -sLo /tmp/kubeconform.tar.gz https://github.com/yannh/kubeconform/releases/download/v0.6.7/kubeconform-$(uname -o | tr '[:upper:]' '[:lower:]')-amd64.tar.gz
+          curl -sLo /tmp/kubeconform.tar.gz https://github.com/yannh/kubeconform/releases/download/v0.6.7/kubeconform-${OS}-amd64.tar.gz
           tar -xC /tmp -f /tmp/kubeconform.tar.gz
           mv /tmp/kubeconform /usr/local/bin/kubeconform
-          curl -sLo /tmp/kubent.tar.gz https://github.com/doitintl/kube-no-trouble/releases/download/0.7.0/kubent-0.7.0-$(uname -o | tr '[:upper:]' '[:lower:]')-amd64.tar.gz
+          curl -sLo /tmp/kubent.tar.gz https://github.com/doitintl/kube-no-trouble/releases/download/0.7.0/kubent-0.7.0-${OS}-amd64.tar.gz
           tar -xC /tmp -f /tmp/kubent.tar.gz
           mv /tmp/kubent /usr/local/bin/kubent
           nvim --headless --noplugin -u ./tests/init.lua -c "lua MiniTest.run()"
