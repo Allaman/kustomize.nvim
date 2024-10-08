@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.0.1](https://github.com/Allaman/kustomize.nvim/compare/v5.0.0...v5.0.1) (2024-10-08)
+
+
+### Bug Fixes
+
+* **run:** Add newline in run output ([71e99f9](https://github.com/Allaman/kustomize.nvim/commit/71e99f907b73b22b3a82a4d4f02812b7480844af))
+
 ## [5.0.0](https://github.com/Allaman/kustomize.nvim/compare/v4.9.3...v5.0.0) (2024-10-04)
 
 
