@@ -39,11 +39,13 @@ jobs:
       - name: Run Tests
         run: |
           nvim --version
-          env
           OS=$(echo $RUNNER_OS | tr '[:upper:]' '[:lower:]')
-          echo $OS
-          if [[ "$OS" = "macos" ]]; then OS=darwin; fi
-          echo $OS
+          if [[ "$OS" = "macos" ]]; then
+            OS=darwin
+            curl -sLo /tmp/kustomize.tar.gz https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize/v5.3.0/kustomize_v5.3.0_darwin_amd64.tar.gz
+            tar -xC /tmp -f /tmp/kustomize.tar.gz
+            mv /tmp/kustomize /usr/local/bin/kustomize
+          fi
           [ ! -d tests ] && exit 0
           curl -sLo /tmp/kubeconform.tar.gz https://github.com/yannh/kubeconform/releases/download/v0.6.7/kubeconform-${OS}-amd64.tar.gz
           tar -xC /tmp -f /tmp/kubeconform.tar.gz
