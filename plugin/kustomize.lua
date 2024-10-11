@@ -20,7 +20,7 @@ vim.api.nvim_create_user_command("KustomizeRun", function(opts)
   local choice = opts.fargs[1]
   local cmd = config.options.run[choice].cmd
   local args = config.options.run[choice].args
-  local timeout = config.options.run[choice].timeout or 5000
+  local timeout = config.options.run[choice].timeout or 5000 -- TODO: refactor in one datastructure
   run.run_checked(cmd, args, timeout)
 end, {
   desc = "Run commands",
