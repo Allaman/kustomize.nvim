@@ -264,10 +264,12 @@ You can define and run arbitrary commands on yaml files, for instance:
         trivy = {
         cmd = "trivy",
         args = { "-q", "fs" },
+        timeout = 10000, -- in ms
         },
         deprecations29 = {
         cmd = "kubent",
         args = { "-t", "1.29", "-c=false", "--helm3=false", "-l=error", "-e", "-f" },
+        -- the default timeout is 5000 when not specified
         },
         deprecations30 = {
         cmd = "kubent",

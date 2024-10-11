@@ -5,9 +5,10 @@ local M = {}
 ---comment
 ---@param cmd string
 ---@param args table
+---@param timeout number
 ---@return table
 ---@return table
-M.run = function(cmd, args)
+M.run = function(cmd, args, timeout)
   if not utils.check_exec(cmd) then
     return { "cmd was not found on path" }, {}
   end
@@ -28,13 +29,13 @@ M.run = function(cmd, args)
 
   table.insert(args, file_to_validate)
 
-  utils.info("Running: " .. cmd .. " " .. vim.inspect(args))
+  utils.info("Running: " .. cmd .. " " .. vim.inspect(args) .. "timeout: " .. timeout)
   local Job = require("plenary.job")
   local job = Job:new({
     command = cmd,
     args = args,
   })
-  job:sync()
+  job:sync(timeout)
   local err, out = job:stderr_result(), job:result()
 
   -- Removes `file_to_validate` so that a second call does not include the first file_to_validate
@@ -47,8 +48,8 @@ M.run = function(cmd, args)
   return err, out
 end
 
-M.run_checked = function(cmd, args)
-  local err, out = M.run(cmd, args)
+M.run_checked = function(cmd, args, timeout)
+  local err, out = M.run(cmd, args, timeout)
 
   if next(err) ~= nil then
     local err_msg = table.concat(err, "\n")

@@ -16,12 +16,12 @@ M.set_default_mappings = function()
 
   vim.keymap.set("n", "<leader>kv", function()
     local validate = config.options.run.validate
-    run.run_checked(validate.cmd, validate.args)
+    run.run_checked(validate.cmd, validate.args, validate.timeout or 5000)
   end, { desc = "Validate manifests" })
 
   vim.keymap.set("n", "<leader>kd", function()
     local deprecate = config.options.run.deprecations
-    run.run_checked(deprecate.cmd, deprecate.args)
+    run.run_checked(deprecate.cmd, deprecate.args, deprecate.timeout or 5000)
   end, { desc = "Check for deprecations" })
 end
 
