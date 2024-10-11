@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.1.0](https://github.com/Allaman/kustomize.nvim/compare/v5.0.1...v5.1.0) (2024-10-11)
+
+
+### Features
+
+* Add configurable timeout for run operations [#61](https://github.com/Allaman/kustomize.nvim/issues/61) ([26f9ced](https://github.com/Allaman/kustomize.nvim/commit/26f9ced7b8afa133d0c193cc25b1ea4b0c168114))
+
 ## [5.0.1](https://github.com/Allaman/kustomize.nvim/compare/v5.0.0...v5.0.1) (2024-10-08)
 
 
