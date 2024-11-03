@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.2.0](https://github.com/Allaman/kustomize.nvim/compare/v5.1.0...v5.2.0) (2024-11-03)
+
+
+### Features
+
+* Add schema-location to validate cmd ([0692a31](https://github.com/Allaman/kustomize.nvim/commit/0692a31a7202fb620126e67dac4959c8d217b701))
+
 ## [5.1.0](https://github.com/Allaman/kustomize.nvim/compare/v5.0.1...v5.1.0) (2024-10-11)
 
 
