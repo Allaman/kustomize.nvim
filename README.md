@@ -38,6 +38,7 @@ With [Lazy.nvim](https://github.com/folke/lazy.nvim):
 {
   "allaman/kustomize.nvim",
   requires = "nvim-lua/plenary.nvim",
+  dependencies = "nvim-lua/plenary.nvim"
   ft = "yaml",
   opts = {}
 }
@@ -89,7 +90,14 @@ This is the default configuration that can be overwritten, also in parts, by you
   run = {
     validate = {
       cmd = "kubeconform",
-      args = { "--strict", "--ignore-missing-schemas" },
+      args = {
+        "--strict",
+        "--ignore-missing-schemas",
+        "-schema-location",
+        "default",
+        "-schema-location",
+        "https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json",
+      },
     },
     deprecations = {
       cmd = "kubent",
