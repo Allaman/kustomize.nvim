@@ -9,7 +9,16 @@ M.options = {
   run = {
     validate = {
       cmd = "kubeconform",
-      args = { "--strict", "--ignore-missing-schemas" },
+      args = {
+        "--strict",
+        "--ignore-missing-schemas",
+        "-schema-location",
+        "default",
+        "-schema-location",
+        "https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json",
+        -- "-schema-location",
+        -- "https://json.schemastore.org/kustomization.json",
+      },
     },
     deprecations = {
       cmd = "kubent",
