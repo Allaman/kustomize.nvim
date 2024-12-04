@@ -1,4 +1,4 @@
-*kustomize.nvim.txt*     For Neovim >= 0.9.0     Last change: 2024 November 03
+*kustomize.nvim.txt*     For Neovim >= 0.9.0     Last change: 2024 December 04
 
 ==============================================================================
 Table of Contents                           *kustomize.nvim-table-of-contents*
