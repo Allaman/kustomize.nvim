@@ -44,8 +44,12 @@ M.build = function()
   -- https://stackoverflow.com/questions/1252539/most-efficient-way-to-determine-if-a-lua-table-is-empty-contains-no-entries
   if next(err) ~= nil then
     local err_msg = table.concat(err, "\n")
-    utils.error("Failed with error " .. err_msg)
-    return
+    if err_msg:match("^# Warning") then
+      utils.warn(err_msg)
+    else
+      utils.error("Failed with error " .. err_msg)
+      return
+    end
   end
   local buf = configure_buffer()
   vim.api.nvim_buf_set_lines(buf, -1, -1, true, manifest)
