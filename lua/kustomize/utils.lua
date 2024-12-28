@@ -180,7 +180,7 @@ M.parseArguments = function(arg_str)
     local key, value = unpack(vim.split(arg, "=", { trimempty = true }))
 
     local splitted_values = vim.split(value, ",")
-    if table.getn(splitted_values) > 1 then
+    if #splitted_values > 1 then
       -- process list
       value = vim.split(value, ",")
     end
