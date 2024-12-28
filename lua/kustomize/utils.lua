@@ -126,13 +126,6 @@ M.is_neovim_version_satisfied = function(version)
   return version <= tonumber(vim.version().minor)
 end
 
----checks if a command is available
----@param command string
----@return boolean
-M.is_executable_available = function(command)
-  return vim.fn.executable(command) == 1
-end
-
 ---create_temp_file creates a temporary file name
 ---@param extension string|nil
 ---@return string
