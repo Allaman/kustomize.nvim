@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.3.2](https://github.com/Allaman/kustomize.nvim/compare/v5.3.1...v5.3.2) (2025-03-15)
+
+
+### Bug Fixes
+
+* **build:** Handling of user config [#72](https://github.com/Allaman/kustomize.nvim/issues/72) ([f2cc07a](https://github.com/Allaman/kustomize.nvim/commit/f2cc07a621732db031893db4bb2a3ddf9657b5d0))
+
 ## [5.3.1](https://github.com/Allaman/kustomize.nvim/compare/v5.3.0...v5.3.1) (2024-12-28)
 
 
