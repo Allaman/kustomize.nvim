@@ -41,8 +41,11 @@ end, {
 })
 
 vim.api.nvim_create_user_command("KustomizeBuild", function(opts)
-  config.options.build.additional_args = opts.fargs
-  require("kustomize.build").build()
+  if opts.args ~= "" then
+    local parsed_arguments = utils.parseArguments(opts.args)
+    config.options.build = vim.tbl_deep_extend("force", config.options.build, parsed_arguments)
+  end
+  require("kustomize.build").build(config)
   utils.reload_config()
 end, {
   desc = "Build kustomization.yaml file",
