@@ -92,7 +92,7 @@ you.
       enable_key_mappings = true,
       enable_lua_snip = false,
       build = { additional_args = {} },
-      kinds = { show_filepath = true, show_line = true, exclude_pattern = {} },
+      kinds = { auto_close = false, show_filepath = true, show_line = true, exclude_pattern = {} },
       -- built-in commands
       run = {
         validate = {
@@ -170,6 +170,7 @@ and line number by adding the following snippet to the opts table:
 
 >lua
       kinds = {
+          auto_close = false,
           show_filepath = false,
           show_line = false,
       },
