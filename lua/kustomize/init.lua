@@ -42,6 +42,10 @@ M.setup = function(opts)
     M.set_default_mappings()
   end
 
+  if config.options.kinds.auto_close then
+    utils.auto_close_loclist()
+  end
+
   if config.options.enable_lua_snip then
     if not utils.is_module_available("luasnip") then
       utils.error("Could not load L3MON4D3/LuaSnip")

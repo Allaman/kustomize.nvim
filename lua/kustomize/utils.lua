@@ -213,4 +213,24 @@ M.reload_config = function()
   end
 end
 
+M.auto_close_loclist = function()
+  vim.api.nvim_create_autocmd("FileType", {
+    pattern = "qf",
+    callback = function()
+      -- Check if this is a location list (not a quickfix list)
+      local is_loclist = vim.fn.getwininfo(vim.fn.win_getid())[1].loclist == 1
+
+      if is_loclist then
+        -- Get the location list title
+        local loc_title = vim.fn.getloclist(0, { title = 0 }).title
+
+        -- Check if the title contains your plugin's name or identifier
+        if loc_title:match("Kustomize") then
+          vim.api.nvim_buf_set_keymap(0, "n", "<CR>", "<CR>:lclose<CR>", { noremap = true, silent = true })
+        end
+      end
+    end,
+  })
+end
+
 return M
