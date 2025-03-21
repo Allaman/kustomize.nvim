@@ -85,7 +85,7 @@ This is the default configuration that can be overwritten, also in parts, by you
   enable_key_mappings = true,
   enable_lua_snip = false,
   build = { additional_args = {} },
-  kinds = { show_filepath = true, show_line = true, exclude_pattern = {} },
+  kinds = { auto_close = false, show_filepath = true, show_line = true, exclude_pattern = {} },
   -- built-in commands
   run = {
     validate = {
@@ -167,6 +167,7 @@ The output consists of `<buffer-name> |<line-nr>| <kind> <name> <namespace>`. Cl
 
 ```lua
   kinds = {
+      auto_close = false,
       show_filepath = false,
       show_line = false,
   },
