@@ -71,11 +71,66 @@ M.list = function()
   end
 end
 
----create a quickfix list filled with items
----@param items table
+---create a vim.ui.select popup with found resources
+---@param items table{<filename, string>}
 M.set_list = function(items)
-  vim.fn.setqflist({}, " ", { title = "Kustomize", id = "$", items = items })
-  vim.cmd.copen()
+  -- Make sure items is a valid table
+  if not items or type(items) ~= "table" or #items == 0 then
+    utils.error("no items provided to select from")
+    return
+  end
+
+  -- Extract just the filenames for display
+  local paths = {}
+  for _, item in ipairs(items) do
+    if item and type(item) == "table" and item.filename then
+      table.insert(paths, item.filename)
+    end
+  end
+
+  if #paths == 0 then
+    utils.error("no valid paths found in the provided items")
+    return
+  end
+
+  vim.ui.select(paths, {
+    prompt = "Select a file or directory:",
+    format_item = function(p)
+      -- Get the file/dir name for display (not the full path)
+      local name = string.match(p, "([^/]+)/?$")
+      if not name or name == "" then
+        name = p -- Fallback to the full path if extraction fails
+      end
+
+      local stat = vim.uv.fs_stat(p)
+      if stat and stat.type == "directory" then
+        return name .. "/" -- Add trailing slash to indicate directories
+      else
+        return name
+      end
+    end,
+  }, function(selected)
+    if selected then
+      local stat = vim.uv.fs_stat(selected)
+      if not stat then
+        utils.warn("path does not exist: " .. selected)
+        return
+      end
+
+      if stat.type == "directory" then
+        local has_neotree, _ = pcall(require, "neo-tree")
+        if has_neotree then
+          vim.cmd("Neotree float dir=" .. vim.fn.fnameescape(selected))
+        else
+          utils.info("Neo-tree not found, falling back to built-in explorer")
+          vim.cmd("Explore " .. vim.fn.fnameescape(selected))
+        end
+      else
+        -- For files, open the file
+        vim.cmd("edit " .. vim.fn.fnameescape(selected))
+      end
+    end
+  end)
 end
 
 ---creates an absolute path from a resource item

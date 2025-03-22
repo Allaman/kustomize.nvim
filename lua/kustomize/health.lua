@@ -59,6 +59,13 @@ M.check = function()
     _ok("nvim-treesitter/nvim-treesitter found")
   end
 
+  local ok, _ = pcall(require, "neo-tree")
+  if not ok then
+    _warn("this plugin can use nvim-neo-tree/neo-tree.nvim for better directory handling")
+  else
+    _ok("nvim-neo-tree/neo-tree.nvim found")
+  end
+
   for k, v in pairs(programs) do
     if not utils.check_exec(k) then
       if v.required then
