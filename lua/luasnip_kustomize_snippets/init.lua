@@ -91,6 +91,8 @@ M.load_snippets = function()
           options:
             labels:
               - foo: bar
+      generatorOptions:
+       disableNameSuffixHash: true
       <finish>
       ]],
         {
