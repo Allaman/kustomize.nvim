@@ -12,7 +12,7 @@ M.set_default_mappings = function()
 
   vim.keymap.set("n", "<leader>kl", "<cmd>KustomizeListResources<cr>", { desc = "List resources" })
 
-  vim.keymap.set("n", "<leader>kp", "<cmd>KustomizePrintResources<cr>", { desc = "Print resources in folder" })
+  vim.keymap.set("n", "<leader>kp", "<cmd>KustomizePrintResources<cr>", { desc = "Print resources" })
 
   vim.keymap.set("n", "<leader>kv", function()
     local validate = config.options.run.validate
