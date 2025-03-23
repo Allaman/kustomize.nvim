@@ -1,4 +1,4 @@
-Output kustomize.nvim-open.gif
+Output kustomize.nvim-list.gif
 
 Set WindowBar Colorful
 Set Padding 5
@@ -14,10 +14,11 @@ Enter
 Sleep 1s
 Type@300ms ":KustomizeListResources"
 Enter
+Sleep 3s
+Type "2"
 Sleep 2s
-Type@3s "jjjkkk"
-Type "q"
-Sleep 2s
+Enter
+Sleep 3s
 Hide
 Type ":q"
 Enter

@@ -28,6 +28,7 @@ Jump to the [use cases](#use-cases) to check out what this plugin can do!
 - [kubent](https://github.com/doitintl/kube-no-trouble) in your PATH to [check for deprecations](#check-for-deprecations)
 - [plenary.nvim](https://github.com/nvim-lua/plenary.nvim)
 - [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) and `yaml` parser
+- (optionally) [neo-tree](https://github.com/nvim-neo-tree/neo-tree.nvim) for directory listings in "List Resources"
 - (optionally) [LuaSnip](https://github.com/L3MON4D3/LuaSnip) for snippets support (default is disabled)
 
 ## Quickstart
@@ -37,8 +38,11 @@ With [Lazy.nvim](https://github.com/folke/lazy.nvim):
 ```lua
 {
   "allaman/kustomize.nvim",
-  requires = "nvim-lua/plenary.nvim",
-  dependencies = "nvim-lua/plenary.nvim"
+  dependencies = {
+    "nvim-lua/plenary.nvim",
+    -- (optional for better directory handling in "List resources")
+    "nvim-neo-tree/neo-tree.nvim"
+  }
   ft = "yaml",
   opts = {}
 }
@@ -53,7 +57,7 @@ Run `:checkhealth kustomize` for a health check.
 | n    | \<leader\>kb | Kustomize build        | `:KustomizeBuild`          |
 | n    | \<leader\>kk | List kinds             | `:KustomizeListKinds`      |
 | n    | \<leader\>kp | Print resources        | `:KustomizePrintResources` |
-| n    | \<leader\>kl | List 'resources'       | `:KustomizeListResources`  |
+| n    | \<leader\>kl | List resources         | `:KustomizeListResources`  |
 | n    | \<leader\>kv | Validate file          | `:KustomizeValidate`       |
 | n    | \<leader\>kd | Check API deprecations | `:KustomizeDeprecations`   |
 | n    |              | Run custom commands    | `:KustomizeRun <command>`  |
@@ -63,8 +67,6 @@ You can define your own keybindings after setting `opts.enable_key_mappings = fa
 ```lua
   use({
     "allaman/kustomize.nvim",
-    requires = "nvim-lua/plenary.nvim",
-    ft = "yaml",
     opts = { enable_key_mappings = false },
     config = function(opts)
       require('kustomize').setup({opts})
@@ -189,16 +191,16 @@ You can also dynamically overwrite the values of your config file with
 
 If [Telescope.nvim](https://github.com/nvim-telescope/telescope.nvim) is installed, you can toggle `Telescope loclist` with `<leader>kt` (if default mappings are enabled).
 
-### Open file/directory
+### List "resources"
 
 <details>
 <summary>Showcase</summary
 
-![kustomize.nvim-open.gif](https://s12.gifyu.com/images/kustomize.nvim-open.gif)
+[![kustomize.nvim-open.gif](https://s6.gifyu.com/images/bzlxA.gif)]
 
 </details>
 
-In a kustomiation.yaml you list your YAMLs that should be included by Kustomize for the build of the final manifests like so:
+In a kustomiation.yaml you define your YAMLs and folders that should be included by Kustomize in a `resources` list like so:
 
 ```yaml
 ---
@@ -210,7 +212,7 @@ resources:
   - ../../base/namespace.yaml
 ```
 
-In order to quickly check/edit those included YAMLs this command will go through all items in `resources:` and populate a loclist with them.
+In order to quickly check/edit those included YAMLs this command will go through all items in `resources:` and open a selection popup with all found files/directories.
 
 ### Print resource files
 
