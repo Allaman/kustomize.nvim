@@ -86,24 +86,48 @@ This is the default configuration that can be overwritten, also in parts, by you
 {
   enable_key_mappings = true,
   enable_lua_snip = false,
-  build = { additional_args = {} },
+  build = {
+    ui = {
+      window = {
+        type = "vsplit", -- "float", "split", or "vsplit"
+        width = 0.5, -- For float/vsplit: percentage of screen width
+        height = 0.8, -- For float/split: percentage of screen height
+        border = "rounded", -- Border style: "none", "single", "double", "rounded", etc.
+        title = " Kustomize ",
+        title_pos = "center", -- "left", "center", "right"
+        blend = 0, -- Background transparency (0-100)
+      },
+      buffer = {
+        readonly = true,
+        modifiable = false,
+        swapfile = false,
+      },
+      -- Keybindings
+      keymaps = {
+        close = { "q", "<Esc>" },
+        save = "s",
+      },
+    },
+    additional_args = {},
+  },
   kinds = { auto_close = false, show_filepath = true, show_line = true, exclude_pattern = {} },
-  -- built-in commands
+  -- the last argument of a run command is always a file with the current buffer's content
   run = {
     validate = {
       cmd = "kubeconform",
       args = {
-        "--strict",
-        "--ignore-missing-schemas",
+        "-strict",
         "-schema-location",
         "default",
         "-schema-location",
         "https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json",
+        "-schema-location",
+        "https://json.schemastore.org/kustomization.json", -- for kustomize.config.k8s.io/v1beta1 which is not included above
       },
     },
     deprecations = {
       cmd = "kubent",
-      args = { "-t", "1.26", "-c=false", "--helm3=false", "-l=error", "-e", "-f" },
+      args = { "-t", "1.27", "-c=false", "--helm3=false", "-l=error", "-e", "-f" },
     },
   },
 }
@@ -138,12 +162,19 @@ If enabled, kustomize.nvim includes some useful snippets for LuaSnip. All snippe
 </details>
 
 This command will run `kustomize build .` in the current buffer's directory. The generated YAML will be printed to a new buffer. The new buffer can be closed by just typing `q`.
+If you want to save the generated output hit `s` in the output buffer. Keybindings can be modified.
+
 This allows me to quickly inspect the YAML that Kustomize generates (and ultimately is applied to the cluster). In addition, I get fast feedback on any errors in my YAML sources.
 
-You can add additional arguments to the build call via config file:
+You can add additional arguments to the build call or change the output options via config file:
 
 ```lua
 build = {
+  ui = {
+    window = {
+      type = "float"
+    },
+  },
   additional_args = {"--enable-helm", "--load-restrictor=LoadRestrictionsNone"}
 },
 ```

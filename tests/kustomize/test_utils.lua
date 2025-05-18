@@ -42,7 +42,7 @@ end)
 describe("parse arguments", function()
   it("valid", function()
     local args = "show_line=true show_filepath=true exclude_pattern=CronJob,ServiceAccount"
-    local get = utils.parseArguments(args)
+    local get = utils.parse_and_merge_config(args, {})
     eq(get, {
       exclude_pattern = { "CronJob", "ServiceAccount" },
       show_filepath = true,

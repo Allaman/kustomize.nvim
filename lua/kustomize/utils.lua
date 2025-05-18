@@ -170,30 +170,96 @@ M.create_file_from_current_buffer_content = function(file_name)
   end
 end
 
--- Helper function to parse key-value pairs from command arguments
-M.parseArguments = function(arg_str)
-  print(arg_str)
-  local result = {}
+-- Helper function to set a nested value in a table
+local function set_nested_value(tbl, path, value)
+  local current = tbl
+  local path_parts = vim.split(path, ".", { plain = true })
 
-  local arg_tbl = vim.split(arg_str, " ", { trimempty = true })
-  for _, arg in ipairs(arg_tbl) do
-    local key, value = unpack(vim.split(arg, "=", { trimempty = true }))
-
-    local splitted_values = vim.split(value, ",")
-    if #splitted_values > 1 then
-      -- process list
-      value = vim.split(value, ",")
+  for i = 1, #path_parts - 1 do
+    local key = path_parts[i]
+    if current[key] == nil then
+      current[key] = {}
+    elseif type(current[key]) ~= "table" then
+      current[key] = {}
     end
-    -- Handle boolean values
-    if value == "true" then
-      value = true
-    end
-    if value == "false" then
-      value = false
-    end
-    result[key] = value
+    current = current[key]
   end
-  return result
+
+  local final_key = path_parts[#path_parts]
+  current[final_key] = value
+end
+
+-- Convert string values to appropriate types
+local function convert_value(value)
+  -- Handle boolean values
+  if value == "true" then
+    return true
+  elseif value == "false" then
+    return false
+  end
+
+  -- Handle numeric values
+  local num_value = tonumber(value)
+  if num_value then
+    return num_value
+  end
+
+  -- Return the original string for everything else
+  return value
+end
+
+-- Parse arguments string and merge with the build configuration
+function M.parse_and_merge_config(args_str, build_config)
+  -- If no arguments, return the build config unchanged
+  if not args_str or args_str == "" then
+    return vim.deepcopy(build_config)
+  end
+
+  local modified_config = vim.deepcopy(build_config)
+  local args_list = vim.split(args_str, " ", { trimempty = true })
+
+  for _, arg in ipairs(args_list) do
+    -- Check if the argument contains a key=value pair
+    local eq_pos = arg:find("=")
+    if not eq_pos then
+      M.warn("Invalid argument format (missing =): " .. arg)
+      goto continue
+    end
+
+    local key = arg:sub(1, eq_pos - 1)
+    local value = arg:sub(eq_pos + 1)
+
+    -- Special handling for additional_args to ensure it's always a table
+    if key == "additional_args" then
+      -- Split by comma if present, otherwise make a single-element table
+      local args_table = {}
+      if value:find(",") then
+        args_table = vim.split(value, ",", { plain = true })
+      else
+        table.insert(args_table, value)
+      end
+      value = args_table
+    else
+      -- Handle list values (comma-separated) for other keys
+      if value:find(",") then
+        local list_values = vim.split(value, ",", { plain = true })
+        -- Convert each value in the list
+        for i, item in ipairs(list_values) do
+          list_values[i] = convert_value(item)
+        end
+        value = list_values
+      else
+        value = convert_value(value)
+      end
+    end
+
+    -- Set the value in the config
+    set_nested_value(modified_config, key, value)
+
+    ::continue::
+  end
+
+  return modified_config
 end
 
 ---reload_config reloads the initial config of the plugin

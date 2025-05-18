@@ -30,8 +30,7 @@ end, {
 
 vim.api.nvim_create_user_command("KustomizeListKinds", function(opts)
   if opts.args ~= "" then
-    local parsed_arguments = utils.parseArguments(opts.args)
-    config.options.kinds = vim.tbl_deep_extend("force", config.options.kinds, parsed_arguments)
+    config.options.kinds = utils.parse_and_merge_config(opts.args, config.options.kinds)
   end
   require("kustomize.kinds").list(config)
   utils.reload_config()
@@ -42,10 +41,9 @@ end, {
 
 vim.api.nvim_create_user_command("KustomizeBuild", function(opts)
   if opts.args ~= "" then
-    local parsed_arguments = utils.parseArguments(opts.args)
-    config.options.build = vim.tbl_deep_extend("force", config.options.build, parsed_arguments)
+    config.options.build = utils.parse_and_merge_config(opts.args, config.options.build)
   end
-  require("kustomize.build").build(config)
+  require("kustomize.build").build(config.options.build)
   utils.reload_config()
 end, {
   desc = "Build kustomization.yaml file",

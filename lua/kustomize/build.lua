@@ -1,16 +1,6 @@
 local utils = require("kustomize.utils")
+local ui = require("kustomize.ui")
 local M = {}
-
----configure buffer for output
----@return integer
-local function configure_buffer()
-  local win, buf = utils.create_output()
-  vim.api.nvim_win_set_buf(win, buf)
-  vim.api.nvim_buf_set_name(buf, "Kustomize #" .. buf)
-  vim.api.nvim_set_option_value("filetype", "yaml", { buf = buf })
-  utils.delete_output_keybinding(win, buf)
-  return buf
-end
 
 ---run 'kustomize build' in the provided directory
 ---@param dirName string
@@ -39,7 +29,7 @@ M.build = function(config)
   if dirName == nil then
     return
   end
-  local additional_args = config.options.build.additional_args or {}
+  local additional_args = config.additional_args or {}
   local err, manifest = kustomize_build(dirName, additional_args)
   -- https://stackoverflow.com/questions/1252539/most-efficient-way-to-determine-if-a-lua-table-is-empty-contains-no-entries
   if next(err) ~= nil then
@@ -51,8 +41,7 @@ M.build = function(config)
       return
     end
   end
-  local buf = configure_buffer()
-  vim.api.nvim_buf_set_lines(buf, -1, -1, true, manifest)
+  ui.display_output(manifest, config.ui)
 end
 
 if _TEST then
