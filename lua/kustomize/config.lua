@@ -33,19 +33,18 @@ M.options = {
     validate = {
       cmd = "kubeconform",
       args = {
-        "--strict",
-        "--ignore-missing-schemas",
+        "-strict",
         "-schema-location",
         "default",
         "-schema-location",
         "https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json",
-        -- "-schema-location",
-        -- "https://json.schemastore.org/kustomization.json",
+        "-schema-location",
+        "https://json.schemastore.org/kustomization.json", -- for kustomize.config.k8s.io/v1beta1 which is not included above
       },
     },
     deprecations = {
       cmd = "kubent",
-      args = { "-t", "1.26", "-c=false", "--helm3=false", "-l=error", "-e", "-f" },
+      args = { "-t", "1.27", "-c=false", "--helm3=false", "-l=error", "-e", "-f" },
     },
   },
 }
