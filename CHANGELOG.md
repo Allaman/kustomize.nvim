@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [6.0.0](https://github.com/Allaman/kustomize.nvim/compare/v5.4.0...v6.0.0) (2025-05-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* **config:** Update default config
+
+### Features
+
+* Add generatorOptions to snippet ([ba6d11d](https://github.com/Allaman/kustomize.nvim/commit/ba6d11d063616614084dcb41ed395a08b6df53b9))
+* **build:** Add display options ([7ed24a1](https://github.com/Allaman/kustomize.nvim/commit/7ed24a1fa55970b15e62b27aae3f1e0743d196ef))
+* **config:** Update default config ([2cb230a](https://github.com/Allaman/kustomize.nvim/commit/2cb230a65e18811c8d426a20e29a226dd2ef490e))
+* **list:** Use vim.ui.select instead of qflist ([cad69aa](https://github.com/Allaman/kustomize.nvim/commit/cad69aa482677ee1a9b56755c9a2c8bb0b05dfb7))
+
+
+### Bug Fixes
+
+* health check using wrong utils function to check for executables ([#76](https://github.com/Allaman/kustomize.nvim/issues/76)) ([2a823e8](https://github.com/Allaman/kustomize.nvim/commit/2a823e8346e10fd3c2bb94bf4726c4585844ff04))
+
 ## [5.4.0](https://github.com/Allaman/kustomize.nvim/compare/v5.3.2...v5.4.0) (2025-03-21)
 
 
