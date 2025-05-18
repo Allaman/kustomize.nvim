@@ -60,7 +60,7 @@ M.check = function()
   end
 
   for k, v in pairs(programs) do
-    if not utils.is_executable_available(k) then
+    if not utils.check_exec(k) then
       if v.required then
         _error(string.format(exec_not_found_template, k, v.desc))
       else
