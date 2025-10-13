@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [6.1.0](https://github.com/Allaman/kustomize.nvim/compare/v6.0.0...v6.1.0) (2025-10-13)
+
+
+### Features
+
+* Add fyler.nvim support ([ebe931c](https://github.com/Allaman/kustomize.nvim/commit/ebe931cf60f3edcafe8626ab05411ecb3e59c514))
+
 ## [6.0.0](https://github.com/Allaman/kustomize.nvim/compare/v5.4.0...v6.0.0) (2025-05-18)
 
 
