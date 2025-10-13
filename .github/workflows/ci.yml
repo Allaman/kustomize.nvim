@@ -26,7 +26,7 @@ jobs:
       matrix:
         # os: [ubuntu-latest, windows-latest]
         os: [ubuntu-latest]
-        neovim_version: ["v0.9.5", "v0.10.2", "nightly"]
+        neovim_version: ["v0.10.4", "v0.11.4", "nightly"]
         # Does not work; https://github.com/Allaman/kustomize.nvim/actions/runs/11244235042/job/31261846739
         # include:
         #   - os: macos-latest
@@ -67,7 +67,7 @@ jobs:
         uses: kdheepak/panvimdoc@main
         with:
           vimdoc: kustomize.nvim
-          version: "Neovim >= 0.9.0"
+          version: "Neovim >= 0.10.0"
           demojify: true
           treesitter: true
       - name: Push changes
