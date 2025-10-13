@@ -1,4 +1,4 @@
-*kustomize.nvim.txt*      For Neovim >= 0.9.0      Last change: 2025 August 15
+*kustomize.nvim.txt*     For Neovim >= 0.10.0     Last change: 2025 October 13
 
 ==============================================================================
 Table of Contents                           *kustomize.nvim-table-of-contents*
@@ -6,7 +6,7 @@ Table of Contents                           *kustomize.nvim-table-of-contents*
   - Requirements                                 |kustomize.nvim-requirements|
   - Quickstart                                     |kustomize.nvim-quickstart|
   - Default mappings                         |kustomize.nvim-default-mappings|
-  - Defaultconfiguration                 |kustomize.nvim-defaultconfiguration|
+  - Default configuration               |kustomize.nvim-default-configuration|
   - Use cases                                       |kustomize.nvim-use-cases|
 kustomize.nvim
 
@@ -18,7 +18,7 @@ the |kustomize.nvim-use-cases| to check out what this plugin can do!
 REQUIREMENTS                                     *kustomize.nvim-requirements*
 
 - Neovim >= 0.9
-- `kustomize` in your PATH to |kustomize.nvim-build-manifests|
+- <https://kustomize.io/> in your PATH to |kustomize.nvim-build-manifests|
 - kubeconform <https://github.com/yannh/kubeconform> in your PATH to |kustomize.nvim-validate-manifests|
 - kubent <https://github.com/doitintl/kube-no-trouble> in your PATH to |kustomize.nvim-check-for-deprecations|
 - plenary.nvim <https://github.com/nvim-lua/plenary.nvim>
@@ -29,7 +29,7 @@ REQUIREMENTS                                     *kustomize.nvim-requirements*
 
 QUICKSTART                                         *kustomize.nvim-quickstart*
 
-With Lazy.nvim <https://github.com/folke/lazy.nvim>
+With Lazy.nvim <https://github.com/folke/lazy.nvim>:
 
 >lua
     {
@@ -44,7 +44,7 @@ With Lazy.nvim <https://github.com/folke/lazy.nvim>
     }
 <
 
-Run`:checkhealth kustomize` for a health check.
+Run `:checkhealth kustomize` for a health check.
 
 
 DEFAULT MAPPINGS                             *kustomize.nvim-default-mappings*
@@ -67,7 +67,7 @@ DEFAULT MAPPINGS                             *kustomize.nvim-default-mappings*
   n                    Run custom commands      :KustomizeRun <command>
   --------------------------------------------------------------------------
 You can define your own keybindings after setting `opts.enable_key_mappings =
-false`
+false`:
 
 >lua
       use({
@@ -84,7 +84,7 @@ false`
 <
 
 
-DEFAULTCONFIGURATION                     *kustomize.nvim-defaultconfiguration*
+DEFAULT CONFIGURATION                   *kustomize.nvim-default-configuration*
 
 This is the default configuration that can be overwritten, also in parts, by
 you.
