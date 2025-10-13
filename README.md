@@ -29,6 +29,7 @@ Jump to the [use cases](#use-cases) to check out what this plugin can do!
 - [plenary.nvim](https://github.com/nvim-lua/plenary.nvim)
 - [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) and `yaml` parser
 - (optionally) [neo-tree](https://github.com/nvim-neo-tree/neo-tree.nvim) for directory listings in "List Resources"
+- (optionally) [fyler.nvim](https://github.com/A7Lavinraj/fyler.nvim) for directory listings in "List Resources"
 - (optionally) [LuaSnip](https://github.com/L3MON4D3/LuaSnip) for snippets support (default is disabled)
 
 ## Quickstart

@@ -119,8 +119,11 @@ M.set_list = function(items)
 
       if stat.type == "directory" then
         local has_neotree, _ = pcall(require, "neo-tree")
+        local has_fyler, _ = pcall(require, "fyler")
         if has_neotree then
           vim.cmd("Neotree float dir=" .. vim.fn.fnameescape(selected))
+        elseif has_fyler then
+          vim.cmd("Fyler kind=split_right_most dir=" .. vim.fn.fnameescape(selected))
         else
           utils.info("Neo-tree not found, falling back to built-in explorer")
           vim.cmd("Explore " .. vim.fn.fnameescape(selected))
