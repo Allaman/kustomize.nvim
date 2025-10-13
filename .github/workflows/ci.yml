@@ -89,7 +89,6 @@ jobs:
         id: release
         with:
           release-type: simple
-          package-name: kustomize.nvim
       - uses: actions/checkout@v5
       - name: tag stable versions
         if: ${{ steps.release.outputs.release_created }}
