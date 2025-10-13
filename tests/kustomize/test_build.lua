@@ -2,7 +2,6 @@ local eq = MiniTest.expect.equality
 local neq = MiniTest.expect.no_equality
 
 local build = require("kustomize.build")
-local config = require("kustomize.config")
 
 local want1 = {
   "apiVersion: v1",
