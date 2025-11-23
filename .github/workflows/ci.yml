@@ -10,7 +10,7 @@ jobs:
     name: Stylua
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: JohnnyMorganz/stylua-action@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -33,7 +33,7 @@ jobs:
         #     neovim_version: v0.10.2
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Setup Neovim
         uses: rhysd/action-setup-vim@v1
         with:
@@ -62,7 +62,7 @@ jobs:
     needs: tests
     if: ${{ github.ref == 'refs/heads/main' }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: panvimdoc
         uses: kdheepak/panvimdoc@main
         with:
@@ -89,7 +89,7 @@ jobs:
         id: release
         with:
           release-type: simple
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: tag stable versions
         if: ${{ steps.release.outputs.release_created }}
         run: |
