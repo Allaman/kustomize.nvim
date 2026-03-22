@@ -34,9 +34,8 @@ function M.setup()
 
   -- Set up 'mini.test'
   require("mini.test").setup()
-  require("nvim-treesitter.configs").setup({})
-  require("nvim-treesitter.install").commands.TSInstall["run!"]("yaml")
-  vim.cmd([[sleep 2000m]]) -- TSInstall is non blocking...
+  require("nvim-treesitter").setup({ install_dir = M.root(".tests/site") })
+  require("nvim-treesitter").install({ "yaml" }):wait(60000)
 end
 
 M.setup()
