@@ -25,6 +25,7 @@ M.set_default_mappings = function()
   end, { desc = "Check for deprecations" })
 end
 
+---@param opts? KustomizeConfig
 M.setup = function(opts)
   if not utils.is_module_available("plenary") then
     utils.error("Could not load nvim-lua/plenary.nvim")

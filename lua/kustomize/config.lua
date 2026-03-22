@@ -1,5 +1,55 @@
 local M = {}
 
+---@class KustomizeWindowConfig
+---@field type? "float"|"split"|"vsplit"
+---@field width? number Percentage of screen width (for float/vsplit)
+---@field height? number Percentage of screen height (for float/split)
+---@field border? string Border style: "none", "single", "double", "rounded", etc.
+---@field title? string
+---@field title_pos? "left"|"center"|"right"
+---@field blend? integer Background transparency (0-100)
+
+---@class KustomizeBufferConfig
+---@field readonly? boolean
+---@field modifiable? boolean
+---@field swapfile? boolean
+
+---@class KustomizeKeymapsConfig
+---@field close? string|string[]
+---@field save? string
+
+---@class KustomizeUIConfig
+---@field window? KustomizeWindowConfig
+---@field buffer? KustomizeBufferConfig
+---@field keymaps? KustomizeKeymapsConfig
+
+---@class KustomizeBuildConfig
+---@field ui? KustomizeUIConfig
+---@field additional_args? string[]
+
+---@class KustomizeKindsConfig
+---@field auto_close? boolean
+---@field show_filepath? boolean
+---@field show_line? boolean
+---@field exclude_pattern? string[]
+
+---@class KustomizeRunCommandConfig
+---@field cmd? string
+---@field args? string[]
+---@field timeout? integer Timeout in milliseconds
+
+---@class KustomizeRunConfig
+---@field validate? KustomizeRunCommandConfig
+---@field deprecations? KustomizeRunCommandConfig
+
+---@class KustomizeConfig
+---@field enable_key_mappings? boolean
+---@field enable_lua_snip? boolean
+---@field build? KustomizeBuildConfig
+---@field kinds? KustomizeKindsConfig
+---@field run? KustomizeRunConfig
+
+---@type KustomizeConfig
 M.options = {
   enable_key_mappings = true,
   enable_lua_snip = false,
