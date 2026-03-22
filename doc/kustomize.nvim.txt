@@ -1,4 +1,4 @@
-*kustomize.nvim.txt*     For Neovim >= 0.10.0    Last change: 2025 November 23
+*kustomize.nvim.txt*      For Neovim >= 0.11.0      Last change: 2026 March 22
 
 ==============================================================================
 Table of Contents                           *kustomize.nvim-table-of-contents*
@@ -17,7 +17,7 @@ the |kustomize.nvim-use-cases| to check out what this plugin can do!
 
 REQUIREMENTS                                     *kustomize.nvim-requirements*
 
-- Neovim >= 0.9
+- Neovim >= 0.11
 - Kustomize <https://kustomize.io/> in your PATH to |kustomize.nvim-build-manifests|
 - kubeconform <https://github.com/yannh/kubeconform> in your PATH to |kustomize.nvim-validate-manifests|
 - kubent <https://github.com/doitintl/kube-no-trouble> in your PATH to |kustomize.nvim-check-for-deprecations|
@@ -41,6 +41,7 @@ With Lazy.nvim <https://github.com/folke/lazy.nvim>:
         "nvim-neo-tree/neo-tree.nvim"
       }
       ft = "yaml",
+      ---@type KustomizeConfig
       opts = {}
     }
 <
@@ -73,6 +74,7 @@ false`:
 >lua
       use({
         "allaman/kustomize.nvim",
+        ---@type KustomizeConfig
         opts = { enable_key_mappings = false },
         config = function(opts)
           require('kustomize').setup({opts})
