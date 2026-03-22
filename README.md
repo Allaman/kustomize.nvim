@@ -45,6 +45,7 @@ With [Lazy.nvim](https://github.com/folke/lazy.nvim):
     "nvim-neo-tree/neo-tree.nvim"
   }
   ft = "yaml",
+  ---@type KustomizeConfig
   opts = {}
 }
 ```
@@ -68,6 +69,7 @@ You can define your own keybindings after setting `opts.enable_key_mappings = fa
 ```lua
   use({
     "allaman/kustomize.nvim",
+    ---@type KustomizeConfig
     opts = { enable_key_mappings = false },
     config = function(opts)
       require('kustomize').setup({opts})
