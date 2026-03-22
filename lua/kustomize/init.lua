@@ -33,7 +33,7 @@ M.setup = function(opts)
   end
 
   -- merge user options with default options
-  config.options = vim.tbl_deep_extend("force", config.options, opts)
+  config.options = vim.tbl_deep_extend("force", config.options, opts or {})
 
   if not KUSTOMIZE_INITIAL_CONFIG then
     KUSTOMIZE_INITIAL_CONFIG = vim.deepcopy(config, true) -- Store the initial options on the first setup call
