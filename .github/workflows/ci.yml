@@ -39,6 +39,8 @@ jobs:
         with:
           neovim: true
           version: ${{ matrix.neovim_version }}
+      - name: Install tree-sitter CLI
+        run: npm install -g tree-sitter-cli
       - name: Run Tests
         run: |
           nvim --version
