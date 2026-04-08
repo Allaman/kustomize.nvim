@@ -26,7 +26,7 @@ jobs:
       matrix:
         # os: [ubuntu-latest, windows-latest]
         os: [ubuntu-latest]
-        neovim_version: ["v0.11.4", "nightly"]
+        neovim_version: ["v0.12.1", "nightly"]
         # Does not work; https://github.com/Allaman/kustomize.nvim/actions/runs/11244235042/job/31261846739
         # include:
         #   - os: macos-latest
