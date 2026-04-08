@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [6.1.2](https://github.com/Allaman/kustomize.nvim/compare/v6.1.1...v6.1.2) (2026-04-08)
+
+
+### Bug Fixes
+
+* update iter_matches captures API for nvim-treesitter compatibility ([52baa2f](https://github.com/Allaman/kustomize.nvim/commit/52baa2f6e07d7e5dbbe6ee59ad411354a488ed1f))
+
 ## [6.1.1](https://github.com/Allaman/kustomize.nvim/compare/v6.1.0...v6.1.1) (2026-03-22)
 
 
