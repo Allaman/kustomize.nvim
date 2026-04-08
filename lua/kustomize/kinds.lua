@@ -26,7 +26,6 @@ local find_kinds = function(bufNr, exclude_pattern)
   local query_without_namespace = q.parse(
     "yaml",
     [[
-(
 (document
 (block_node
 (block_mapping
@@ -41,14 +40,12 @@ local find_kinds = function(bufNr, exclude_pattern)
         key: (flow_node) @key_name
         value: (flow_node) @name_value (#match? @key_name "name$"))))
 ))))
-) @name_value @kind_value
 ]]
   )
 
   local query_with_namespace = q.parse(
     "yaml",
     [[
-(
 (document
 (block_node
 (block_mapping
@@ -68,7 +65,6 @@ local find_kinds = function(bufNr, exclude_pattern)
       )
     )
 ))))
-) @name_value @kind_value @namespace_value
 ]]
   )
 
@@ -77,25 +73,21 @@ local find_kinds = function(bufNr, exclude_pattern)
   local unsorted_matches = {} -- Temporarily store matches here
 
   -- Iterate over the first query matches
-  -- TODO: https://github.com/neovim/neovim/commit/6913c5e1d975a11262d08b3339d50b579e6b6bb8
-  -- {all = false} forces the old behavior
-  for _, captures, _ in query_with_namespace:iter_matches(root, bufNr, 0, 0, { all = false }) do
-    local row, _ = captures[1]:start()
-    local kind = t.get_node_text(captures[2], bufNr)
-    local kind_name = t.get_node_text(captures[5], bufNr)
-    local namespace = t.get_node_text(captures[7], bufNr)
+  for _, captures, _ in query_with_namespace:iter_matches(root, bufNr, 0, 0) do
+    local row, _ = captures[1][1]:start()
+    local kind = t.get_node_text(captures[2][1], bufNr)
+    local kind_name = t.get_node_text(captures[5][1], bufNr)
+    local namespace = t.get_node_text(captures[7][1], bufNr)
     table.insert(unsorted_matches, { kind, kind_name, namespace, row })
     matched_rows[row] = true
   end
 
   -- Iterate over the second query matches
-  -- TODO: https://github.com/neovim/neovim/commit/6913c5e1d975a11262d08b3339d50b579e6b6bb8
-  -- {all = false} forces the old behavior
-  for _, captures, _ in query_without_namespace:iter_matches(root, bufNr, 0, 0, { all = false }) do
-    local row, _ = captures[1]:start()
+  for _, captures, _ in query_without_namespace:iter_matches(root, bufNr, 0, 0) do
+    local row, _ = captures[1][1]:start()
     if not matched_rows[row] then -- Only process if row hasn't been matched already
-      local kind = t.get_node_text(captures[2], bufNr)
-      local kind_name = t.get_node_text(captures[5], bufNr)
+      local kind = t.get_node_text(captures[2][1], bufNr)
+      local kind_name = t.get_node_text(captures[5][1], bufNr)
       table.insert(unsorted_matches, { kind, kind_name, "", row }) -- Empty namespace
     end
   end

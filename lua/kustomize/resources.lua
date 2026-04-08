@@ -28,16 +28,14 @@ function M.find_resources(bufNr)
 (block_sequence_item
 (flow_node)@resource)))))))
   (#match? @key_name "resources")
-) @resource
+)
 ]]
   )
   ---@type table<string>
   local resources = {}
-  -- TODO: https://github.com/neovim/neovim/commit/6913c5e1d975a11262d08b3339d50b579e6b6bb8
-  -- {all = false} forces the old behavior
-  for _, captures, _ in query:iter_matches(root, bufNr, 0, 0, { all = false }) do
+  for _, captures, _ in query:iter_matches(root, bufNr, 0, 0) do
     -- resource is second capture
-    table.insert(resources, t.get_node_text(captures[2], bufNr))
+    table.insert(resources, t.get_node_text(captures[2][1], bufNr))
   end
   return resources
 end
