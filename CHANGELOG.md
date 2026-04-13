@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [6.1.3](https://github.com/Allaman/kustomize.nvim/compare/v6.1.2...v6.1.3) (2026-04-13)
+
+
+### Bug Fixes
+
+* Replace plenary.nvim with built-in APIs ([2e09201](https://github.com/Allaman/kustomize.nvim/commit/2e09201ee5201bc30c2b4ae163bf7609b1ae7944))
+
 ## [6.1.2](https://github.com/Allaman/kustomize.nvim/compare/v6.1.1...v6.1.2) (2026-04-08)
 
 
