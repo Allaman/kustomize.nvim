@@ -26,7 +26,6 @@ Jump to the [use cases](#use-cases) to check out what this plugin can do!
 - [Kustomize](https://kustomize.io/) in your PATH to [build manifests](#build-manifests)
 - [kubeconform](https://github.com/yannh/kubeconform) in your PATH to [validate manifests](#validate-resources)
 - [kubent](https://github.com/doitintl/kube-no-trouble) in your PATH to [check for deprecations](#check-for-deprecations)
-- [plenary.nvim](https://github.com/nvim-lua/plenary.nvim)
 - [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) and `yaml` parser
 - (optionally) [neo-tree](https://github.com/nvim-neo-tree/neo-tree.nvim) for directory listings in "List Resources"
 - (optionally) [fyler.nvim](https://github.com/A7Lavinraj/fyler.nvim) for directory listings in "List Resources"
@@ -40,9 +39,12 @@ With [Lazy.nvim](https://github.com/folke/lazy.nvim):
 {
   "allaman/kustomize.nvim",
   dependencies = {
-    "nvim-lua/plenary.nvim",
     -- (optional for better directory handling in "List resources")
     "nvim-neo-tree/neo-tree.nvim"
+    -- (optional for better directory handling in "List resources")
+    "A7Lavinraj/fyler.nvim"
+    -- (optional for snippets)
+    "L3MON4D3/LuaSnip"
   }
   ft = "yaml",
   ---@type KustomizeConfig

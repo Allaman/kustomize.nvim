@@ -1,6 +1,4 @@
 local utils = require("kustomize.utils")
-local scan = require("plenary.scandir")
-local path = require("plenary.path")
 
 local M = {}
 
@@ -136,19 +134,15 @@ end
 
 ---creates an absolute path from a resource item
 ---@param resource string
----@return any
+---@return string|nil
 M.build_paths = function(resource)
-  local function join_paths(a, b)
-    local file = path:new(a, b)
-    local absolute = path:new({ file, sep = utils.path_separator() }):absolute()
-    return absolute
-  end
   local bufName = vim.api.nvim_buf_get_name(0)
   -- resources are relative to the current kustomization.yaml
   -- so we need to track the current directory to build a valid path
   local dirName = vim.fs.dirname(bufName)
-  if path:new(dirName, resource):is_file() or path:new(dirName, resource):is_dir() then
-    return join_paths(dirName, resource)
+  local full_path = vim.fs.joinpath(dirName, resource)
+  if vim.uv.fs_stat(full_path) then
+    return full_path
   else
     utils.warn("This is not a valid file or directory: " .. resource)
   end
@@ -164,16 +158,20 @@ M.print = function()
   local resourceList = {}
   if utils.is_kustomization_yaml(fileName) then
     local dirName = vim.fs.dirname(bufName)
-    local resources = scan.scan_dir(dirName, { hidden = false, depth = 1, add_dirs = true })
-    for _, r in pairs(resources) do
-      if not string.find(r, "kustomization") then
-        local baseName = vim.fs.basename(r)
-        if path:new(r):is_file() then
-          table.insert(resourceList, "  - " .. baseName)
-        elseif path:new(r):is_dir() then
-          table.insert(resourceList, "  - " .. baseName .. "/")
-        else
-          utils.warn("This is not a valid file or directory: " .. r)
+    for name, _ in vim.fs.dir(dirName) do
+      if not name:match("^%.") then
+        local r = vim.fs.joinpath(dirName, name)
+        if not string.find(r, "kustomization") then
+          local stat = vim.uv.fs_stat(r)
+          if stat then
+            if stat.type == "file" then
+              table.insert(resourceList, "  - " .. name)
+            elseif stat.type == "directory" then
+              table.insert(resourceList, "  - " .. name .. "/")
+            else
+              utils.warn("This is not a valid file or directory: " .. r)
+            end
+          end
         end
       end
     end

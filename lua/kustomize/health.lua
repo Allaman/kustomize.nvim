@@ -34,18 +34,6 @@ M.check = function()
     _ok("This config will work with your Neovim version")
   end
 
-  if not utils.is_module_available("plenary") then
-    _error("this plugin requires nvim-lua/plenary.nvim")
-  else
-    _ok("nvim-lua/plenary.nvim found")
-  end
-
-  if not utils.is_module_available("plenary") then
-    _error("this plugin requires nvim-lua/plenary.nvim")
-  else
-    _ok("nvim-lua/plenary.nvim found")
-  end
-
   if not utils.is_module_available("luasnip") then
     _warn("this plugin (optionally) requires L3MON4D3/LuaSnip for LuaSnip integration")
   else

@@ -8,14 +8,11 @@ local M = {}
 ---@return table
 ---@return table
 local function kustomize_build(dirName, additional_args)
-  local Job = require("plenary.job")
-  local job = Job:new({
-    command = "kustomize",
-    args = vim.list_extend({ "build", "." }, additional_args),
-    cwd = dirName,
-  })
-  job:sync()
-  return job:stderr_result(), job:result()
+  local cmd = vim.list_extend({ "kustomize", "build", "." }, additional_args)
+  local result = vim.system(cmd, { cwd = dirName, text = true }):wait()
+  local err = vim.split(result.stderr or "", "\n", { trimempty = true })
+  local out = vim.split(result.stdout or "", "\n", { trimempty = true })
+  return err, out
 end
 
 ---run kustomize_build and display the result in a new buffer

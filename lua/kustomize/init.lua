@@ -27,11 +27,6 @@ end
 
 ---@param opts? KustomizeConfig
 M.setup = function(opts)
-  if not utils.is_module_available("plenary") then
-    utils.error("Could not load nvim-lua/plenary.nvim")
-    return
-  end
-
   -- merge user options with default options
   config.options = vim.tbl_deep_extend("force", config.options, opts or {})
 

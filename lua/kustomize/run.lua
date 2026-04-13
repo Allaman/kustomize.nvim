@@ -1,5 +1,4 @@
 local utils = require("kustomize.utils")
-local path = require("plenary.path")
 local M = {}
 
 ---comment
@@ -16,11 +15,12 @@ M.run = function(cmd, args, timeout)
   local file_to_validate
   local tmpFile = utils.create_temp_file_string("yaml")
   local bufName = vim.api.nvim_buf_get_name(0)
-  local is_file = path:new(bufName):is_file()
+  local stat = vim.uv.fs_stat(bufName)
+  local is_file = stat ~= nil and stat.type == "file"
 
   if is_file then
     -- file exists on disk
-    file_to_validate = path:new({ bufName, sep = utils.path_separator() }):absolute()
+    file_to_validate = vim.fn.fnamemodify(bufName, ":p")
   else
     -- if buffer content is not file on disk
     file_to_validate = tmpFile
@@ -30,13 +30,10 @@ M.run = function(cmd, args, timeout)
   table.insert(args, file_to_validate)
 
   utils.info("Running: " .. cmd .. " " .. vim.inspect(args) .. "timeout: " .. timeout)
-  local Job = require("plenary.job")
-  local job = Job:new({
-    command = cmd,
-    args = args,
-  })
-  job:sync(timeout)
-  local err, out = job:stderr_result(), job:result()
+  local sys_cmd = vim.list_extend({ cmd }, args)
+  local result = vim.system(sys_cmd, { text = true }):wait(timeout)
+  local err = vim.split(result.stderr or "", "\n", { trimempty = true })
+  local out = vim.split(result.stdout or "", "\n", { trimempty = true })
 
   -- Removes `file_to_validate` so that a second call does not include the first file_to_validate
   table.remove(args)
